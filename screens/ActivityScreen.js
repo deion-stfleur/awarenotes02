@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import moment from 'moment';
 import { collection, query, onSnapshot } from 'firebase/firestore'
 import {db} from '../firebaseConfig'
@@ -44,6 +44,11 @@ const ActivityScreen = () => {
       unsubscribe(); 
     }// Unsubscribe from the snapshot listener when the component unmounts
   }, []);
+
+
+  const alertMessage = () => {
+    Alert.alert("We will hold you to your goals and help you track your progress!")
+  }
   
 
   return (
@@ -93,7 +98,7 @@ const ActivityScreen = () => {
  
               {orders.map((order) => (
 
-                <TouchableOpacity  key={order.id} activeOpacity={0.7}>
+                <TouchableOpacity onPress={alertMessage}  key={order.id} activeOpacity={0.7}>
 
                 <View key={order.id} style={{borderWidth: 1, width: '90%', marginBottom: 10, padding: 10, borderRadius: 4, backgroundColor: '#fff', alignSelf: 'center'}}>
                   {/* Render order details here */}

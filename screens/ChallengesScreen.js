@@ -13,6 +13,65 @@ const ChallengesScreen = ({navigation}) => {
     const [description, setDescription] = useState('');
 
 
+    const [selectedImages, setSelectedImages] = useState([]);
+
+    const handleImagePress = (uri) => {
+      // Check if the image is already selected
+      if (selectedImages.includes(uri)) {
+        // If selected, remove it
+        setSelectedImages(selectedImages.filter((imageUri) => imageUri !== uri));
+      } else if (selectedImages.length < 3) {
+        // If not selected and less than 3 images are selected, add it
+        setSelectedImages([...selectedImages, uri]);
+      }
+    };
+  
+    const isImageSelected = (uri) => selectedImages.includes(uri);
+  
+    const renderImage = (uri, label) => {
+      const isSelected = isImageSelected(uri);
+  
+      return (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => handleImagePress(uri)}
+          key={uri}
+        >
+          <View
+            style={{
+              borderColor: isSelected ? 'green' : 'transparent',
+              borderWidth: isSelected ? 3 : 0,
+              borderRadius: 10,
+            }}
+          >
+            <Image
+              source={{ uri }}
+              style={{ height: 300, width: 180, borderRadius: 10 }}
+            />
+            {isSelected && (
+              <View
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: [{ translateX: -10 }, { translateY: -10 }],
+                  backgroundColor: 'green',
+                  width: 20,
+                  height: 20,
+                  borderRadius: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={{ color: 'white' }}>✔</Text>
+              </View>
+            )}
+            <Text style={{ textAlign: 'center', marginTop: 15, fontWeight: '500', fontSize: 18 }}>{label}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    };
+
     const isSubmitDisabled = !description
 
 
@@ -58,6 +117,11 @@ const ChallengesScreen = ({navigation}) => {
       setGreeting(getCurrentTime());
     }, []);
 
+    const resetSelectedImages = () => {
+      // Clear the selectedImages state
+      setSelectedImages([]);
+    };
+
     const openModal = () => {
         setIsModalVisible(true);
       };
@@ -65,6 +129,7 @@ const ChallengesScreen = ({navigation}) => {
 
       const closeModal = () => {
         setIsModalVisible(false);
+        resetSelectedImages();
       };
 
 
@@ -87,6 +152,8 @@ const ChallengesScreen = ({navigation}) => {
       const closeModal3 = () => {
         setIsModalVisible3(false);
       };
+
+      
   return (
     <>
     <SafeAreaView>
@@ -159,49 +226,28 @@ const ChallengesScreen = ({navigation}) => {
 
     <Text style={{fontSize: 24, textAlign: 'center', marginTop: 20, fontWeight: '500'}}>Lets works on creating some healthy habits </Text>
 
-    <ScrollView  style={{marginTop: 20}}>
-
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-
-
-
-        <TouchableOpacity activeOpacity={0.7}>
-        <View>
-            <Image source={{uri: 'https://images.unsplash.com/photo-1627376617965-b8c29ca91aca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDh8fHNsZWVwfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60'}} style={{height: 300, width: 180, borderRadius: 10}} />
-            <Text style={{textAlign: 'center',marginTop: 15, fontWeight: '500', fontSize: 18}}>Sleeping</Text>
-        </View>
-        </TouchableOpacity>
-    {/* <View style={{width: 10}}></View> */}
-        <TouchableOpacity activeOpacity={0.7}>
-        <View>
-            <Image source={{uri: 'https://images.unsplash.com/photo-1578880981498-3d60436ba825?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTExfHxmaXRuZXNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60'}} style={{height: 300, width: 180, borderRadius: 10}} />
-            <Text style={{textAlign: 'center',marginTop: 15, fontWeight: '500', fontSize: 18}}>Fitness</Text>
-        </View>
-        </TouchableOpacity>
-
-        </View>
-
-        <View  style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 70}}>
-
-<TouchableOpacity activeOpacity={0.7}>
-        <View>
-            <Image source={{uri: 'https://images.unsplash.com/photo-1586511934875-5c5411eebf79?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDh8fGZvb2R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60'}} style={{height: 300, width: 180, borderRadius: 10}} />
-            <Text style={{marginTop: 15, fontWeight: '500', fontSize: 18,textAlign: 'center'}}>Eating on Time!</Text>
-        </View>
-</TouchableOpacity>
-
-
-<TouchableOpacity activeOpacity={0.7}>
-        <View>
-            <Image source={{uri: 'https://images.unsplash.com/photo-1684938031016-81c55677220d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyOXxfaGItZGw0US00VXx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60'}} style={{height: 300, width: 180, borderRadius: 10}} />
-            <Text style={{marginTop: 15, fontWeight: '500', fontSize: 18,textAlign: 'center'}}>Me Time</Text>
-        </View>
-</TouchableOpacity>
-        </View>
-
- 
-
-
+    <ScrollView style={{ marginTop: 20 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+        {renderImage(
+          'https://images.unsplash.com/photo-1627376617965-b8c29ca91aca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDh8fHNsZWVwfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60',
+          'Sleeping'
+        )}
+      
+        {renderImage(
+          'https://images.unsplash.com/photo-1578880981498-3d60436ba825?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTExfHxmaXRuZXNzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60',
+          'Fitness'
+        )}
+      </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 70 }}>
+        {renderImage(
+          'https://images.unsplash.com/photo-1586511934875-5c5411eebf79?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyOXxfaGItZGw0US00VXx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
+          'Eating on Time!'
+        )}
+        {renderImage(
+          'https://images.unsplash.com/photo-1684938031016-81c55677220d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyOXxfaGItZGw0US00VXx8ZW58MHx8fHx8&auto=format&fit=crop&w=800&q=60',
+          'Me Time'
+        )}
+      </View>
     </ScrollView>
     {/* <TextInput placeholder='Answer Here' style={{ borderRadius: 6, marginBottom: 260, marginTop: 20,fontSize: 18}} /> */}
 

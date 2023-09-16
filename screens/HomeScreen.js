@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Modal, TextInput, Alert } from 'react-native'
 import React,{useState, useEffect} from 'react'
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -6,8 +6,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {auth} from '../firebaseConfig'
 import { Entypo } from '@expo/vector-icons';
+import { doc, setDoc, collection, addDoc } from 'firebase/firestore'
+import {db, auth} from '../firebaseConfig'
 
 const quotes = [
     "No matter how dirty your past is, your future is still spotless.",
@@ -90,11 +91,60 @@ const HomeScreen = ({navigation}) => {
     const [greeting, setGreeting] = useState('');
     const [selectedButton, setSelectedButton] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [description, setDescription] = useState('');
 
+
+    const isSubmitDisabled = !description
+
+
+    const create = async () => {
+      const user = auth.currentUser;
+      const order = {
+        userId: user.uid,
+        userEmail: user.email,
+        generatedQuestion: randomQuote2,
+        description: description,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
+      };
+    
+      try {
+        const docRef = await addDoc(collection(db, 'answered-generated-user-questions'), order);
+        console.log('Document created with ID: ', docRef.id);
+        Alert.alert("Nice!","Go to the activity screen for all note history 😊");   
+        // Clear the description after successfully creating the document
+        setDescription(''); // Set the description to an empty string
+      } catch (error) {
+        console.error('Error creating document:', error);
+      }
+    };
+    
 
     const handleButtonClick = (buttonName) => {
       setSelectedButton(buttonName);
+
+      if (buttonName === 'Hopeful') {
+        Alert.alert("We apprecitate your response and understand that feeelng hopeful is okay!");
+      }
+
+      if (buttonName === 'Silly') {
+        Alert.alert("We apprecitate your response and understand that feeelng silly is okay!");
+      }
+
+      if (buttonName === 'Sad') {
+        Alert.alert("We apprecitate your response and understand that feeelng sad is okay!");
+      }
+
+      if (buttonName === 'Happy') {
+        Alert.alert("We apprecitate your response and understand that feeelng happy is okay!");
+      }
+
+      if (buttonName === 'Angry') {
+        Alert.alert("We apprecitate your response and understand that feeelng angry is okay!");
+      }
     };
+
+
+
 
     const openModal = () => {
         setIsModalVisible(true);
@@ -290,7 +340,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={{marginLeft: 15}}>20 cups/hr</Text>
 
 
-            <View style={{flexDirection: 'row', justifyContent: 'space-between',width: '50%', marginTop: 50}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between',width: '50%', marginTop: 50, marginBottom: 15}}>
 
             <TouchableOpacity activeOpacity={0.6} onPress={decrement}>
                 <View style={{backgroundColor: '#fff',borderWidth: 1, marginLeft: 14, borderRadius: 5,borderWidth: 'lightblue'}}>
@@ -431,6 +481,7 @@ const HomeScreen = ({navigation}) => {
 
     <View style={styles.modalContent}>
 
+      
         <Text style={{fontSize: 18}}>{randomQuote2}</Text>
 
       <View style={{borderWidth: 1,marginTop: 20, borderRadius: 6,marginBottom: 22, backgroundColor: '#fff',  shadowColor: 'black',
@@ -438,8 +489,14 @@ const HomeScreen = ({navigation}) => {
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 4,}}>
-        <TextInput placeholder='Answer Here' style={{ borderRadius: 6, marginBottom: 260, marginTop: 20,fontSize: 28,paddingLeft: 12}} />
+        <TextInput value={description}
+          onChangeText={setDescription}  placeholder='Answer Here' style={{ borderRadius: 6, marginBottom: 260, marginTop: 20,fontSize: 28,paddingLeft: 12}} />
       </View>
+      <TouchableOpacity onPress={create} style={{alignSelf: 'flex-end'}}>
+<View disabled={isSubmitDisabled}  style={{ backgroundColor: isSubmitDisabled ? 'lightgray' : 'black',padding: 12, borderRadius: 100, width: 95,alignSelf: 'flex-end', marginRight: 14,marginBottom: 5}}>
+  <Text style={{color: '#fff',fontWeight: 'bold',fontSize: 16,textAlign: 'center'}}>Send   <FontAwesome name="send-o" size={16} color="gray" style={{marginBottom: 20}} /></Text>
+</View>
+  </TouchableOpacity>
 
 
     <View style={{backgroundColor: 'black',width: 45,borderRadius: '50%',alignSelf: 'center'}}>
