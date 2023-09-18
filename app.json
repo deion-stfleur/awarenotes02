@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "awarenotes02",
-    "slug": "awarenotes02",
+    "name": "awarenotes",
+    "slug": "awarenotes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

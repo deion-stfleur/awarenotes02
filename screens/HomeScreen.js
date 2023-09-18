@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { doc, setDoc, collection, addDoc } from 'firebase/firestore'
+import { doc, setDoc, collection, addDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import {db, auth} from '../firebaseConfig'
 
 const quotes = [
@@ -92,6 +92,7 @@ const HomeScreen = ({navigation}) => {
     const [selectedButton, setSelectedButton] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [description, setDescription] = useState('');
+    const [isScrollViewVisible, setIsScrollViewVisible] = useState(true);
 
 
     const isSubmitDisabled = !description
@@ -119,8 +120,9 @@ const HomeScreen = ({navigation}) => {
     };
     
 
-    const handleButtonClick = (buttonName) => {
+    const handleButtonClick = async (buttonName) => {
       setSelectedButton(buttonName);
+      setIsScrollViewVisible(false);
 
       if (buttonName === 'Hopeful') {
         Alert.alert("We apprecitate your response and understand that feeelng hopeful is okay!");
@@ -140,6 +142,34 @@ const HomeScreen = ({navigation}) => {
 
       if (buttonName === 'Angry') {
         Alert.alert("We apprecitate your response and understand that feeelng angry is okay!");
+      }
+
+     
+
+      // Get the user's email (assuming you are using Firebase Authentication)
+   
+      const user = auth.currentUser;
+      const userEmail = user ? user.email : 'Anonymous'; // Use 'Anonymous' for unauthenticated users
+    
+      // Reference to the Firestore document for the selected feeling
+      const feelingRef = doc(db, 'FeelingCounts', buttonName);
+    
+      try {
+        // Fetch the current count from Firestore
+        const feelingDoc = await getDoc(feelingRef);
+        const currentCount = feelingDoc.exists() ? feelingDoc.data().count : 0;
+    
+        // Increment the count in Firestore
+        await setDoc(feelingRef, {
+          count: currentCount + 1,
+          userEmail: userEmail,
+          timestamp: serverTimestamp(), // Use Firestore server timestamp
+        });
+    
+        // Update the front end with the new count
+        // Update the state variables and display the counts in your component
+      } catch (error) {
+        console.error('Error updating feeling count:', error);
       }
     };
 
@@ -263,8 +293,9 @@ const HomeScreen = ({navigation}) => {
 
 
     <View style={{marginLeft: 14, marginTop: 30}}>
-        <Text>How are you feeling today?</Text>
-        <ScrollView horizontal style={{flexDirection: 'row', marginTop: 20}}>
+        {!selectedButton ? (
+          <ScrollView horizontal style={{flexDirection: 'row', marginTop: 20}}>
+          <Text>How are you feeling today?</Text>
 
 
 
@@ -305,6 +336,9 @@ const HomeScreen = ({navigation}) => {
            
 
         </ScrollView>
+        ) : <View>
+          <Text>Thank you for your feedback we getting closer to our goals!</Text>
+          </View>}
          
 
     </View>

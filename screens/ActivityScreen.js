@@ -1,8 +1,9 @@
 import React, {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Alert, Modal } from 'react-native';
 import moment from 'moment';
 import { collection, query, onSnapshot } from 'firebase/firestore'
 import {db} from '../firebaseConfig'
+import { Ionicons } from '@expo/vector-icons';
 
 const ActivityScreen = () => {
   const currentDate = moment(); // Get the current date
@@ -49,6 +50,18 @@ const ActivityScreen = () => {
   const alertMessage = () => {
     Alert.alert("We will hold you to your goals and help you track your progress!")
   }
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   
 
   return (
@@ -60,7 +73,14 @@ const ActivityScreen = () => {
 <ScrollView style={{backgroundColor: '#EEECE4'}}>
 
     <View>
-        <Text style={{marginLeft: 20, fontSize: 20,marginTop: 19,fontWeight: 'bold'}}>This Week</Text>
+
+        <View style={{flexDirection: 'row', alignItems: 'center',marginTop: 19, justifyContent: 'space-between', width: '95%',marginBottom: 20}}>
+        <Text style={{marginLeft: 20, fontSize: 20,fontWeight: 'bold'}}>This Week</Text>
+
+    <TouchableOpacity onPress={openModal}> 
+        <Text style={{fontWeight: 'bold'}}><Ionicons name="analytics" size={20} color="black" /> More insights! </Text>
+    </TouchableOpacity>
+        </View>
     <ScrollView horizontal contentContainerStyle={styles.scrollContainer}>
       {daysOfWeek}
     </ScrollView>
@@ -79,11 +99,14 @@ const ActivityScreen = () => {
             <Text style={{textAlign: 'center', width: '80%',alignSelf:'center'}}>Total Habits Created</Text>
             </View>
 
-
+                <View style={{height: '100%', width: 2,backgroundColor: '#CBCBCB'}}></View>
             <View>
             <Text style={{textAlign: 'center',fontWeight: 'bold',marginBottom: 5, fontSize: 19}}>0</Text>
             <Text style={{textAlign: 'center', width: '80%',alignSelf:'center'}}>Moods Tracked</Text>
             </View>
+
+
+            <View style={{height: '100%', width: 2,backgroundColor: '#CBCBCB'}}></View>
 
 
             <View>
@@ -94,7 +117,7 @@ const ActivityScreen = () => {
 
     </View>
 
-
+    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 10,fontWeight: 'bold', marginBottom: 22}}>Journal Notes</Text>
  
               {orders.map((order) => (
 
@@ -108,6 +131,31 @@ const ActivityScreen = () => {
                 </View>
                 </TouchableOpacity>
               ))}
+
+
+<Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible(false)}>
+
+                <View style={styles.modalContainer}>
+
+
+                    <View style={styles.modalContent}>
+
+
+
+                       
+
+                   
+                        <Text style={{ fontWeight: 'bold',fontSize: 20,textAlign: 'center'}}>Insights</Text>
+
+                        <Text style={{textAlign: 'right',marginRight: 14}} onPress={closeModal}>x</Text>
+                     
+                  
+
+
+                    </View>
+                </View>
+
+    </Modal>
  
 </ScrollView>
     
@@ -143,6 +191,23 @@ const styles = StyleSheet.create({
   highlightedText: {
     color: '#fff', // Change to your text color when highlighted
   },
+  modalContainer: {
+    backgroundColor: 'white',
+    height: '99%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    position: 'absolute',
+    zIndex: 999,
+    width: '100%',
+    bottom: 0,
+  },
+  modalContent: {
+    flex: 1,
+    marginTop: 60,
+    width: '95%',
+    alignSelf: 'center'
+  }
 });
 
 export default ActivityScreen;
