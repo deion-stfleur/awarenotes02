@@ -28,6 +28,7 @@ const ActivityScreen = () => {
 
   const [orders, setOrders] = useState([]);
 
+
   useEffect(() => {
 
 
@@ -39,10 +40,12 @@ const ActivityScreen = () => {
       setOrders(ordersData);
     });
 
+ 
 
 
     return () => {
       unsubscribe(); 
+   
     }// Unsubscribe from the snapshot listener when the component unmounts
   }, []);
 

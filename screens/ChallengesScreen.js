@@ -24,12 +24,12 @@ const ChallengesScreen = ({ navigation }) => {
       setOrders2(ordersData);
     });
 
- 
+
 
 
     return () => {
-      unsubscribe(); 
-   
+      unsubscribe();
+
     }// Unsubscribe from the snapshot listener when the component unmounts
   }, []);
 
@@ -183,11 +183,11 @@ const ChallengesScreen = ({ navigation }) => {
       <ScrollView style={{ backgroundColor: '#EEECE4' }}>
 
 
-          <Text style={{ fontWeight: 'bold', fontSize: 19,marginLeft: 17,marginTop: 20 }}>Leaderboards</Text>
-<ScrollView horizontal style={{alignSelf: 'center',marginLeft: 17}} showsHorizontalScrollIndicator={false}>
+        <Text style={{ fontWeight: 'bold', fontSize: 19, marginLeft: 17, marginTop: 20 }}>Leaderboards</Text>
+        <ScrollView horizontal style={{ alignSelf: 'center', marginLeft: 17 }} showsHorizontalScrollIndicator={false}>
 
 
-{/* {orders2.map((order) => (
+          {/* {orders2.map((order) => (
 
 <TouchableOpacity key={order.id} activeOpacity={0.7}>
 
@@ -199,51 +199,51 @@ const ChallengesScreen = ({ navigation }) => {
 ))} */}
 
 
-      <TouchableOpacity activeOpacity={0.9}>
-       
-          <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300,marginRight: 12 }}>
+          <TouchableOpacity activeOpacity={0.9}>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
+            <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300, marginRight: 12 }}>
 
-              <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/smiling-face.png?alt=media&token=85cce9ef-8d6e-49d7-8d24-9be22beed892' }} />
-              <Text style={{ width: '60%' }}>95 members are feeling silly!</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
+
+                <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/smiling-face.png?alt=media&token=85cce9ef-8d6e-49d7-8d24-9be22beed892' }} />
+                <Text style={{ width: '60%' }}>95 members are feeling silly!</Text>
+              </View>
             </View>
-          </View>
 
-      </TouchableOpacity>
-
+          </TouchableOpacity>
 
 
-      <TouchableOpacity activeOpacity={0.9}>
-          <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300, marginRight: 12 }}>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300, marginRight: 12 }}>
 
-              <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/confused.png?alt=media&token=ea2b80dc-5ec8-407c-8a6b-16ea8b247b0f' }} />
-              <Text style={{ width: '60%' }}>24 members are feeling confused</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
+
+                <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/confused.png?alt=media&token=ea2b80dc-5ec8-407c-8a6b-16ea8b247b0f' }} />
+                <Text style={{ width: '60%' }}>24 members are feeling confused</Text>
+              </View>
             </View>
-          </View>
-      </TouchableOpacity>
+          </TouchableOpacity>
 
 
 
-<TouchableOpacity activeOpacity={0.9}>
-          <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300 }}>
+          <TouchableOpacity activeOpacity={0.9}>
+            <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300 }}>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
 
-              <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/happy-face.png?alt=media&token=70accc22-590e-48c5-a9ed-ae87ab4c560c' }} />
-              <Text style={{ width: '60%' }}>46 members are feeling silly!</Text>
+                <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/happy-face.png?alt=media&token=70accc22-590e-48c5-a9ed-ae87ab4c560c' }} />
+                <Text style={{ width: '60%' }}>46 members are feeling silly!</Text>
+              </View>
             </View>
-          </View>
 
-</TouchableOpacity>
-          
-    
+          </TouchableOpacity>
 
-        
 
-</ScrollView>
+
+
+
+        </ScrollView>
 
 
 
@@ -259,13 +259,13 @@ const ChallengesScreen = ({ navigation }) => {
                 <View>
 
                   <View>
-{/* 
+                    {/* 
                     <View style={{ backgroundColor: 'white', width: 100, borderRadius: 16, alignSelf: 'center', marginTop: 20 }}>
                       <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Love</Text>
 
                     </View> */}
-                    <MaterialCommunityIcons style={{ alignSelf: 'center', marginTop: 40 }} name="head-question-outline" size={44} color="gray" />
-                    <Text style={{ marginTop: 17, textAlign: 'center', fontWeight: '700' }}>Habit Tracker</Text>
+                    <MaterialCommunityIcons style={{ alignSelf: 'center', marginTop: 40 }} name="lightning-bolt" size={44} color="gray" />
+                    <Text style={{ marginTop: 17, textAlign: 'center', fontWeight: '700' }}>Create Healthy Habits</Text>
                     <Text style={{ textAlign: 'center', width: '80%', alignSelf: 'center', marginTop: 10, lineHeight: 19 }}>Let's maintain 3 habits this week</Text>
                   </View>
                 </View>
@@ -305,9 +305,13 @@ const ChallengesScreen = ({ navigation }) => {
 
             <View style={styles.modalContent}>
 
-              <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 20, fontWeight: '500' }}>Lets works on creating some healthy habits </Text>
+              <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 20, fontWeight: '500', width: '80%', alignSelf: 'center' }}>Lets works on creating some healthy habits. </Text>
 
-              <ScrollView style={{ marginTop: 20 }}>
+              <Text style={{ textAlign: 'center', marginTop: 20 }}>We have chosen these healthy habits for you based off our super fancy algorithm😆 </Text>
+              {/* <Text style={{ textAlign: 'center', marginTop: 20 }}>Select three things you want achieve this cycle!</Text> */}
+
+
+              {/* <ScrollView style={{ marginTop: 20 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
                   {renderImage(
                     'https://images.unsplash.com/photo-1627376617965-b8c29ca91aca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDh8fHNsZWVwfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60',
@@ -329,8 +333,121 @@ const ChallengesScreen = ({ navigation }) => {
                     'Me Time'
                   )}
                 </View>
-              </ScrollView>
+              </ScrollView> */}
               {/* <TextInput placeholder='Answer Here' style={{ borderRadius: 6, marginBottom: 260, marginTop: 20,fontSize: 18}} /> */}
+
+
+              <ScrollView>
+
+                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4 }}>
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Running</Text>
+
+                    <View>
+                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                    </View>
+
+                  </View>
+                </View>
+
+                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4 }}>
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}>More Sleep</Text>
+
+                    <View>
+                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                    </View>
+
+                  </View>
+                </View>
+
+                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4 }}>
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}>No sugar</Text>
+
+                    <View>
+                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                    </View>
+
+                  </View>
+                </View>
+
+                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4 }}>
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Walk the Dog</Text>
+
+                    <View>
+                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                    </View>
+
+                  </View>
+                </View>
+
+                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4 }}>
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Read</Text>
+
+                    <View>
+                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                    </View>
+
+                  </View>
+                </View>
+
+                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+        shadowOffset: { width: 10, height: 10 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 4 }}>
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Personal Time</Text>
+
+                    <View>
+                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                    </View>
+
+                  </View>
+                </View>
+
+
+              {/* <TouchableOpacity activeOpacity={0.6}>
+
+                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,borderWidth: 1 }}>
+
+                 
+                    <Text style={{ fontSize: 19, fontWeight: '500',textAlign: 'center' }}>Add More</Text>
+
+
+                  
+                </View>
+              </TouchableOpacity> */}
+              </ScrollView>
 
 
               <View style={{ backgroundColor: 'black', width: 45, borderRadius: '50%', alignSelf: 'center', position: 'absolute', bottom: 60 }}>
@@ -544,7 +661,7 @@ export default ChallengesScreen
 
 const styles = StyleSheet.create({
   modalContainer: {
-    backgroundColor: 'pink',
+    backgroundColor: '#DEDEDE',
     height: '95%',
     justifyContent: 'center',
     alignItems: 'center',

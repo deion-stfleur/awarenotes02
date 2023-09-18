@@ -280,25 +280,31 @@ const HomeScreen = ({navigation}) => {
 <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', width: '95%'}}>
     <View style={styles.container}>
       <Text style={styles.greeting}>{greeting}</Text>
-      <Text onPress={handleSignOut} style={{fontSize: 24, fontWeight: '500', marginTop: 6}}>Deion</Text>
-    </View>
-{/* 
-    <View style={{backgroundColor: 'lightgray', borderRadius: 200,padding: 20, height: 70, width: 70}}>
-      <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
-      <Text>{auth.currentUser?.email.charAt(0).toUpperCase()} {auth.currentUser?.email.charAt(1).toUpperCase()} </Text>
+
+      <View style={{flexDirection: 'row',alignItems: 'center',marginTop: 12}}>
+
+        <TouchableOpacity activeOpacity={0.6}>
+      <View style={{height: 50,width: 50, backgroundColor: 'gray',borderRadius: '50%',marginRight: 12}}>
+
+        <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+        {/* <Text style={{color: '#fff'}}>test</Text> */}
+        </View>
       </View>
-    </View> */}
+        </TouchableOpacity>
+      <Text onPress={handleSignOut} style={{fontSize: 24, fontWeight: '500', marginTop: 6}}>Deion</Text>
+      </View>
+    </View>
+
 
 </View>
 
 
     <View style={{marginLeft: 14, marginTop: 30}}>
+      <Text>How are you feeling today?</Text>
         {!selectedButton ? (
           <ScrollView horizontal style={{flexDirection: 'row', marginTop: 20}}>
-          <Text>How are you feeling today?</Text>
 
-
-
+    
             <TouchableOpacity activeOpacity={0.6}    onPress={() => handleButtonClick('Hopeful')}>
             <View style={{borderColor: selectedButton === 'Hopeful' ? 'blue' : 'transparent', borderWidth: 1,padding: 8, borderRadius: 13, width: 70, marginRight: 5, backgroundColor: '#f5f5f3'}}>
                 <Fontisto style={{alignSelf: 'center',color: '#FABE0E'}} name="neutral" size={24}  />
@@ -333,6 +339,7 @@ const HomeScreen = ({navigation}) => {
                 <Text style={{marginTop: 5, textAlign: 'center'}}>Angry</Text>
             </View>
             </TouchableOpacity>
+
            
 
         </ScrollView>
