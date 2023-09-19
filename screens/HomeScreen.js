@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { doc, setDoc, collection, addDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import {db, auth} from '../firebaseConfig'
@@ -395,10 +396,10 @@ const HomeScreen = ({navigation}) => {
 
             <View style={{backgroundColor: '#2C8FD7',padding: 10, borderRadius: 6, paddingHorizontal: 16 }}>
             <MaterialCommunityIcons name="cup-water" size={24} color="black" style={{marginBottom: 3}} />
-            <Text>{count}/20</Text>
+            <Text style={{textAlign: 'center'}}>{count}</Text>
             </View>
             </View>
-            <Text style={{marginLeft: 15}}>20 cups/hr</Text>
+            <Text style={{marginLeft: 15}}>6 cups/hr</Text>
 
 
             <View style={{flexDirection: 'row', justifyContent: 'space-between',width: '50%', marginTop: 50, marginBottom: 15}}>
@@ -420,15 +421,15 @@ const HomeScreen = ({navigation}) => {
 
         <TouchableOpacity onPress={openModal} style={{backgroundColor:'#FF956E',borderRadius: 6, width: 200, marginRight: 20}} activeOpacity={0.8}>
         
-        <View style={{marginTop: 20,alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 15, width: 150}}>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>Question of the day?</Text>
-        <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>
+        <View style={{alignItems: 'center', justifyContent: 'center', marginLeft: 15,flex: 1}}>
+        <Text style={{fontSize: 23, fontWeight: 'bold',textAlign: 'center'}}>Question of the day?</Text>
+        {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text> */}
         </View>
 
 
-            <View style={{marginTop: 10, backgroundColor: '#fff',width: 100,alignSelf: 'center', borderRadius: 100, marginBottom: 10}}>
+            {/* <View style={{marginTop: 50, backgroundColor: '#fff',width: 100,alignSelf: 'center', borderRadius: 100, marginBottom: 10}}>
                 <Text style={{textAlign: 'center', fontSize: 15, fontWeight: '500'}}>Answer +</Text>
-            </View>
+            </View> */}
     </TouchableOpacity>
 
 
@@ -436,7 +437,7 @@ const HomeScreen = ({navigation}) => {
         
         <View style={{marginTop: 20,alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 15, width: 150}}>
         <Text style={{fontSize: 18, fontWeight: 'bold'}}>Let's get to the bottom of things!</Text>
-        <Text style={{marginTop: 14, fontSize: 17}}>Take this quiz, and we will join you on this path to self discovery.</Text>
+        {/* <Text style={{marginTop: 14, fontSize: 17}}>Take today's quiz, and we will join you on this path to self discovery.</Text> */}
         
         </View>
 
@@ -467,11 +468,38 @@ const HomeScreen = ({navigation}) => {
 <Text style={styles.quoteText}>
         <Text style={styles.boldWhite}>"{words[0]}</Text> {words.slice(1, 3).join(' ')} <Text style={styles.boldWhite}>{words[3]}</Text> {words.slice(4).join(' ')}"
   </Text>
+
       
         </View>
+
   
      
 </View>
+        <View style={{flexDirection: 'row',marginTop: 10,alignSelf: 'center'}}>
+
+          <View style={{flexDirection: 'row',alignItems: 'center'}}>
+            <TouchableOpacity>
+        <Entypo name="emoji-happy" size={30} color="black" />
+            </TouchableOpacity>
+        <Text style={{fontSize: 19,marginLeft: 6}}>90</Text>
+          </View>
+
+          <View style={{flexDirection: 'row',alignItems: 'center',marginLeft: 10,marginRight: 10}}>
+            <TouchableOpacity>
+        <FontAwesome5 name="laugh-squint" size={30} color="black" />
+            </TouchableOpacity>
+        <Text style={{fontSize: 19,marginLeft: 6}}>30</Text>
+          </View>
+
+
+          <View style={{flexDirection: 'row',alignItems: 'center'}}>
+            <TouchableOpacity>
+        <MaterialCommunityIcons name="emoticon-cry-outline" size={30} color="black" />
+            </TouchableOpacity>
+        <Text style={{fontSize: 19,marginLeft: 6}}>22</Text>
+          </View>
+
+        </View>
 
 
 </View>
