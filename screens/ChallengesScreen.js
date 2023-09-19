@@ -279,6 +279,7 @@ const ChallengesScreen = ({ navigation }) => {
                     </View> */}
                     <MaterialCommunityIcons name="head-question-outline" size={44} style={{ alignSelf: 'center', marginTop: 40 }} color="gray" />
                     <Text style={{ marginTop: 17, textAlign: 'center', fontWeight: '700' }}>Mood Board</Text>
+                    
                     <Text style={{ textAlign: 'center', width: '80%', alignSelf: 'center', marginTop: 10, lineHeight: 19 }}></Text>
                   </View>
                 </View>

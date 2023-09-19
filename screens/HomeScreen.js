@@ -580,11 +580,17 @@ const HomeScreen = ({navigation}) => {
     {/* <Text style={{fontWeight: 'bold',textAlign:'right',marginRight: 22,fontSize:25}}>x</Text> */}
     <MaterialCommunityIcons name="window-close" onPress={closeModal2} size={24} color="black" style={{textAlign: 'right',marginRight: 22}} />
   </View>
-  <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
-    <TouchableOpacity>
-       <Text>Logout</Text>
-    </TouchableOpacity>
+
+  <View style={{backgroundColor: 'gray', height: 200,width: 200, alignSelf: 'center',borderRadius: 100}}>
+
   </View>
+  <Text style={{textAlign: 'center',fontSize: 22,fontWeight: 'bold',marginTop: 20}}>Deion</Text>
+  <Text>Reward Points</Text>
+  <Text>Reward Points meter</Text>
+  <Text>Calendar</Text>
+  <Text>Add a partner +</Text>
+
+ 
 </View>
 
 </View>
