@@ -95,7 +95,7 @@ const ActivityScreen = () => {
         shadowRadius: 4,
         elevation: 4,marginBottom: 30}}>
 
-        <View style={{flexDirection: 'row',justifyContent: 'space-between', width:'90%', alignSelf: 'center',marginTop: 14, marginBottom: 14}}>
+        <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop: 14, marginBottom: 14}}>
 
             <View>
             <Text style={{textAlign: 'center',fontWeight: 'bold',marginBottom: 5, fontSize: 19}}>0</Text>

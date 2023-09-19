@@ -180,7 +180,7 @@ const ChallengesScreen = ({ navigation }) => {
     <>
 
 
-      <ScrollView style={{ backgroundColor: '#EEECE4' }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#EEECE4' }}>
 
 
         <Text style={{ fontWeight: 'bold', fontSize: 19, marginLeft: 17, marginTop: 20 }}>Leaderboards</Text>
@@ -278,8 +278,8 @@ const ChallengesScreen = ({ navigation }) => {
                       <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Confused</Text>
                     </View> */}
                     <MaterialCommunityIcons name="head-question-outline" size={44} style={{ alignSelf: 'center', marginTop: 40 }} color="gray" />
-                    <Text style={{ marginTop: 17, textAlign: 'center', fontWeight: '700' }}>Mood Tracker</Text>
-                    <Text style={{ textAlign: 'center', width: '80%', alignSelf: 'center', marginTop: 10, lineHeight: 19 }}>Let's note how we are feeling 5x today</Text>
+                    <Text style={{ marginTop: 17, textAlign: 'center', fontWeight: '700' }}>Mood Board</Text>
+                    <Text style={{ textAlign: 'center', width: '80%', alignSelf: 'center', marginTop: 10, lineHeight: 19 }}></Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -290,7 +290,7 @@ const ChallengesScreen = ({ navigation }) => {
 
         <TouchableOpacity onPress={openModal3} activeOpacity={0.7}>
 
-          <View style={{ backgroundColor: '#91CCFF', width: '90%', alignSelf: 'center', marginTop: 20, height: 260, borderRadius: 6 }}>
+          <View style={{ backgroundColor: '#91CCFF', width: '90%', alignSelf: 'center', marginTop: 20, height: 260, borderRadius: 6,marginBottom: 40 }}>
 
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <FontAwesome name="send-o" size={44} color="gray" style={{ marginBottom: 20 }} />

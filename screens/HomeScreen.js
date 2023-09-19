@@ -91,6 +91,7 @@ const HomeScreen = ({navigation}) => {
     const [greeting, setGreeting] = useState('');
     const [selectedButton, setSelectedButton] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible2, setIsModalVisible2] = useState(false);
     const [description, setDescription] = useState('');
     const [isScrollViewVisible, setIsScrollViewVisible] = useState(true);
 
@@ -186,6 +187,16 @@ const HomeScreen = ({navigation}) => {
       };
 
 
+    const openModal2 = () => {
+      setIsModalVisible2(true);
+    };
+
+
+    const closeModal2 = () => {
+      setIsModalVisible2(false);
+    };
+
+
     useEffect(() => {
         // Function to reset the counter to 0 at the end of the day
         const resetCounterAtEndOfDay = () => {
@@ -279,19 +290,28 @@ const HomeScreen = ({navigation}) => {
 
 <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', width: '95%'}}>
     <View style={styles.container}>
-      <Text style={styles.greeting}>{greeting}</Text>
+      {/* <Text style={styles.greeting}>{greeting}</Text> */}
 
-      <View style={{flexDirection: 'row',alignItems: 'center',marginTop: 12}}>
+      <View style={{flexDirection: 'row',alignItems: 'center',marginTop: 5,justifyContent:'space-between'}}>
 
-        <TouchableOpacity activeOpacity={0.6}>
-      <View style={{height: 50,width: 50, backgroundColor: 'gray',borderRadius: '50%',marginRight: 12}}>
+        <View>
+          
+        </View>
+
+        <TouchableOpacity activeOpacity={0.6} onPress={openModal2} style={{marginTop: 10}}>
+      <View style={{height: 75,width: 75, backgroundColor: '#c4c4c4',borderRadius: '50%',marginRight: 12,borderColor: '#fff',borderWidth:2}}>
 
         <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
         {/* <Text style={{color: '#fff'}}>test</Text> */}
         </View>
       </View>
         </TouchableOpacity>
-      <Text onPress={handleSignOut} style={{fontSize: 24, fontWeight: '500', marginTop: 6}}>Deion</Text>
+        <View>
+        <Text style={{marginTop: 10,fontSize: 19}}>{greeting}</Text>
+      <Text  style={{fontSize: 29, fontWeight: '500'}}>Deion</Text>
+      <Text onPress={handleSignOut} style={{marginTop: 10}}>Logout <AntDesign name="logout" size={12} color="black" /></Text>
+        </View>
+      
       </View>
     </View>
 
@@ -299,8 +319,8 @@ const HomeScreen = ({navigation}) => {
 </View>
 
 
-    <View style={{marginLeft: 14, marginTop: 30}}>
-      <Text>How are you feeling today?</Text>
+    <View style={{marginLeft: 14, marginTop: 27}}>
+      <Text style={{fontSize: 17}}>How are you feeling today?</Text>
         {!selectedButton ? (
           <ScrollView horizontal style={{flexDirection: 'row', marginTop: 20}}>
 
@@ -416,7 +436,7 @@ const HomeScreen = ({navigation}) => {
         
         <View style={{marginTop: 20,alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 15, width: 150}}>
         <Text style={{fontSize: 18, fontWeight: 'bold'}}>Let's get to the bottom of things!</Text>
-        <Text style={{marginTop: 14, fontSize: 17}}>Take the Quiz!</Text>
+        <Text style={{marginTop: 14, fontSize: 17}}>Take this quiz, and we will join you on this path to self discovery.</Text>
         
         </View>
 
@@ -426,8 +446,14 @@ const HomeScreen = ({navigation}) => {
 
     
 </ScrollView>
-<Text style={{fontWeight: 'bold', fontSize: 19, marginTop: 40}}>Quote of the Day</Text>
-<View style={{flexDirection: 'row',marginTop: 10}}>
+
+<View style={{flexDirection: 'row', alignItems: 'center',marginTop: 40,justifyContent: 'space-between',width: '95%'}}>
+<Text style={{fontWeight: 'bold', fontSize: 19}}>Quote of the Day</Text>
+<TouchableOpacity>
+{/* <MaterialCommunityIcons name="share-circle" size={25} color="black" /> */}
+</TouchableOpacity>
+</View>
+<View style={{flexDirection: 'row',marginTop: 10, alignItems: 'center'}}>
 
 {/* <View style={{backgroundColor:'orange', width: '40%',borderRadius: 6,marginRight: 18}}>
             <View style={{flex: 1,alignItems: 'center', justifyContent: 'center'}}>
@@ -440,15 +466,11 @@ const HomeScreen = ({navigation}) => {
 
 <Text style={styles.quoteText}>
         <Text style={styles.boldWhite}>"{words[0]}</Text> {words.slice(1, 3).join(' ')} <Text style={styles.boldWhite}>{words[3]}</Text> {words.slice(4).join(' ')}"
-      </Text>
+  </Text>
+      
         </View>
-
-
-
-
-
-
-       
+  
+     
 </View>
 
 
@@ -550,8 +572,26 @@ const HomeScreen = ({navigation}) => {
 
     </Modal>
 
+    <Modal visible={isModalVisible2} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible2(false)}>
 
-    <View style={{backgroundColor: '#fff', width: '100%', height: 300}}>
+<View style={styles.modalContainer2}>
+<View style={styles.modalContent2}>
+  <View style={{marginTop: 90}}>
+    {/* <Text style={{fontWeight: 'bold',textAlign:'right',marginRight: 22,fontSize:25}}>x</Text> */}
+    <MaterialCommunityIcons name="window-close" onPress={closeModal2} size={24} color="black" style={{textAlign: 'right',marginRight: 22}} />
+  </View>
+  <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+    <TouchableOpacity>
+       <Text>Logout</Text>
+    </TouchableOpacity>
+  </View>
+</View>
+
+</View>
+    </Modal>
+
+
+    <View style={{backgroundColor: '#fff', width: '100%',height: 300}}>
 
         <Text style={{textAlign: 'center',marginTop: 50, fontSize: 19, fontWeight: 'bold'}}>Try Premium</Text>
 
@@ -586,6 +626,7 @@ const styles = StyleSheet.create({
       greeting: {
         fontSize: 31,
         fontWeight: '600',
+        // opacity: 0
       },
       quoteText: {
         fontSize: 25, 
@@ -595,6 +636,7 @@ const styles = StyleSheet.create({
         // marginTop: 50, 
         alignSelf: 'center',
         padding: 12,
+     
       },
     //   quoteText: {
     //     fontSize: 18,
@@ -617,6 +659,23 @@ const styles = StyleSheet.create({
         bottom: 0,
       },
       modalContent: {
+        flex: 1,
+        marginTop: 20,
+        width: '95%',
+        alignSelf: 'center'
+      },
+      modalContainer2: {
+        backgroundColor: 'white',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        position: 'absolute',
+        zIndex: 999,
+        width: '100%',
+        bottom: 0,
+      },
+      modalContent2: {
         flex: 1,
         marginTop: 20,
         width: '95%',
