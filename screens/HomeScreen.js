@@ -176,6 +176,63 @@ const HomeScreen = ({navigation}) => {
     };
 
 
+    const [happyCount, setHappyCount] = useState(0);
+    const [laughCount, setLaughCount] = useState(0);
+    const [cryCount, setCryCount] = useState(0);
+    const [sadCount, setSadCount] = useState(0);
+    const [confusedCount, setConfuesCount] = useState(0);
+    const [lazyCount, setLazyCount] = useState(0);
+    const [inspiredCount, setInspiredCount] = useState(0);
+  
+    const updateFirestore = async () => {
+      try {
+        const docRef = doc(db, 'emotions', 'counts'); // Assuming 'emotions' is your collection name
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) {
+          await setDoc(docRef, {
+            happy: happyCount,
+            laugh: laughCount,
+            cry: cryCount,
+            sad: sadCount,
+            confused: confusedCount,
+            lazy: lazyCount,
+            inspired: inspiredCount,
+            timestamp: serverTimestamp(),
+          });
+        } else {
+          // Create the document if it doesn't exist
+          await setDoc(docRef, {
+            happy: happyCount,
+            laugh: laughCount,
+            cry: cryCount,
+            sad: sadCount,
+            confused: confusedCount,
+            lazy: lazyCount,
+            inspired: inspiredCount,
+            timestamp: serverTimestamp(),
+          });
+        }
+      } catch (error) {
+        console.error('Error updating Firestore:', error);
+      }
+    };
+  
+    const incrementHappy = () => {
+      setHappyCount(happyCount + 1);
+      updateFirestore();
+    };
+  
+    const incrementLaugh = () => {
+      setLaughCount(laughCount + 1);
+      updateFirestore();
+    };
+  
+    const incrementCry = () => {
+      setCryCount(cryCount + 1);
+      updateFirestore();
+    };
+
+
 
 
     const openModal = () => {
@@ -322,7 +379,92 @@ const HomeScreen = ({navigation}) => {
 
     <View style={{marginLeft: 14, marginTop: 27}}>
       <Text style={{fontSize: 17}}>How are you feeling today?</Text>
-        {!selectedButton ? (
+
+      <View style={{flexDirection: 'row',marginTop: 30}}>
+
+        <TouchableOpacity onPress={() => handleButtonClick('Hopeful')} activeOpacity={0.6} style={{width: '33%'}}>
+      <View style={{borderColor: selectedButton === 'Hopeful' ? 'blue' : 'transparent', borderWidth: 1,padding: 8, borderRadius: 13, marginRight: 5, backgroundColor: '#f5f5f3'}}>
+                <Fontisto style={{alignSelf: 'center',color: '#FABE0E'}} name="neutral" size={34}  />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>Hopeful</Text>
+            </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleButtonClick('Silly')} activeOpacity={0.6} style={{width: '33%'}}>
+            <View style={{borderColor: selectedButton === 'Silly' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
+            <Fontisto style={{alignSelf: 'center'}} name="wink" size={34} color="purple" />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>Silly</Text>
+            </View>
+        </TouchableOpacity>
+
+
+      <TouchableOpacity activeOpacity={0.6} onPress={() => handleButtonClick('Happy')} style={{width: '33%'}}>
+            <View style={{borderColor: selectedButton === 'Happy' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
+            <Fontisto style={{alignSelf: 'center'}}  name="slightly-smile" size={34} color="green" />
+                <Text  style={{marginTop: 5, textAlign: 'center'}}>Happy</Text>
+            </View>
+      </TouchableOpacity>
+      </View>
+
+      <View style={{flexDirection: 'row',marginTop: 4}}>
+
+
+        <TouchableOpacity style={{width: '33%'}} activeOpacity={0.6} onPress={() => handleButtonClick('Angry')}>
+
+      <View  style={{borderColor: selectedButton === 'Angry' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
+            <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="red" />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>Angry</Text>
+        </View>
+
+        </TouchableOpacity>
+
+
+<TouchableOpacity activeOpacity={0.6} style={{width: '33%'}} onPress={() => handleButtonClick('Sad')}>
+      <View  style={{borderColor: selectedButton === 'Sad' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
+            <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="blue" />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>Sad</Text>
+            </View>
+</TouchableOpacity>
+
+
+<TouchableOpacity activeOpacity={0.6} style={{width: '33%'}} onPress={() => handleButtonClick('Confused')}>
+
+      <View  style={{borderColor: selectedButton === 'Confused' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
+            <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="orange" />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>Confused</Text>
+            </View>
+</TouchableOpacity>
+
+
+      </View>
+
+      <View style={{flexDirection: 'row',marginTop: 4}}>
+<TouchableOpacity activeOpacity={0.6} style={{width: '33%'}} onPress={() => handleButtonClick('Lazy')}>
+<View  style={{borderColor: selectedButton === 'Lazy' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
+      <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="black" />
+          <Text style={{marginTop: 5, textAlign: 'center'}}>Lazy</Text>
+      </View>
+</TouchableOpacity>
+
+
+<TouchableOpacity style={{width: '33%'}} activeOpacity={0.6} onPress={() => handleButtonClick('Inspired')}>
+<View  style={{borderColor: selectedButton === 'Inspired' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
+      <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="pink" />
+          <Text style={{marginTop: 5, textAlign: 'center'}}>Inspired</Text>
+      </View>
+</TouchableOpacity>
+
+
+
+<View  style={{padding: 8, borderRadius: 13, width: '30%',marginRight: 5,backgroundColor: '#f5f5f3'}}>
+ 
+      <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+          <Text style={{marginTop: 5, textAlign: 'center',fontWeight: 'bold'}}>Previous Feelings</Text>
+      </View>
+      </View>
+
+
+</View>
+        {/* {!selectedButton ? (
           <ScrollView horizontal style={{flexDirection: 'row', marginTop: 20}}>
 
     
@@ -365,8 +507,8 @@ const HomeScreen = ({navigation}) => {
 
         </ScrollView>
         ) : <View>
-          <Text>Thank you for your feedback we getting closer to our goals!</Text>
-          </View>}
+          <Text>Thank you for your feedback we are getting closer to our goals!</Text>
+          </View>} */}
          
 
     </View>
@@ -374,7 +516,7 @@ const HomeScreen = ({navigation}) => {
     <View style={{marginTop: 40, marginLeft: 4}}>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '96%',alignSelf: 'center'}}>
 
-        <Text style={{fontWeight: 'bold', fontSize: 19}}>Daily Goals</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 19}}>Daily Tasks & Programs</Text>
 
         {/* <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("GoalsScreen")}>
         <Text style={{fontSize: 15, textAlign: 'center', textDecorationLine: 'underline'}}>View all</Text>
@@ -389,10 +531,10 @@ const HomeScreen = ({navigation}) => {
 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
 
        
-        <TouchableOpacity style={{backgroundColor:'lightblue',borderRadius: 6, width: 200, marginRight: 20}} activeOpacity={0.8}>
+        {/* <TouchableOpacity style={{backgroundColor:'lightblue',borderRadius: 6, width: 200, marginRight: 20}} activeOpacity={0.8}>
         
             <View style={{marginTop: 20,alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 15, flexDirection: 'row', justifyContent: 'space-between', width: '85%', alignItems: 'center'}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', width: '50%'}}>Water Tracker</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold', width: '50%'}}>Water Goals</Text>
 
             <View style={{backgroundColor: '#2C8FD7',padding: 10, borderRadius: 6, paddingHorizontal: 16 }}>
             <MaterialCommunityIcons name="cup-water" size={24} color="black" style={{marginBottom: 3}} />
@@ -416,14 +558,14 @@ const HomeScreen = ({navigation}) => {
                 </TouchableOpacity>
             </View>
     
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
 
-        <TouchableOpacity onPress={openModal} style={{backgroundColor:'#FF956E',borderRadius: 6, width: 200, marginRight: 20}} activeOpacity={0.8}>
+        <TouchableOpacity onPress={openModal} style={{backgroundColor:'#FF956E',borderRadius: 6, width: 200, marginRight: 20, height: 200}} activeOpacity={0.8}>
         
-        <View style={{alignItems: 'center', justifyContent: 'center', marginLeft: 15,flex: 1}}>
-        <Text style={{fontSize: 23, fontWeight: 'bold',textAlign: 'center'}}>Question of the day?</Text>
-        {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text> */}
+        <View style={{alignItems: 'center', justifyContent: 'center',flex: 1}}>
+        <Text style={{fontSize: 20, fontWeight: 'bold',textAlign: 'center'}}>Question of the day?</Text>
+        {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>/ */}
         </View>
 
 
@@ -433,17 +575,26 @@ const HomeScreen = ({navigation}) => {
     </TouchableOpacity>
 
 
-    <TouchableOpacity style={{backgroundColor:'#F6BF04',borderRadius: 6, width: 200}} activeOpacity={0.8}>
+    <TouchableOpacity style={{backgroundColor:'#F6BF04',borderRadius: 6, width: 200,marginRight: 20}} activeOpacity={0.8}>
         
-        <View style={{marginTop: 20,alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 15, width: 150}}>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>Let's get to the bottom of things!</Text>
-        {/* <Text style={{marginTop: 14, fontSize: 17}}>Take today's quiz, and we will join you on this path to self discovery.</Text> */}
-        
+    <View style={{alignItems: 'center', justifyContent: 'center',flex: 1}}>
+        <Text style={{fontSize: 20, fontWeight: 'bold',textAlign: 'center'}}>Take this daily quiz!</Text>
+        {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>/ */}
         </View>
-
 
         
     </TouchableOpacity>
+
+
+    <TouchableOpacity style={{borderWidth: 2,borderColor: 'blue',borderRadius: 6,width: 200}} activeOpacity={0.8}>
+      <View style={{alignItems: 'center',justifyContent: 'center',flex: 1}}>
+        <View>
+          <Text style={{fontSize: 20,fontWeight: 'bold'}}><AntDesign name="pluscircle" size={16} color="black" /> Add More</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+
+
 
     
 </ScrollView>
@@ -466,7 +617,9 @@ const HomeScreen = ({navigation}) => {
         <View style={{alignSelf: 'center', backgroundColor: '#fff', marginTop: 10, width: '95%', borderRadius: 6,borderWidth:1}}>
 
 <Text style={styles.quoteText}>
-        <Text style={styles.boldWhite}>"{words[0]}</Text> {words.slice(1, 3).join(' ')} <Text style={styles.boldWhite}>{words[3]}</Text> {words.slice(4).join(' ')}"
+       
+       <Text>"{randomQuote}"</Text>
+        {/* <Text style={styles.boldWhite}>"{words[0]}</Text> {words.slice(1, 3).join(' ')} <Text style={styles.boldWhite}>{words[3]}</Text> {words.slice(4).join(' ')}" */}
   </Text>
 
       
@@ -475,31 +628,28 @@ const HomeScreen = ({navigation}) => {
   
      
 </View>
-        <View style={{flexDirection: 'row',marginTop: 10,alignSelf: 'center'}}>
+{/* <View style={{ flexDirection: 'row', marginTop: 10, alignSelf: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity onPress={incrementHappy}>
+          <Entypo name="emoji-happy" size={30} color="black" />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 19, marginLeft: 6 }}>{happyCount}</Text>
+      </View>
 
-          <View style={{flexDirection: 'row',alignItems: 'center'}}>
-            <TouchableOpacity>
-        <Entypo name="emoji-happy" size={30} color="black" />
-            </TouchableOpacity>
-        <Text style={{fontSize: 19,marginLeft: 6}}>90</Text>
-          </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginRight: 10 }}>
+        <TouchableOpacity onPress={incrementLaugh}>
+          <FontAwesome5 name="laugh-squint" size={30} color="black" />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 19, marginLeft: 6 }}>{laughCount}</Text>
+      </View>
 
-          <View style={{flexDirection: 'row',alignItems: 'center',marginLeft: 10,marginRight: 10}}>
-            <TouchableOpacity>
-        <FontAwesome5 name="laugh-squint" size={30} color="black" />
-            </TouchableOpacity>
-        <Text style={{fontSize: 19,marginLeft: 6}}>30</Text>
-          </View>
-
-
-          <View style={{flexDirection: 'row',alignItems: 'center'}}>
-            <TouchableOpacity>
-        <MaterialCommunityIcons name="emoticon-cry-outline" size={30} color="black" />
-            </TouchableOpacity>
-        <Text style={{fontSize: 19,marginLeft: 6}}>22</Text>
-          </View>
-
-        </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity onPress={incrementCry}>
+          <MaterialCommunityIcons name="emoticon-cry-outline" size={30} color="black" />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 19, marginLeft: 6 }}>{cryCount}</Text>
+      </View>
+    </View> */}
 
 
 </View>
@@ -613,10 +763,23 @@ const HomeScreen = ({navigation}) => {
 
   </View>
   <Text style={{textAlign: 'center',fontSize: 22,fontWeight: 'bold',marginTop: 20}}>Deion</Text>
-  <Text>Reward Points</Text>
+
+
+  <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>
   <Text>Reward Points meter</Text>
+  </View>
+
+  <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>
   <Text>Calendar</Text>
+  </View>
+
+  <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>
   <Text>Add a partner +</Text>
+  </View>
+
+  <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>
+  <Text>Enable Reminders</Text>
+  </View>
 
  
 </View>

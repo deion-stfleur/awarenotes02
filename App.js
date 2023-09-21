@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen';
 import ChallengesScreen from './screens/ChallengesScreen';
 import GoalsScreen from './screens/GoalsScreen';
 import ActivityScreen from './screens/ActivityScreen';
+import RunningScreen from './screens/RunningScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -31,7 +32,7 @@ function HomeTabNavigator() {
           />
         ),
       }} component={HomeScreen} />
-      <Tab.Screen name="Challenges"  options={{
+      {/* <Tab.Screen name="Challenges"  options={{
         tabBarIcon: ({ focused }) => (
           <MaterialIcons
             name={focused ? 'recent-actors' : 'recent-actors'}
@@ -39,7 +40,7 @@ function HomeTabNavigator() {
             color={focused ? '#000' : '#999'}
           />
         ),
-      }} component={ChallengesScreen} />
+      }} component={ChallengesScreen} /> */}
 
 <Tab.Screen name="Activity"  options={{
         tabBarIcon: ({ focused }) => (
@@ -81,6 +82,7 @@ export default function App() {
       <Stack.Navigator  screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeTab" component={HomeTabNavigator} />
         <Stack.Screen name="GoalsScreen" component={GoalsScreen} />
+        <Stack.Screen name="RunningScreen" component={RunningScreen} />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

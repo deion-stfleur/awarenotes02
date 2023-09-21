@@ -2,6 +2,10 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Mod
 import React, { useState, useEffect } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { doc, setDoc, collection, addDoc, onSnapshot } from 'firebase/firestore'
 import { db, auth } from '../firebaseConfig'
 
@@ -47,6 +51,12 @@ const ChallengesScreen = ({ navigation }) => {
       setSelectedImages([...selectedImages, uri]);
     }
   };
+
+
+  const closeScreen = () => {
+    closeModal();
+    navigation.navigate("RunningScreen");
+  }
 
   const isImageSelected = (uri) => selectedImages.includes(uri);
 
@@ -340,14 +350,16 @@ const ChallengesScreen = ({ navigation }) => {
 
               <ScrollView>
 
-                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+
+                <TouchableOpacity activeOpacity={0.6} onPress={closeScreen}>
+                <View style={{ backgroundColor: 'white', borderWidth: 1, borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 4 }}>
 
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Running</Text>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}><FontAwesome5 name="running" size={24} color="black" /> Running</Text>
 
                     <View>
                       <Text style={{ fontSize: 19 }}>0/7</Text>
@@ -355,15 +367,19 @@ const ChallengesScreen = ({ navigation }) => {
 
                   </View>
                 </View>
+                </TouchableOpacity>
 
-                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+
+
+<TouchableOpacity activeOpacity={0.6}>
+                <View style={{borderWidth: 1,backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 4 }}>
 
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}>More Sleep</Text>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}><MaterialCommunityIcons name="sleep" size={24} color="black" /> More Sleep</Text>
 
                     <View>
                       <Text style={{ fontSize: 19 }}>0/7</Text>
@@ -371,15 +387,18 @@ const ChallengesScreen = ({ navigation }) => {
 
                   </View>
                 </View>
+</TouchableOpacity>
 
-                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+
+              <TouchableOpacity activeOpacity={0.6}>
+                <View style={{borderWidth:1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 4 }}>
 
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}>No sugar</Text>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}><MaterialCommunityIcons name="spoon-sugar" size={24} color="black" /> No sugar</Text>
 
                     <View>
                       <Text style={{ fontSize: 19 }}>0/7</Text>
@@ -387,15 +406,18 @@ const ChallengesScreen = ({ navigation }) => {
 
                   </View>
                 </View>
+              </TouchableOpacity>
 
-                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+
+              <TouchableOpacity activeOpacity={0.6}>
+                <View style={{borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 4 }}>
 
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Walk the Dog</Text>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}><Foundation name="guide-dog" size={24} color="black" /> Walk the Dog</Text>
 
                     <View>
                       <Text style={{ fontSize: 19 }}>0/7</Text>
@@ -403,15 +425,18 @@ const ChallengesScreen = ({ navigation }) => {
 
                   </View>
                 </View>
+              </TouchableOpacity>
 
-                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+
+              <TouchableOpacity activeOpacity={0.6}>
+                <View style={{borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 4 }}>
 
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Read</Text>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}><AntDesign name="book" size={24} color="black" /> Read</Text>
 
                     <View>
                       <Text style={{ fontSize: 19 }}>0/7</Text>
@@ -419,15 +444,17 @@ const ChallengesScreen = ({ navigation }) => {
 
                   </View>
                 </View>
+              </TouchableOpacity>
 
-                <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
+              <TouchableOpacity activeOpacity={0.6}>
+                <View style={{borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 4 }}>
 
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}>Personal Time</Text>
+                    <Text style={{ fontSize: 19, fontWeight: '500' }}><Ionicons name="person-circle" size={24} color="black" /> Personal Time</Text>
 
                     <View>
                       <Text style={{ fontSize: 19 }}>0/7</Text>
@@ -435,6 +462,7 @@ const ChallengesScreen = ({ navigation }) => {
 
                   </View>
                 </View>
+              </TouchableOpacity>
 
 
               {/* <TouchableOpacity activeOpacity={0.6}>

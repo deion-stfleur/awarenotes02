@@ -80,16 +80,16 @@ const ActivityScreen = () => {
         <View style={{flexDirection: 'row', alignItems: 'center',marginTop: 19, justifyContent: 'space-between', width: '95%',marginBottom: 20}}>
         <Text style={{marginLeft: 20, fontSize: 20,fontWeight: 'bold'}}>This Week</Text>
 
-    <TouchableOpacity onPress={openModal}> 
+    {/* <TouchableOpacity onPress={openModal}> 
         <Text style={{fontWeight: 'bold'}}><Ionicons name="analytics" size={20} color="black" /> More insights! </Text>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
         </View>
     <ScrollView horizontal contentContainerStyle={styles.scrollContainer}>
       {daysOfWeek}
     </ScrollView>
     </View>
 
-    <View style={{backgroundColor: '#fff',width: '95%',alignSelf: 'center',marginTop: 30,padding: 12, borderRadius: 12,shadowColor: 'black',
+    {/* <View style={{backgroundColor: '#fff',width: '95%',alignSelf: 'center',marginTop: 30,padding: 12, borderRadius: 12,shadowColor: 'black',
         shadowOffset: { width: 10, height: 10 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -118,22 +118,22 @@ const ActivityScreen = () => {
             </View>
         </View>
 
-    </View>
+    </View> */}
 
-    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 10,fontWeight: 'bold', marginBottom: 22}}>Journal Notes</Text>
+    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Moodyboard</Text>
  
-              {orders.map((order) => (
+              {/* {orders.map((order) => (
 
                 <TouchableOpacity onPress={alertMessage}  key={order.id} activeOpacity={0.7}>
 
                 <View key={order.id} style={{borderWidth: 1, width: '90%', marginBottom: 10, padding: 10, borderRadius: 4, backgroundColor: '#fff', alignSelf: 'center'}}>
-                  {/* Render order details here */}
+                 
                   <Text style={{fontSize: 16}}>{order.userEmail}</Text>
                   <Text style={{fontSize: 16,marginTop: 5}}>{order.description}</Text>
                   <Text style={{fontSize: 16, alignSelf: 'flex-end'}}>{order.timestamp}</Text>
                 </View>
                 </TouchableOpacity>
-              ))}
+              ))} */}
 
 
 <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible(false)}>
