@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const GoalsScreen = ({navigation}) => {
   return (
@@ -20,34 +22,34 @@ const GoalsScreen = ({navigation}) => {
   
         <TouchableOpacity activeOpacity={0.7}>
     <View style={{backgroundColor: '#7A00F5',width: '93%', alignSelf: 'center', marginTop: 30,padding: 35,borderRadius: 12, borderWidth: 1}}>
-      <Text style={{fontSize: 22, fontWeight: 'bold',color: '#fff'}}>Let's Start the Morning Right</Text>
+
+      <View style={{flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center'}}>
+      <Text style={{fontSize: 25, fontWeight: 'bold',color: '#fff'}}>Nutrional Plan</Text>
+      <MaterialIcons name="food-bank" size={54} color="white" />
+      </View>
     </View>
         </TouchableOpacity>
 
         <TouchableOpacity activeOpacity={0.7}>
     <View style={{backgroundColor: '#0078FF',width: '93%', alignSelf: 'center', marginTop: 30,padding: 35,borderRadius: 12, borderWidth: 1}}>
-      <Text style={{fontSize: 22, fontWeight: 'bold'}}>Fitness</Text>
+
+      <View style={{flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center'}}>
+      <Text style={{fontSize: 25, fontWeight: 'bold',color: '#fff'}}>Fitness Plan</Text>
+      <Ionicons name="fitness" size={54} color="white" />
+      </View>
     </View>
         </TouchableOpacity>
 
         <TouchableOpacity activeOpacity={0.7}>
     <View style={{backgroundColor: '#D6DDFF',width: '93%', alignSelf: 'center', marginTop: 30,padding: 35,borderRadius: 12, borderWidth: 1}}>
-      <Text style={{fontSize: 22, fontWeight: 'bold'}}>Sleep Control</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center'}}>
+      <Text style={{fontSize: 25, fontWeight: 'bold',color: '#fff'}}>Sleep Control</Text>
+      <MaterialCommunityIcons name="sleep" size={54} color="white" />
+      </View>
     </View>
         </TouchableOpacity>
 
-        <TouchableOpacity activeOpacity={0.7}>
-    <View style={{backgroundColor: 'lightgreen',width: '93%', alignSelf: 'center', marginTop: 30,padding: 35,borderRadius: 12, borderWidth: 1}}>
-      <Text style={{fontSize: 22, fontWeight: 'bold'}}>Create a Routine</Text>
-    </View>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity activeOpacity={0.9}>
-    <View style={{alignSelf: 'center', marginTop: 80, borderWidth: 1, padding: 10,borderRadius: 100, backgroundColor: '#fff'}}>
-      <Text style={{fontSize: 18, fontWeight: '700'}}>Add More +</Text>
-    </View>
-    </TouchableOpacity>
+       
 
     </ScrollView>
     </>

@@ -589,7 +589,7 @@ const HomeScreen = ({navigation}) => {
     </TouchableOpacity>
 
 
-    <TouchableOpacity style={{borderWidth: 2,borderColor: 'blue',borderRadius: 6,width: 200}} activeOpacity={0.8}>
+    <TouchableOpacity onPress={() => navigation.navigate("GoalsScreen")} style={{borderWidth: 2,borderColor: 'blue',borderRadius: 6,width: 200,marginRight: 20}} activeOpacity={0.6}>
       <View style={{alignItems: 'center',justifyContent: 'center',flex: 1}}>
         <View>
           <Text style={{fontSize: 20,fontWeight: 'bold'}}><AntDesign name="pluscircle" size={16} color="black" /> Add More</Text>
@@ -777,7 +777,7 @@ const HomeScreen = ({navigation}) => {
   </View>
 
   <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>
-  <Text>Add a partner +</Text>
+  <Text>Accountability Partner +</Text>
   </View>
 
   <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>

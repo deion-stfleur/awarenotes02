@@ -54,6 +54,8 @@ const FeelingHistory = ({navigation}) => {
     <View style={{alignSelf: 'center'}}>
       <View style={{}}>
       <FlatList
+      showsVerticalScrollIndicator={false}
+      style={{marginBottom: 150}}
         data={feelingCounts}
         keyExtractor={(item) => item.id} // Use the document name as the key
         renderItem={({ item }) => (
