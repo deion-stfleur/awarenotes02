@@ -455,12 +455,15 @@ const HomeScreen = ({navigation}) => {
 
 
 
-<View  style={{padding: 8, borderRadius: 13, width: '30%',marginRight: 5,backgroundColor: '#f5f5f3'}}>
+
+<TouchableOpacity style={{width:'33%'}} activeOpacity={0.6} onPress={() => navigation.navigate("FeelingHistoryScreen")}>
+<View  style={{padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3',height: 73}}>
  
       <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
-          <Text style={{marginTop: 5, textAlign: 'center',fontWeight: 'bold'}}>Previous Feelings</Text>
+          <Text style={{marginTop: 5, textAlign: 'center',fontWeight: 'bold'}}> Feeling History</Text>
       </View>
       </View>
+</TouchableOpacity>
 
 
 </View>
