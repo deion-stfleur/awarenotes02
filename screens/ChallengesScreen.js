@@ -720,10 +720,19 @@ const ChallengesScreen = ({ navigation }) => {
                   </View>
                 </View>
 
-                <TextInput placeholder='Challenge Name' style={{borderWidth: 1,marginTop: 50,padding: 14,borderRadius: 6}} />
-                <TextInput multiline placeholder='Enter Description for challenge' style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6,height: 140}}  />
+                <TouchableOpacity activeOpacity={0.6}>
+                  <View style={{borderWidth: 1,borderRadius: 6,height: 150,marginTop: 20}}>
+                    <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+                    <Entypo name="upload" size={24} color="black" style={{marginBottom: 20}} />
+                   <Text>Tap to select or upload image</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+
+                <TextInput placeholder='Challenge Name' placeholderTextColor={'white'} style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6}} />
+                <TextInput placeholderTextColor={'white'}  multiline placeholder='Enter Description for challenge' style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6,height: 140}}  />
                 <Text style={{marginTop: 20,fontSize: 17}}>Goal</Text>
-                <TextInput placeholder='How many times per day?' keyboardType='numeric' maxLength={2} style={{borderWidth: 1,marginTop: 10,padding: 14,borderRadius: 6}} />
+                <TextInput placeholderTextColor={'white'}  placeholder='How many times per day?' keyboardType={'numeric'} maxLength={2} style={{borderWidth: 1,marginTop: 10,padding: 14,borderRadius: 6}} />
                 
                 <TouchableOpacity style={{marginTop: 40}} activeOpacity={0.6}>
                   <View style={{borderWidth:1.4,padding: 12,borderRadius: 8,width: 200,alignSelf: 'center'}}>
