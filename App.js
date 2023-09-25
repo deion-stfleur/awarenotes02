@@ -33,7 +33,7 @@ function HomeTabNavigator() {
           />
         ),
       }} component={HomeScreen} />
-      {/* <Tab.Screen name="Challenges"  options={{
+      <Tab.Screen name="Challenges"  options={{
         tabBarIcon: ({ focused }) => (
           <MaterialIcons
             name={focused ? 'recent-actors' : 'recent-actors'}
@@ -41,7 +41,7 @@ function HomeTabNavigator() {
             color={focused ? '#000' : '#999'}
           />
         ),
-      }} component={ChallengesScreen} /> */}
+      }} component={ChallengesScreen} />
 
 <Tab.Screen name="Activity"  options={{
         tabBarIcon: ({ focused }) => (

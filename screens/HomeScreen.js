@@ -581,7 +581,7 @@ const HomeScreen = ({navigation}) => {
     <TouchableOpacity style={{backgroundColor:'#F6BF04',borderRadius: 6, width: 200,marginRight: 20}} activeOpacity={0.8}>
         
     <View style={{alignItems: 'center', justifyContent: 'center',flex: 1}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold',textAlign: 'center'}}>Take this daily quiz!</Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold',textAlign: 'center'}}>Take the daily quiz!</Text>
         {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>/ */}
         </View>
 
@@ -767,7 +767,7 @@ const HomeScreen = ({navigation}) => {
   </View>
   <Text style={{textAlign: 'center',fontSize: 22,fontWeight: 'bold',marginTop: 20}}>Deion</Text>
 
-
+{/* 
   <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>
   <Text>Reward Points meter</Text>
   </View>
@@ -782,9 +782,26 @@ const HomeScreen = ({navigation}) => {
 
   <View style={{borderWidth: 1,padding: 12,marginTop: 22,borderRadius: 4}}>
   <Text>Enable Reminders</Text>
+  </View> */}
+
+  <View style={{backgroundColor: 'lightgray',height: 120, borderRadius: 10,marginTop: 30}}>
+   <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+    <Text>10 days</Text>
+    <Text>Current Streak</Text>
+   </View>
   </View>
 
- 
+
+  <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop: 16}}>
+
+    <View style={{backgroundColor: 'lightgray',width: '48%',height: 90,borderRadius: 8}}>
+      <Text>Total Success</Text>
+    </View>
+
+    <View style={{backgroundColor: 'lightgray',width: '48%',height: 90,borderRadius: 8}}>
+      <Text>Total Failed</Text>
+    </View>
+  </View>
 </View>
 
 </View>

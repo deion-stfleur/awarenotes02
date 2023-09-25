@@ -8,14 +8,27 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { doc, setDoc, collection, addDoc, onSnapshot } from 'firebase/firestore'
 import { db, auth } from '../firebaseConfig'
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+
+
 
 const ChallengesScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisible2, setIsModalVisible2] = useState(false);
   const [isModalVisible3, setIsModalVisible3] = useState(false);
+  const [isModalVisible4, setIsModalVisible4] = useState(false);
+  const [isModalVisible9, setIsModalVisible9] = useState(false);
   const [greeting, setGreeting] = useState('');
   const [description, setDescription] = useState('');
   const [orders2, setOrders2] = useState([]);
+
+  const [selectedBtnIndex, setSelectedBtnIndex] = useState(0); // Set the default selected button index to 0
+
+  const handleBtnPress = (index) => {
+    setSelectedBtnIndex(index);
+  }
+
 
   useEffect(() => {
 
@@ -164,6 +177,24 @@ const ChallengesScreen = ({ navigation }) => {
     resetSelectedImages();
   };
 
+  const openModal4 = () => {
+    setIsModalVisible(true);
+  };
+
+
+  const closeModal4 = () => {
+    setIsModalVisible4(false);
+  };
+
+  const openModal9 = () => {
+    setIsModalVisible9(true);
+  };
+
+
+  const closeModal9 = () => {
+    setIsModalVisible9(false);
+  };
+
 
 
   const openModal2 = () => {
@@ -193,73 +224,60 @@ const ChallengesScreen = ({ navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#EEECE4' }}>
 
 
-        <Text style={{ fontWeight: 'bold', fontSize: 19, marginLeft: 17, marginTop: 20 }}>Leaderboards</Text>
-        <ScrollView horizontal style={{ alignSelf: 'center', marginLeft: 17 }} showsHorizontalScrollIndicator={false}>
+        {/* <Text style={{ fontWeight: 'bold', fontSize: 19, marginLeft: 17, marginTop: 20 }}>Leaderboards</Text> */}
+       
+       
+       
+        <View style={styles.btnRow}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => handleBtnPress(0)}>
+            <View style={[styles.btnContainer, selectedBtnIndex === 0 && styles.selectedBtn]}>
+              <View style={{flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
+              <Text style={styles.btnTxt}>Explore</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => handleBtnPress(1)}>
+            <View style={[styles.btnContainer, selectedBtnIndex === 1 && styles.selectedBtn]}>
+            <View style={{flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
+              <Text style={styles.btnTxt}>My Challenges</Text>
+              </View>
+            </View>
 
+          </TouchableOpacity>
+        </View>
 
-          {/* {orders2.map((order) => (
-
-<TouchableOpacity key={order.id} activeOpacity={0.7}>
-
-<View key={order.id} style={{borderWidth: 1, width: '90%', marginBottom: 10, padding: 10, borderRadius: 4, backgroundColor: '#fff', alignSelf: 'center'}}>
-
-  <Text style={{fontSize: 16,marginTop: 5}}>{order.count}</Text>
+        {selectedBtnIndex === 0 ? (
+<View>
+  <Text>explore challenges</Text>
 </View>
+
+) : selectedBtnIndex === 1 ? (
+
+<View>
+  <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginTop: 100}}>
+    <Text style={{fontWeight:'bold',marginBottom: 8,fontSize: 19}}>No challenge joined</Text>
+    <Text style={{fontSize: 16,marginBottom: 30}}>Challenges that you join or create will appear here</Text>
+
+<TouchableOpacity activeOpacity={0.6} onPress={openModal9}>
+    <View style={{borderWidth: 1,padding: 18,borderRadius: 10,width: 240}}>
+      <Text style={{textAlign: 'center',fontWeight: '600'}}>Host your own challenge</Text>
+    </View>
 </TouchableOpacity>
-))} */}
+  </View>
+</View>
+  ) : (
+       
 
-
-          <TouchableOpacity activeOpacity={0.9}>
-
-            <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300, marginRight: 12 }}>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
-
-                <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/smiling-face.png?alt=media&token=85cce9ef-8d6e-49d7-8d24-9be22beed892' }} />
-                <Text style={{ width: '60%' }}>95 members are feeling silly!</Text>
-              </View>
-            </View>
-
-          </TouchableOpacity>
-
-
-
-          <TouchableOpacity activeOpacity={0.9}>
-            <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300, marginRight: 12 }}>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
-
-                <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/confused.png?alt=media&token=ea2b80dc-5ec8-407c-8a6b-16ea8b247b0f' }} />
-                <Text style={{ width: '60%' }}>24 members are feeling confused</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-
-
-          <TouchableOpacity activeOpacity={0.9}>
-            <View style={{ backgroundColor: '#fff', alignSelf: 'center', marginTop: 18, marginBottom: 30, borderRadius: 12, width: 300 }}>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 7, marginTop: 7 }}>
-
-                <Image style={{ height: 100, width: 100, marginRight: 12 }} source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/happy-face.png?alt=media&token=70accc22-590e-48c5-a9ed-ae87ab4c560c' }} />
-                <Text style={{ width: '60%' }}>46 members are feeling silly!</Text>
-              </View>
-            </View>
-
-          </TouchableOpacity>
+    null
+    )}
+       
+     
 
 
 
 
 
-        </ScrollView>
-
-
-
-
-
-        <View>
+        {/* <View>
 
           <TouchableOpacity activeOpacity={0.7}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', alignSelf: 'center' }}>
@@ -269,11 +287,11 @@ const ChallengesScreen = ({ navigation }) => {
                 <View>
 
                   <View>
-                    {/* 
+                    
                     <View style={{ backgroundColor: 'white', width: 100, borderRadius: 16, alignSelf: 'center', marginTop: 20 }}>
                       <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Love</Text>
 
-                    </View> */}
+                    </View>
                     <MaterialCommunityIcons style={{ alignSelf: 'center', marginTop: 40 }} name="lightning-bolt" size={44} color="gray" />
                     <Text style={{ marginTop: 17, textAlign: 'center', fontWeight: '700' }}>Create Healthy Habits</Text>
                     <Text style={{ textAlign: 'center', width: '80%', alignSelf: 'center', marginTop: 10, lineHeight: 19 }}>Let's maintain 3 habits this week</Text>
@@ -284,9 +302,9 @@ const ChallengesScreen = ({ navigation }) => {
               <TouchableOpacity onPress={openModal2} activeOpacity={0.7} style={{ backgroundColor: 'lightgreen', height: 250, width: '49%', borderRadius: 6 }}>
                 <View>
                   <View>
-                    {/* <View style={{ backgroundColor: 'white', width: 100, borderRadius: 16, alignSelf: 'center', marginTop: 20 }}>
+                    <View style={{ backgroundColor: 'white', width: 100, borderRadius: 16, alignSelf: 'center', marginTop: 20 }}>
                       <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Confused</Text>
-                    </View> */}
+                    </View>
                     <MaterialCommunityIcons name="head-question-outline" size={44} style={{ alignSelf: 'center', marginTop: 40 }} color="gray" />
                     <Text style={{ marginTop: 17, textAlign: 'center', fontWeight: '700' }}>Mood Board</Text>
                     
@@ -297,9 +315,9 @@ const ChallengesScreen = ({ navigation }) => {
 
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        <TouchableOpacity onPress={openModal3} activeOpacity={0.7}>
+        {/* <TouchableOpacity onPress={openModal3} activeOpacity={0.7}>
 
           <View style={{ backgroundColor: '#91CCFF', width: '90%', alignSelf: 'center', marginTop: 20, height: 260, borderRadius: 6,marginBottom: 40 }}>
 
@@ -308,7 +326,7 @@ const ChallengesScreen = ({ navigation }) => {
               <Text style={{ textAlign: 'center', width: '75%', alignSelf: 'center', fontSize: 19, fontWeight: '500' }}>Complete atleast 1 blank posts using different tags over the past month</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible(false)}>
 
@@ -681,7 +699,42 @@ const ChallengesScreen = ({ navigation }) => {
         </Modal>
 
 
+
       </ScrollView>
+        <Modal visible={isModalVisible9} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible9(false)}>
+              <View style={styles.modalContainer4}>
+
+                <View style={styles.modalContent4}>
+                <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop: 13}}>
+                 
+                  <View>
+                    <TouchableOpacity onPress={closeModal9}>
+                  <Text style={{fontSize: 16,fontWeight: 'bold'}}>Cancel</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                  <Text style={{textAlign: 'center',marginRight: 20,fontSize: 16}}>New Challenge</Text>
+                  </View>
+                  <View>
+                    <Text style={{color: 'transparent'}}>no</Text>
+                  </View>
+                </View>
+
+                <TextInput placeholder='Challenge Name' style={{borderWidth: 1,marginTop: 50,padding: 14,borderRadius: 6}} />
+                <TextInput multiline placeholder='Enter Description for challenge' style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6,height: 140}}  />
+                <Text style={{marginTop: 20,fontSize: 17}}>Goal</Text>
+                <TextInput placeholder='How many times per day?' keyboardType='numeric' maxLength={2} style={{borderWidth: 1,marginTop: 10,padding: 14,borderRadius: 6}} />
+                
+                <TouchableOpacity style={{marginTop: 40}} activeOpacity={0.6}>
+                  <View style={{borderWidth:1.4,padding: 12,borderRadius: 8,width: 200,alignSelf: 'center'}}>
+                    <Text style={{textAlign: 'center',fontWeight: '500'}}>Create Challenge +</Text>
+                  </View>
+                </TouchableOpacity>
+                
+                </View>
+
+              </View>
+</Modal>
     </>
   )
 }
@@ -739,5 +792,43 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '95%',
     alignSelf: 'center'
-  }
+  },
+  btnRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  btnTxt: {
+    fontSize: 16,
+    color: '#000',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  selectedBtn: {
+    backgroundColor: '#87C6FF',
+  },
+  btnContainer: {
+    backgroundColor: 'lightgray',
+    padding: 7,
+    borderRadius: 6,
+    width: 200
+  },
+  modalContainer4: {
+    backgroundColor: '#91CCFF',
+    height: '96%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    position: 'absolute',
+    zIndex: 999,
+    width: '100%',
+    bottom: 0,
+  },
+  modalContent4: {
+    flex: .99,
+    marginTop: 10,
+    width: '95%',
+    alignSelf: 'center'
+  },
 })
