@@ -631,6 +631,28 @@ const HomeScreen = ({navigation}) => {
   
      
 </View>
+
+<View style={{marginTop: 40}}>
+  <Text style={{fontWeight: 'bold', fontSize: 19}}>Daily Tips</Text>
+
+<TouchableOpacity activeOpacity={0.7}>
+  <View style={{width: '95%',padding: 18, height: 120,marginTop: 20,borderRadius: 8,backgroundColor: '#fff'}}>
+
+    <View style={{flexDirection: 'row'}}>
+    <FontAwesome style={{marginRight: 12}} name="lightbulb-o" size={30} color="black" />
+
+    <View style={{width: '90%'}}>
+    <Text style={{fontSize: 19,fontWeight: 'bold'}}>Floss before bed</Text>
+    <Text style={{fontSize: 16,marginTop: 9}}>Flowing before bed can help you relax and sleep better.
+It eases your mind, reducing stress and anxiety...Read more</Text>
+{/* This practice promotes a peaceful and restful night's sleep.
+It's a way to unwind and release the day's tensions.
+Flowing before bed can improve your overall sleep quality.</Text> */}
+    </View>
+    </View>
+  </View>
+</TouchableOpacity>
+</View>
 {/* <View style={{ flexDirection: 'row', marginTop: 10, alignSelf: 'center' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity onPress={incrementHappy}>
