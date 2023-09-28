@@ -22,6 +22,12 @@ const ChallengesScreen = ({ navigation }) => {
   const [greeting, setGreeting] = useState('');
   const [description, setDescription] = useState('');
   const [orders2, setOrders2] = useState([]);
+  const [challengeName, setChallengeName] = useState('');
+  const [challengeDescription, setChallengeDescription] = useState('');
+  const [goal, setGoal] = useState('');
+
+  const isSubmitDisableds = !challengeName || challengeDescription || goal 
+
 
   const [selectedBtnIndex, setSelectedBtnIndex] = useState(0); // Set the default selected button index to 0
 
@@ -49,6 +55,29 @@ const ChallengesScreen = ({ navigation }) => {
 
     }// Unsubscribe from the snapshot listener when the component unmounts
   }, []);
+
+
+  const handleMessage = () => {
+    closeModal9();
+  }
+
+
+  const sendFeedback = async () => {
+    const user = auth.currentUser;
+    const order = {
+      userId: user.uid, 
+      challengeName: challengeName,  
+      challengeDescription: challengeDescription,
+    };
+  
+    try {
+      const docRef = await addDoc(collection(db, 'phase1-feedback'), order);
+      console.log('Document created with ID: ', docRef.id);
+      handleMessage();
+    } catch (error) {
+      console.error('Error creating document:', error);
+    }
+  };
 
 
 
@@ -719,7 +748,7 @@ const ChallengesScreen = ({ navigation }) => {
                     <Text style={{color: 'transparent'}}>no</Text>
                   </View>
                 </View>
-
+{/* 
                 <TouchableOpacity activeOpacity={0.6}>
                   <View style={{borderWidth: 1,borderRadius: 6,height: 150,marginTop: 20}}>
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
@@ -727,15 +756,18 @@ const ChallengesScreen = ({ navigation }) => {
                    <Text>Tap to select or upload image</Text>
                     </View>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TextInput placeholder='Challenge Name' placeholderTextColor={'white'} style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6}} />
-                <TextInput placeholderTextColor={'white'}  multiline placeholder='Enter Description for challenge' style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6,height: 140}}  />
+                <TextInput  value={challengeName}
+          onChangeText={setChallengeName}  placeholder='Challenge Name' placeholderTextColor={'white'} style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6}} />
+                <TextInput placeholderTextColor={'white'}  value={challengeDescription}
+          onChangeText={setChallengeDescription}   multiline placeholder='Enter Description for challenge' style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6,height: 140}}  />
                 <Text style={{marginTop: 20,fontSize: 17}}>Goal</Text>
-                <TextInput placeholderTextColor={'white'}  placeholder='How many times per day?' keyboardType={'numeric'} maxLength={2} style={{borderWidth: 1,marginTop: 10,padding: 14,borderRadius: 6}} />
+                <TextInput placeholderTextColor={'white'}  value={goal}
+          onChangeText={setGoal}   placeholder='How many times per day?' keyboardType={'numeric'} maxLength={2} style={{borderWidth: 1,marginTop: 10,padding: 14,borderRadius: 6}} />
                 
-                <TouchableOpacity style={{marginTop: 40}} activeOpacity={0.6}>
-                  <View style={{borderWidth:1.4,padding: 12,borderRadius: 8,width: 200,alignSelf: 'center'}}>
+                <TouchableOpacity style={{marginTop: 40}} activeOpacity={0.6} onPress={sendFeedback}>
+                  <View style={{borderWidth:1.4,padding: 12,borderRadius: 8,width: 200,alignSelf: 'center',backgroundColor: '#fff'}}>
                     <Text style={{textAlign: 'center',fontWeight: '500'}}>Create Challenge +</Text>
                   </View>
                 </TouchableOpacity>
