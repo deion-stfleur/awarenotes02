@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar,KeyboardAvoidingView,TouchableOpacity, TextInput, ScrollView } from 'react-native'
 import React, {useState, useEffect} from 'react'
-import {auth} from '../firebaseConfig'
+import {auth, db} from '../firebaseConfig'
+import {collection, addDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
 const Login = ({navigation}) => {
@@ -18,11 +19,27 @@ const Login = ({navigation}) => {
         return unsubscribe;
     },[])
 
+
+    const createUser = async () => {
+        
+        const order = {
+          userEmail: email,  
+        };
+      
+        try {
+          const docRef = await addDoc(collection(db, 'userEmails'), order);
+          console.log('Document created with ID: ', docRef.id);
+        } catch (error) {
+          console.error('Error creating document:', error);
+        }
+      };
+
     const handleSignUp = () => {
         if (email!== "" & password !== "") {
             createUserWithEmailAndPassword(auth,email,password)
             .then(() => console.log("Signup Successful"))
             .catch((err) => Alert.alert("Login error", err.message));
+            createUser();
         }
     }
 

@@ -29,7 +29,7 @@ const GoalsScreen = ({ navigation }) => {
             <View style={[styles.btnContainer, selectedBtnIndex === 0 && styles.selectedBtn]}>
               <View style={{flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
             <Entypo name="infinity" size={20} color="black" style={{marginRight: 8}} />
-              <Text style={styles.btnTxt}>Create Habis</Text>
+              <Text style={styles.btnTxt}>Create Habits</Text>
               </View>
             </View>
           </TouchableOpacity>

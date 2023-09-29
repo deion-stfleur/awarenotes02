@@ -25,6 +25,23 @@ const ChallengesScreen = ({ navigation }) => {
   const [challengeName, setChallengeName] = useState('');
   const [challengeDescription, setChallengeDescription] = useState('');
   const [goal, setGoal] = useState('');
+  const [authenticatedUserId, setAuthenticatedUserId] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in. Access the user's ID.
+        setAuthenticatedUserId(user.uid);
+      } else {
+        // User is signed out or not authenticated.
+        setAuthenticatedUserId(null);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const isSubmitDisableds = !challengeName || challengeDescription || goal 
 
@@ -63,9 +80,9 @@ const ChallengesScreen = ({ navigation }) => {
 
 
   const sendFeedback = async () => {
-    const user = auth.currentUser;
+    const user = auth.currentUser.email;
     const order = {
-      userId: user.uid, 
+      userId: user, 
       challengeName: challengeName,  
       challengeDescription: challengeDescription,
     };
@@ -78,6 +95,28 @@ const ChallengesScreen = ({ navigation }) => {
       console.error('Error creating document:', error);
     }
   };
+
+  const [orders, setOrders] = useState([]);
+
+
+  useEffect(() => {
+
+
+    const unsubscribe = onSnapshot(collection(db, 'phase1-feedback'), (snapshot) => {
+      const ordersData = [];
+      snapshot.forEach((doc) => {
+        ordersData.push({ id: doc.id, ...doc.data() });
+      });
+      setOrders(ordersData);
+    });
+
+
+
+
+    return () => {
+      unsubscribe(); 
+    }// Unsubscribe from the snapshot listener when the component unmounts
+  }, []);
 
 
 
@@ -277,22 +316,29 @@ const ChallengesScreen = ({ navigation }) => {
 
         {selectedBtnIndex === 0 ? (
 <View>
-  <Text>explore challenges</Text>
+  {/* <Text>explore challenges</Text> */}
 </View>
 
 ) : selectedBtnIndex === 1 ? (
 
 <View>
-  <View style={{flex: 1,justifyContent: 'center',alignItems: 'center',marginTop: 100}}>
-    <Text style={{fontWeight:'bold',marginBottom: 8,fontSize: 19}}>No challenge joined</Text>
-    <Text style={{fontSize: 16,marginBottom: 30}}>Challenges that you join or create will appear here</Text>
+  
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
+      <Text style={{ fontWeight: 'bold', marginBottom: 8, fontSize: 19 }}>No challenge joined</Text>
+      <Text style={{ fontSize: 16, marginBottom: 30 }}>Challenges that you join or create will appear here</Text>
 
-<TouchableOpacity activeOpacity={0.6} onPress={openModal9}>
-    <View style={{borderWidth: 1,padding: 18,borderRadius: 10,width: 240}}>
-      <Text style={{textAlign: 'center',fontWeight: '600'}}>Host your own challenge</Text>
+      <TouchableOpacity activeOpacity={0.6} onPress={openModal9}>
+        <View style={{ borderWidth: 1, padding: 18, borderRadius: 10, width: 300, backgroundColor: 'blue' }}>
+          <Text style={{ textAlign: 'center', fontWeight: '700', color: '#fff', fontSize: 17 }}>Host your own challenge</Text>
+        </View>
+      </TouchableOpacity>
     </View>
-</TouchableOpacity>
-  </View>
+  
+
+{/*   
+<TouchableOpacity onPress={openModal9} activeOpacity={0.7} style={{alignSelf: 'flex-end',marginRight: 15,marginTop: 20}}>
+  <AntDesign name="plussquareo" size={30} color="black" />
+</TouchableOpacity> */}
 </View>
   ) : (
        
