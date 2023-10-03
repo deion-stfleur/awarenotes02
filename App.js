@@ -5,8 +5,11 @@ import HomeScreen from './screens/HomeScreen';
 import ChallengesScreen from './screens/ChallengesScreen';
 import GoalsScreen from './screens/GoalsScreen';
 import ActivityScreen from './screens/ActivityScreen';
-import RunningScreen from './screens/RunningScreen';
+// import RunningScreen from './screens/RunningScreen';
 import FeelingHistoryScreen from './screens/FeelingHistory';
+import MeditateScreen from './screens/subscreens/Meditate';
+import YogaScreen from './screens/subscreens/Yoga'
+import RunningScreen from './screens/subscreens/Running';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -85,6 +88,8 @@ export default function App() {
         <Stack.Screen name="GoalsScreen" component={GoalsScreen} />
         <Stack.Screen name="RunningScreen" component={RunningScreen} />
         <Stack.Screen name="FeelingHistoryScreen" component={FeelingHistoryScreen} />
+        <Stack.Screen name="MeditateScreen" component={MeditateScreen} />
+        <Stack.Screen name="YogaScreen" component={YogaScreen} />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

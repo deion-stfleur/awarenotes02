@@ -10,6 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { doc, setDoc, collection, addDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import {db, auth} from '../firebaseConfig'
+import { Foundation } from '@expo/vector-icons';
 
 const quotes = [
     "No matter how dirty your past is, your future is still spotless.",
@@ -638,7 +639,7 @@ const HomeScreen = ({navigation}) => {
 <TouchableOpacity activeOpacity={0.7}>
   <View style={{width: '95%',padding: 18, height: 120,marginTop: 20,borderRadius: 8,backgroundColor: '#fff'}}>
 
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row',width: '98%'}}>
     <FontAwesome style={{marginRight: 12}} name="lightbulb-o" size={30} color="black" />
 
     <View style={{width: '90%'}}>
@@ -649,6 +650,7 @@ It eases your mind, reducing stress and anxiety...Read more</Text>
 It's a way to unwind and release the day's tensions.
 Flowing before bed can improve your overall sleep quality.</Text> */}
     </View>
+    {/* <Foundation name="info" size={24} color="lightgray" /> */}
     </View>
   </View>
 </TouchableOpacity>
