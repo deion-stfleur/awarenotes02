@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { doc, setDoc, collection, addDoc, getDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, setDoc, collection, addDoc, getDoc, serverTimestamp,query, where, getDocs } from 'firebase/firestore'
 import {db, auth} from '../firebaseConfig'
 import { Foundation } from '@expo/vector-icons';
 
@@ -96,6 +96,55 @@ const HomeScreen = ({navigation}) => {
     const [isModalVisible2, setIsModalVisible2] = useState(false);
     const [description, setDescription] = useState('');
     const [isScrollViewVisible, setIsScrollViewVisible] = useState(true);
+
+    const [usersWithMeditation, setUsersWithMeditation] = useState([]);
+    const [usersWithYoga,setUsersWithYoga] = useState([]);
+
+    useEffect(() => {
+      // Get the user's email
+      const user = auth.currentUser;
+      const userEmail = user ? user.email : '';
+  
+      // Create a Firestore query to filter users with 'meditation' field as true
+      const usersCollection = collection(db, 'users');
+      const q = query(usersCollection, where('email', '==', userEmail), where('meditation', '==', true));
+      const y = query(usersCollection, where('email', '==', userEmail), where('yoga', '==', true));
+
+
+
+  
+      getDocs(q)
+        .then((querySnapshot) => {
+          const filteredUsers = [];
+          querySnapshot.forEach((doc) => {
+            // Add users with 'meditation' field as true to the filteredUsers array
+            filteredUsers.push(doc.data());
+          });
+          setUsersWithMeditation(filteredUsers);
+        })
+        .catch((error) => {
+          console.error('Error fetching users with meditation:', error);
+        });
+
+
+
+
+        getDocs(y)
+        .then((querySnapshot) => {
+          const filteredUsers2 = [];
+          querySnapshot.forEach((doc) => {
+            // Add users with 'meditation' field as true to the filteredUsers array
+            filteredUsers2.push(doc.data());
+          });
+          setUsersWithYoga(filteredUsers2);
+        })
+        .catch((error) => {
+          console.error('Error fetching users with meditation:', error);
+        });
+
+
+
+    }, []);
 
 
     const isSubmitDisabled = !description
@@ -633,28 +682,93 @@ const HomeScreen = ({navigation}) => {
      
 </View>
 
-<View style={{marginTop: 40}}>
+<Text style={{fontWeight: 'bold', fontSize: 19,marginTop: 40,marginBottom: 20}}>Daily Habits</Text>
+<View>
+      {usersWithMeditation.length > 0 ? (
+
+        <View style={{}}>
+
+          <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("MediationGoal")}>
+
+            <View style={{backgroundColor: '#C35BD1',width: '95%',padding: 20,borderRadius: 6}}>
+
+              <View style={{flexDirection:'row',justifyContent: 'space-between',alignItems: 'center'}}>
+                <View>
+              <Text style={{color: '#fff',fontSize: 19,fontWeight: 'bold'}}>Meditation</Text>
+              <Text style={{color: '#fff'}}>🔥8</Text>
+
+                </View>
+
+                <View>
+                  <Text style={{color: '#fff',fontWeight: 'bold'}}>Begin</Text>
+                </View>
+              </View>
+            </View>
+
+          </TouchableOpacity>
+
+          </View>
+
+      ) : (
+        <Text>
+          No Goals have been set yet . Go to Add More Above !
+        </Text>
+      )}
+
+
+
+{usersWithYoga.length > 0 ? (
+
+<View style={{}}>
+
+  <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("YogaGoal")}>
+
+    <View style={{backgroundColor: 'green',width: '95%',padding: 20,borderRadius: 6,marginTop: 20}}>
+
+      <View style={{flexDirection:'row',justifyContent: 'space-between',alignItems: 'center'}}>
+        <View>
+      <Text style={{color: '#fff',fontSize: 19,fontWeight: 'bold'}}>Yoga</Text>
+      <Text style={{color: '#fff'}}>🔥11</Text>
+
+        </View>
+
+        <View>
+          <Text style={{color: '#fff',fontWeight: 'bold'}}>Begin</Text>
+        </View>
+      </View>
+    </View>
+
+  </TouchableOpacity>
+
+  </View>
+
+) : (
+<Text>
+  No Goals have been set yet . Go to Add More Above !
+</Text>
+)}
+    </View>
+
+{/* <View style={{marginTop: 40}}>
   <Text style={{fontWeight: 'bold', fontSize: 19}}>Daily Tips</Text>
 
 <TouchableOpacity activeOpacity={0.7}>
   <View style={{width: '95%',padding: 18, height: 120,marginTop: 20,borderRadius: 8,backgroundColor: '#fff'}}>
 
-    <View style={{flexDirection: 'row',width: '98%'}}>
+    <View style={{flexDirection: 'row',width: '95%'}}>
     <FontAwesome style={{marginRight: 12}} name="lightbulb-o" size={30} color="black" />
 
-    <View style={{width: '90%'}}>
+    <View style={{}}>
     <Text style={{fontSize: 19,fontWeight: 'bold'}}>Floss before bed</Text>
     <Text style={{fontSize: 16,marginTop: 9}}>Flowing before bed can help you relax and sleep better.
 It eases your mind, reducing stress and anxiety...Read more</Text>
-{/* This practice promotes a peaceful and restful night's sleep.
-It's a way to unwind and release the day's tensions.
-Flowing before bed can improve your overall sleep quality.</Text> */}
+
     </View>
-    {/* <Foundation name="info" size={24} color="lightgray" /> */}
+
     </View>
   </View>
 </TouchableOpacity>
-</View>
+</View> */}
 {/* <View style={{ flexDirection: 'row', marginTop: 10, alignSelf: 'center' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity onPress={incrementHappy}>
@@ -832,7 +946,7 @@ Flowing before bed can improve your overall sleep quality.</Text> */}
     </Modal>
 
 
-    <View style={{backgroundColor: '#fff', width: '100%',height: 300}}>
+    {/* <View style={{backgroundColor: '#fff', width: '100%',height: 300}}>
 
         <Text style={{textAlign: 'center',marginTop: 50, fontSize: 19, fontWeight: 'bold'}}>Try Premium</Text>
 
@@ -848,7 +962,7 @@ Flowing before bed can improve your overall sleep quality.</Text> */}
         <Text style={{textAlign: 'center',color: '#fff',padding: 12,fontWeight: 'bold',fontSize: 15}}>Upgrade</Text>
     </View>
 </TouchableOpacity>
-    </View>
+    </View> */}
     </ScrollView>
     </>
   )

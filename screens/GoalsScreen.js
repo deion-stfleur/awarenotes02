@@ -216,9 +216,11 @@ export default GoalsScreen
 const styles = StyleSheet.create({
   btnRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     alignSelf: 'center',
     marginTop: 20,
+    // width: '90%',
+    alignSelf: 'center'
   },
   btnTxt: {
     fontSize: 16,
@@ -233,6 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     padding: 7,
     borderRadius: 6,
-    width: 200
+    width: 180,
+    // alignSelf: 'center'
   },
 })
