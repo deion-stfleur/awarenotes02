@@ -1,11 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform,StatusBar, TextInput } from 'react-native'
 import React from 'react'
+import { Ionicons } from '@expo/vector-icons';
 
-const ChallengeDetail = () => {
+
+
+const ChallengeDetail = ({route, navigation}) => {
+  const {item} = route.params;
   return (
-    <View>
-      <Text>ChallengeDetail</Text>
+    <>
+         <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0) }}>
+                <TouchableOpacity onPress={() => navigation.navigate("Challenges")}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Ionicons name="arrow-back" size={24} color="black" style={{ marginLeft: 14, marginRight: 10 }} />
+                        <Text style={{ fontSize: 18 }}>Back</Text>
+                    </View>
+                </TouchableOpacity>
+            </SafeAreaView>
+    
+    <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}>
+      <Text>Why you need this challenge?</Text>
+
+      <Text>Challenge Name: {item.challengeName}</Text>
+                <Text>Challenge Description: {item.challengeDescription}</Text>
+                <Text>Challenge Starting in</Text>
+                <TextInput style={{borderWidth: 1,width: '90%',marginTop: 30,borderRadius: 4,padding: 12}} />
+
     </View>
+    </>
   )
 }
 

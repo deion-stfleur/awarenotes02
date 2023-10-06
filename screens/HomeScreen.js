@@ -401,7 +401,7 @@ const HomeScreen = ({navigation}) => {
       </View>
 
       <View style={{flexDirection: 'row'}}>
-<TouchableOpacity activeOpacity={0.6}>
+<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("ProfileScreen")}>
     <Ionicons name="person-circle" size={30} color="black"  />
 </TouchableOpacity>
     <View style={{width: 15,backgroundColor: 'transparent'}}></View>

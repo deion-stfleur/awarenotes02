@@ -12,6 +12,8 @@ import YogaScreen from './screens/subscreens/Yoga'
 import RunningScreen from './screens/subscreens/Running';
 import MeditationGoal from './screens/goals/Meditation';
 import YogaGoal from './screens/goals/Yoga';
+import ProfileScreen from './screens/ProfileScreen';
+import ChallengeDetail from './screens/ChallengeDetail';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -94,6 +96,8 @@ export default function App() {
         <Stack.Screen name="YogaScreen" component={YogaScreen} />
         <Stack.Screen name="MediationGoal" component={MeditationGoal} />
         <Stack.Screen name="YogaGoal" component={YogaGoal} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="ChallengeDetail" component={ChallengeDetail} />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

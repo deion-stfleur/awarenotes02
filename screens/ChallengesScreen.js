@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Modal, TextInput, Image, Alert } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Modal, TextInput, Image, Alert, Platform, StatusBar, FlatList } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { doc, setDoc, collection, addDoc, onSnapshot } from 'firebase/firestore'
+import { doc, setDoc, collection, addDoc, onSnapshot, query, where, getDocs } from 'firebase/firestore'
 import { db, auth } from '../firebaseConfig'
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -25,6 +25,8 @@ const ChallengesScreen = ({ navigation }) => {
   const [challengeName, setChallengeName] = useState('');
   const [challengeDescription, setChallengeDescription] = useState('');
   const [goal, setGoal] = useState('');
+  const [durationFrom, setDurationFrom] = useState('');
+  const [durationTo, setDurationTo] = useState('');
   const [authenticatedUserId, setAuthenticatedUserId] = useState(null);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const ChallengesScreen = ({ navigation }) => {
     };
   }, []);
 
-  const isSubmitDisableds = !challengeName || challengeDescription || goal 
+  const isSubmitDisableds = !challengeName || challengeDescription || goal
 
 
   const [selectedBtnIndex, setSelectedBtnIndex] = useState(0); // Set the default selected button index to 0
@@ -82,11 +84,11 @@ const ChallengesScreen = ({ navigation }) => {
   const sendFeedback = async () => {
     const user = auth.currentUser.email;
     const order = {
-      userId: user, 
-      challengeName: challengeName,  
+      userId: user,
+      challengeName: challengeName,
       challengeDescription: challengeDescription,
     };
-  
+
     try {
       const docRef = await addDoc(collection(db, 'phase1-feedback'), order);
       console.log('Document created with ID: ', docRef.id);
@@ -95,6 +97,32 @@ const ChallengesScreen = ({ navigation }) => {
       console.error('Error creating document:', error);
     }
   };
+
+  const [userFeedbackData, setUserFeedbackData] = useState([]);
+
+  useEffect(() => {
+    const fetchUserFeedback = async () => {
+      const user = auth.currentUser.email;
+      const feedbackRef = collection(db, 'phase1-feedback');
+      const userFeedbackQuery = query(feedbackRef, where('userId', '==', user));
+
+      try {
+        const querySnapshot = await getDocs(userFeedbackQuery);
+        const feedbackData = [];
+
+        querySnapshot.forEach((doc) => {
+          const feedback = doc.data();
+          feedbackData.push(feedback);
+        });
+
+        setUserFeedbackData(feedbackData);
+      } catch (error) {
+        console.error('Error fetching user feedback:', error);
+      }
+    };
+
+    fetchUserFeedback();
+  }, []); // Use an empty dependency array to run the effect once
 
   const [orders, setOrders] = useState([]);
 
@@ -114,7 +142,7 @@ const ChallengesScreen = ({ navigation }) => {
 
 
     return () => {
-      unsubscribe(); 
+      unsubscribe();
     }// Unsubscribe from the snapshot listener when the component unmounts
   }, []);
 
@@ -285,30 +313,107 @@ const ChallengesScreen = ({ navigation }) => {
   };
 
 
+  const [yesPressed, setYesPressed] = useState(false);
+  const [noSkipsPressed, setNoSkipsPressed] = useState(false);
+
+  const [yesPublic, setYesPublic] = useState(false);
+  const [yesPrivate, setYesPrivate] = useState(false);
+
+  const handleYesPress = () => {
+    setYesPressed(true);
+    setNoSkipsPressed(false);
+  };
+
+  const handleNoSkipsPress = () => {
+    setNoSkipsPressed(true);
+    setYesPressed(false);
+  };
+
+
+  const handleYesPublic = () => {
+    setYesPublic(true);
+    setYesPrivate(false);
+  };
+
+  const handleYesPrivate = () => {
+    setYesPrivate(true);
+    setYesPublic(false);
+  };
+
+
+  const addChallengeToFirestore = async () => {
+    const user = auth.currentUser.email;
+    try {
+      // Define the data you want to add
+      const challengeData = {
+        userId: user,
+        challengeName,
+        challengeDescription,
+        goal,
+        duration: {
+          from: durationFrom, // You'll need to replace this with the actual date data
+          to: durationTo, // You'll need to replace this with the actual date data
+        },
+        privacy: yesPublic ? 'Public' : 'Private',
+      };
+  
+      // Add the data to a Firestore collection
+      const docRef = await addDoc(collection(db, 'challenges'), challengeData);
+  
+      // Clear the form fields or reset state as needed
+      setChallengeName('');
+      setChallengeDescription('');
+      setGoal('');
+      closeModal9();
+      // ... and other state variables you may have
+  
+      // Optionally, you can display a success message or navigate to another screen
+      // or perform other actions after successfully adding the data.
+    } catch (error) {
+      console.error('Error adding challenge to Firestore: ', error);
+      // Handle the error as needed
+    }
+  };
+
+
   return (
     <>
 
-<SafeAreaView></SafeAreaView>
+      <SafeAreaView style={{
+        backgroundColor: '#EEECE4', paddingTop:
+          Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0)
+      }}>
+
+        <View style={{ marginLeft: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%' }}>
+          <Text style={{ marginLeft: 10, fontSize: 30, fontWeight: 'bold', marginTop: 4 }}>Challenges</Text>
+
+          <View>
+            <TouchableOpacity activeOpacity={0.6} onPress={openModal9}>
+              <Ionicons name="md-add-circle" size={29} color="black" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </SafeAreaView>
 
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#EEECE4' }}>
 
 
         {/* <Text style={{ fontWeight: 'bold', fontSize: 19, marginLeft: 17, marginTop: 20 }}>Leaderboards</Text> */}
-       
-       
-       
+
+
+
         <View style={styles.btnRow}>
           <TouchableOpacity activeOpacity={0.7} onPress={() => handleBtnPress(0)}>
             <View style={[styles.btnContainer, selectedBtnIndex === 0 && styles.selectedBtn]}>
-              <View style={{flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
-              <Text style={styles.btnTxt}>Explore</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={styles.btnTxt}>Explore</Text>
               </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.7} onPress={() => handleBtnPress(1)}>
             <View style={[styles.btnContainer, selectedBtnIndex === 1 && styles.selectedBtn]}>
-            <View style={{flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
-              <Text style={styles.btnTxt}>My Challenges</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={styles.btnTxt}>My Challenges</Text>
               </View>
             </View>
 
@@ -316,38 +421,67 @@ const ChallengesScreen = ({ navigation }) => {
         </View>
 
         {selectedBtnIndex === 0 ? (
-<View>
-  {/* <Text>explore challenges</Text> */}
-</View>
+          <View>
+            {/* <Text>explore challenges</Text> */}
+          </View>
 
-) : selectedBtnIndex === 1 ? (
+        ) : selectedBtnIndex === 1 ? (
 
-<View>
-  
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 100 }}>
-      <Text style={{ fontWeight: 'bold', marginBottom: 8, fontSize: 19 }}>No challenge joined</Text>
-      <Text style={{ fontSize: 16, marginBottom: 30 }}>Challenges that you join or create will appear here</Text>
+          <View>
 
-      <TouchableOpacity activeOpacity={0.6} onPress={openModal9}>
-        <View style={{ borderWidth: 1, padding: 18, borderRadius: 10, width: 300, backgroundColor: 'blue' }}>
-          <Text style={{ textAlign: 'center', fontWeight: '700', color: '#fff', fontSize: 17 }}>Host your own challenge</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
 
-{/*   
+
+              {userFeedbackData.length === 0 ? (
+
+                <>
+                  <Text style={{ fontWeight: 'bold', marginBottom: 8, fontSize: 19 }}>No challenge joined</Text>
+                  <Text style={{ fontSize: 16, marginBottom: 30 }}>Challenges that you join or create will appear here</Text>
+                  <TouchableOpacity activeOpacity={0.6} onPress={openModal9}>
+                    <View style={{ borderWidth: 1, padding: 18, borderRadius: 10, width: 300, backgroundColor: 'blue' }}>
+                      <Text style={{ textAlign: 'center', fontWeight: '700', color: '#fff', fontSize: 17 }}>Host your own challenge</Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              ) : null}
+
+              <View style={{ width: '90%', alignSelf: 'center' }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent</Text>
+                {userFeedbackData.length === 0 ? (
+                  <Text>No feedback available</Text>
+                ) : (
+                  <FlatList
+                    data={userFeedbackData}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+
+                      <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('ChallengeDetail', { item })}>
+
+                        <View style={{ marginBottom: 10, borderWidth: 1, padding: 20, borderRadius: 4, marginBottom: 17 }}>
+                          <Text>Challenge Name: {item.challengeName}</Text>
+                          <Text>Challenge Description: {item.challengeDescription}</Text>
+                          {/* You can add more details from your feedback object here */}
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  />
+                )}
+              </View>
+            </View>
+
+
+            {/*   
 <TouchableOpacity onPress={openModal9} activeOpacity={0.7} style={{alignSelf: 'flex-end',marginRight: 15,marginTop: 20}}>
   <AntDesign name="plussquareo" size={30} color="black" />
 </TouchableOpacity> */}
-</View>
-  ) : (
-       
+          </View>
+        ) : (
 
-    null
-    )}
-       
-     
+
+          null
+        )}
+
+
 
 
 
@@ -446,120 +580,132 @@ const ChallengesScreen = ({ navigation }) => {
 
 
                 <TouchableOpacity activeOpacity={0.6} onPress={closeScreen}>
-                <View style={{ backgroundColor: 'white', borderWidth: 1, borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
-        shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4 }}>
+                  <View style={{
+                    backgroundColor: 'white', borderWidth: 1, borderRadius: 6, padding: 19, marginTop: 30, shadowColor: 'black',
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 4
+                  }}>
 
-                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}><FontAwesome5 name="running" size={24} color="black" /> Running</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={{ fontSize: 19, fontWeight: '500' }}><FontAwesome5 name="running" size={24} color="black" /> Running</Text>
 
-                    <View>
-                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                      <View>
+                        <Text style={{ fontSize: 19 }}>0/7</Text>
+                      </View>
+
                     </View>
-
                   </View>
-                </View>
                 </TouchableOpacity>
 
 
 
-<TouchableOpacity activeOpacity={0.6}>
-                <View style={{borderWidth: 1,backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
-        shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4 }}>
+                <TouchableOpacity activeOpacity={0.6}>
+                  <View style={{
+                    borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30, shadowColor: 'black',
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 4
+                  }}>
 
-                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}><MaterialCommunityIcons name="sleep" size={24} color="black" /> More Sleep</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={{ fontSize: 19, fontWeight: '500' }}><MaterialCommunityIcons name="sleep" size={24} color="black" /> More Sleep</Text>
 
-                    <View>
-                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                      <View>
+                        <Text style={{ fontSize: 19 }}>0/7</Text>
+                      </View>
+
                     </View>
-
                   </View>
-                </View>
-</TouchableOpacity>
+                </TouchableOpacity>
 
 
-              <TouchableOpacity activeOpacity={0.6}>
-                <View style={{borderWidth:1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
-        shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4 }}>
+                <TouchableOpacity activeOpacity={0.6}>
+                  <View style={{
+                    borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30, shadowColor: 'black',
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 4
+                  }}>
 
-                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}><MaterialCommunityIcons name="spoon-sugar" size={24} color="black" /> No sugar</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={{ fontSize: 19, fontWeight: '500' }}><MaterialCommunityIcons name="spoon-sugar" size={24} color="black" /> No sugar</Text>
 
-                    <View>
-                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                      <View>
+                        <Text style={{ fontSize: 19 }}>0/7</Text>
+                      </View>
+
                     </View>
-
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
 
 
-              <TouchableOpacity activeOpacity={0.6}>
-                <View style={{borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
-        shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4 }}>
+                <TouchableOpacity activeOpacity={0.6}>
+                  <View style={{
+                    borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30, shadowColor: 'black',
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 4
+                  }}>
 
-                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}><Foundation name="guide-dog" size={24} color="black" /> Walk the Dog</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={{ fontSize: 19, fontWeight: '500' }}><Foundation name="guide-dog" size={24} color="black" /> Walk the Dog</Text>
 
-                    <View>
-                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                      <View>
+                        <Text style={{ fontSize: 19 }}>0/7</Text>
+                      </View>
+
                     </View>
-
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
 
 
-              <TouchableOpacity activeOpacity={0.6}>
-                <View style={{borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
-        shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4 }}>
+                <TouchableOpacity activeOpacity={0.6}>
+                  <View style={{
+                    borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30, shadowColor: 'black',
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 4
+                  }}>
 
-                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}><AntDesign name="book" size={24} color="black" /> Read</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={{ fontSize: 19, fontWeight: '500' }}><AntDesign name="book" size={24} color="black" /> Read</Text>
 
-                    <View>
-                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                      <View>
+                        <Text style={{ fontSize: 19 }}>0/7</Text>
+                      </View>
+
                     </View>
-
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
 
-              <TouchableOpacity activeOpacity={0.6}>
-                <View style={{borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,shadowColor: 'black',
-        shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4 }}>
+                <TouchableOpacity activeOpacity={0.6}>
+                  <View style={{
+                    borderWidth: 1, backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30, shadowColor: 'black',
+                    shadowOffset: { width: 10, height: 10 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 4,
+                    elevation: 4
+                  }}>
 
-                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 19, fontWeight: '500' }}><Ionicons name="person-circle" size={24} color="black" /> Personal Time</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={{ fontSize: 19, fontWeight: '500' }}><Ionicons name="person-circle" size={24} color="black" /> Personal Time</Text>
 
-                    <View>
-                      <Text style={{ fontSize: 19 }}>0/7</Text>
+                      <View>
+                        <Text style={{ fontSize: 19 }}>0/7</Text>
+                      </View>
+
                     </View>
-
                   </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
 
 
-              {/* <TouchableOpacity activeOpacity={0.6}>
+                {/* <TouchableOpacity activeOpacity={0.6}>
 
                 <View style={{ backgroundColor: 'white', borderRadius: 6, padding: 19, marginTop: 30,borderWidth: 1 }}>
 
@@ -777,25 +923,28 @@ const ChallengesScreen = ({ navigation }) => {
 
 
       </ScrollView>
-        <Modal visible={isModalVisible9} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible9(false)}>
-              <View style={styles.modalContainer4}>
+      <Modal visible={isModalVisible9} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible9(false)}>
+        <View style={styles.modalContainer4}>
 
-                <View style={styles.modalContent4}>
-                <View style={{flexDirection: 'row',justifyContent: 'space-between',marginTop: 13}}>
-                 
-                  <View>
-                    <TouchableOpacity onPress={closeModal9}>
-                  <Text style={{fontSize: 16,fontWeight: 'bold'}}>Cancel</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View>
-                  <Text style={{textAlign: 'center',marginRight: 20,fontSize: 16}}>New Challenge</Text>
-                  </View>
-                  <View>
-                    <Text style={{color: 'transparent'}}>no</Text>
-                  </View>
+          <View style={styles.modalContent4}>
+            <ScrollView>
+
+
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 13 }}>
+
+                <View>
+                  <TouchableOpacity onPress={closeModal9}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>Cancel</Text>
+                  </TouchableOpacity>
                 </View>
-{/* 
+                <View>
+                  <Text style={{ textAlign: 'center', marginRight: 20, fontSize: 16, color: '#fff' }}>New Challenge</Text>
+                </View>
+                <View>
+                  <Text style={{ color: 'transparent' }}>no</Text>
+                </View>
+              </View>
+              {/* 
                 <TouchableOpacity activeOpacity={0.6}>
                   <View style={{borderWidth: 1,borderRadius: 6,height: 150,marginTop: 20}}>
                     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
@@ -805,24 +954,126 @@ const ChallengesScreen = ({ navigation }) => {
                   </View>
                 </TouchableOpacity> */}
 
-                <TextInput  value={challengeName}
-          onChangeText={setChallengeName}  placeholder='Challenge Name' placeholderTextColor={'white'} style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6}} />
-                <TextInput placeholderTextColor={'white'}  value={challengeDescription}
-          onChangeText={setChallengeDescription}   multiline placeholder='Enter Description for challenge' style={{borderWidth: 1,marginTop: 20,padding: 14,borderRadius: 6,height: 140}}  />
-                <Text style={{marginTop: 20,fontSize: 17}}>Goal</Text>
-                <TextInput placeholderTextColor={'white'}  value={goal}
-          onChangeText={setGoal}   placeholder='How many times per day?' keyboardType={'numeric'} maxLength={2} style={{borderWidth: 1,marginTop: 10,padding: 14,borderRadius: 6}} />
-                
-                <TouchableOpacity style={{marginTop: 40}} activeOpacity={0.6} onPress={sendFeedback}>
-                  <View style={{borderWidth:1.4,padding: 12,borderRadius: 8,width: 200,alignSelf: 'center',backgroundColor: '#fff'}}>
-                    <Text style={{textAlign: 'center',fontWeight: '500'}}>Create Challenge +</Text>
+              <TextInput value={challengeName}
+                onChangeText={setChallengeName} placeholder='Enter Challenge Name' placeholderTextColor={'black'} style={{ marginTop: 20, padding: 14, borderRadius: 6, backgroundColor: 'lightgray' }} />
+              <TextInput placeholderTextColor={'black'} value={challengeDescription}
+                onChangeText={setChallengeDescription} multiline placeholder='Enter Description for challenge' style={{ borderWidth: 1, marginTop: 20, padding: 14, borderRadius: 6, height: 140, backgroundColor: 'lightgray' }} />
+              <Text style={{ marginTop: 20, fontSize: 17, color: '#fff', fontWeight: 'bold' }}>Goal</Text>
+
+
+              <TextInput placeholderTextColor={'black'} value={goal}
+                onChangeText={setGoal} placeholder='How many times per day?' keyboardType={'numeric'} maxLength={2} style={{ borderWidth: 1, marginTop: 10, padding: 14, borderRadius: 6, backgroundColor: 'lightgray' }} />
+
+              <Text style={{ marginTop: 40, fontSize: 17, color: '#fff', fontWeight: 'bold' }}>Skip allowance</Text>
+
+
+              <View style={styles.container}>
+                <TouchableOpacity onPress={handleYesPress}>
+                  <View
+                    style={[
+                      styles.button,
+                      { backgroundColor: yesPressed ? 'white' : '#202020' },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        { color: yesPressed ? 'black' : '#fff' },
+                      ]}
+                    >
+                      Yes
+                    </Text>
                   </View>
                 </TouchableOpacity>
-                
-                </View>
 
+                <TouchableOpacity onPress={handleNoSkipsPress}>
+                  <View
+                    style={[
+                      styles.button,
+                      { backgroundColor: noSkipsPressed ? 'white' : '#202020' },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        { color: noSkipsPressed ? 'black' : '#fff' },
+                      ]}
+                    >
+                      No Skips
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-</Modal>
+
+              <Text style={{ marginTop: 40, fontSize: 17, color: '#fff', fontWeight: 'bold', marginBottom: 15 }}>Duration</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ color: '#fff', fontSize: 17, marginRight: 8 }}>From</Text>
+                <TextInput  value={durationFrom}
+                onChangeText={setDurationFrom} keyboardType='numeric' placeholder='dd/mm' placeholderTextColor={'black'} style={{ borderWidth: 1, backgroundColor: 'lightgray', width: 90, padding: 14 }} maxLength={4} />
+                <Text style={{ color: '#fff', fontSize: 18 }}>-</Text>
+                <Text style={{ color: '#fff', fontSize: 17, marginRight: 8 }}>To</Text>
+                <TextInput  value={durationTo}
+                onChangeText={setDurationTo} keyboardType='numeric' placeholder='dd/mm' placeholderTextColor={'black'} style={{ borderWidth: 1, backgroundColor: 'lightgray', width: 90, padding: 14 }} maxLength={4} />
+              </View>
+
+              <Text style={{ marginTop: 40, fontSize: 17, color: '#fff', fontWeight: 'bold' }}>Privacy*</Text>
+
+
+
+
+
+              <View style={styles.container}>
+                <TouchableOpacity onPress={handleYesPublic}>
+                  <View
+                    style={[
+                      styles.button,
+                      { backgroundColor: yesPublic ? 'white' : '#202020' },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        { color: yesPublic ? 'black' : '#fff' },
+                      ]}
+                    >
+                      Public
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={handleYesPrivate}>
+                  <View
+                    style={[
+                      styles.button,
+                      { backgroundColor: yesPrivate ? 'white' : '#202020' },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        { color: yesPrivate ? 'black' : '#fff' },
+                      ]}
+                    >
+                      Private
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+
+
+
+              <TouchableOpacity style={{ marginTop: 40, marginBottom: 40 }} activeOpacity={0.6} onPress={addChallengeToFirestore}>
+                <View style={{ borderWidth: 1.4, padding: 12, borderRadius: 8, width: 200, alignSelf: 'center', backgroundColor: '#fff' }}>
+                  <Text style={{ textAlign: 'center', fontWeight: '500' }}>Create Challenge +</Text>
+                </View>
+              </TouchableOpacity>
+
+            </ScrollView>
+          </View>
+
+        </View>
+      </Modal>
     </>
   )
 }
@@ -906,7 +1157,7 @@ const styles = StyleSheet.create({
     // alignSelf: 'center'
   },
   modalContainer4: {
-    backgroundColor: '#91CCFF',
+    backgroundColor: '#162B96',
     height: '96%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -921,5 +1172,21 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '95%',
     alignSelf: 'center'
+  },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    maxWidth: 250,
+    marginTop: 20,
+  },
+  button: {
+    padding: 12,
+    width: 100,
+    borderRadius: 6,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    textAlign: 'center',
   },
 })
