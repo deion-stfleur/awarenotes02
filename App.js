@@ -28,7 +28,7 @@ const Tab = createBottomTabNavigator();
 
 function HomeTabNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="Home"  options={{
         tabBarIcon: ({ focused }) => (
           <FontAwesome

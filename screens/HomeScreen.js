@@ -393,6 +393,25 @@ const HomeScreen = ({navigation}) => {
   <>
     <SafeAreaView style={{paddingTop:
     Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0), backgroundColor: '#EEECE4'}}>
+    
+    <View style={{flexDirection: 'row',justifyContent: 'space-between',width:'95%',alignSelf: 'center',alignItems: 'center',marginBottom: 12}}>
+
+      <View>
+        <Text style={{fontSize: 23,fontWeight: 'bold',color: '#4358D8'}}>Awarenotes</Text>
+      </View>
+
+      <View style={{flexDirection: 'row'}}>
+<TouchableOpacity activeOpacity={0.6}>
+    <Ionicons name="person-circle" size={30} color="black"  />
+</TouchableOpacity>
+    <View style={{width: 15,backgroundColor: 'transparent'}}></View>
+
+    <TouchableOpacity activeOpacity={0.6}>
+    <Ionicons name="ios-notifications" size={30} color="black" />
+    </TouchableOpacity>
+      </View>
+    </View>
+    
     </SafeAreaView>
     <ScrollView style={{backgroundColor: '#EEECE4'}}>
 
@@ -407,17 +426,17 @@ const HomeScreen = ({navigation}) => {
         </View>
 
         <TouchableOpacity activeOpacity={0.6} onPress={openModal2} style={{marginTop: 10}}>
-      <View style={{height: 75,width: 75, backgroundColor: '#c4c4c4',borderRadius: '50%',marginRight: 12,borderColor: '#fff',borderWidth:2}}>
+      {/* <View style={{height: 75,width: 75, backgroundColor: '#c4c4c4',borderRadius: '50%',marginRight: 12,borderColor: '#fff',borderWidth:2}}>
 
         <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
-        {/* <Text style={{color: '#fff'}}>test</Text> */}
+        <Text style={{color: '#fff'}}>test</Text>
         </View>
-      </View>
+      </View> */}
         </TouchableOpacity>
         <View>
-        <Text style={{marginTop: 10,fontSize: 19}}>{greeting}</Text>
-      <Text  style={{fontSize: 29, fontWeight: '500'}}>Deion</Text>
-      <Text onPress={handleSignOut} style={{marginTop: 10}}>Logout <AntDesign name="logout" size={12} color="black" /></Text>
+        <Text style={{marginTop: 10,fontSize: 34,fontWeight:'500'}}>{greeting}</Text>
+      {/* <Text  style={{fontSize: 29, fontWeight: '500'}}>Deion</Text> */}
+      {/* <Text onPress={handleSignOut} style={{marginTop: 10}}>Logout <AntDesign name="logout" size={12} color="black" /></Text> */}
         </View>
       
       </View>
@@ -628,15 +647,15 @@ const HomeScreen = ({navigation}) => {
     </TouchableOpacity>
 
 
-    <TouchableOpacity style={{backgroundColor:'#F6BF04',borderRadius: 6, width: 200,marginRight: 20}} activeOpacity={0.8}>
+    {/* <TouchableOpacity style={{backgroundColor:'#F6BF04',borderRadius: 6, width: 200,marginRight: 20}} activeOpacity={0.8}>
         
     <View style={{alignItems: 'center', justifyContent: 'center',flex: 1}}>
         <Text style={{fontSize: 20, fontWeight: 'bold',textAlign: 'center'}}>Take the daily quiz!</Text>
-        {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>/ */}
+        <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>/
         </View>
 
         
-    </TouchableOpacity>
+    </TouchableOpacity> */}
 
 
     <TouchableOpacity onPress={() => navigation.navigate("GoalsScreen")} style={{borderWidth: 2,borderColor: 'blue',borderRadius: 6,width: 200,marginRight: 20}} activeOpacity={0.6}>

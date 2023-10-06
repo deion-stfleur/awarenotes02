@@ -288,6 +288,7 @@ const ChallengesScreen = ({ navigation }) => {
   return (
     <>
 
+<SafeAreaView></SafeAreaView>
 
       <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#EEECE4' }}>
 
