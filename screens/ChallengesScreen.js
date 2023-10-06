@@ -28,6 +28,28 @@ const ChallengesScreen = ({ navigation }) => {
   const [durationFrom, setDurationFrom] = useState('');
   const [durationTo, setDurationTo] = useState('');
   const [authenticatedUserId, setAuthenticatedUserId] = useState(null);
+  const [challenges, setChallenges] = useState([]);
+
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const challengesQuery = query(collection(db, 'challenges'));
+        const challengesSnapshot = await getDocs(challengesQuery);
+
+        const challengesData = [];
+        challengesSnapshot.forEach((doc) => {
+          challengesData.push({ id: doc.id, ...doc.data() });
+        });
+
+        setChallenges(challengesData);
+      } catch (error) {
+        console.error('Error fetching challenges: ', error);
+        // Handle the error as needed
+      }
+    };
+
+    fetchChallenges();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -103,7 +125,7 @@ const ChallengesScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchUserFeedback = async () => {
       const user = auth.currentUser.email;
-      const feedbackRef = collection(db, 'phase1-feedback');
+      const feedbackRef = collection(db, 'challenges');
       const userFeedbackQuery = query(feedbackRef, where('userId', '==', user));
 
       try {
@@ -356,17 +378,17 @@ const ChallengesScreen = ({ navigation }) => {
         },
         privacy: yesPublic ? 'Public' : 'Private',
       };
-  
+
       // Add the data to a Firestore collection
       const docRef = await addDoc(collection(db, 'challenges'), challengeData);
-  
+
       // Clear the form fields or reset state as needed
       setChallengeName('');
       setChallengeDescription('');
       setGoal('');
       closeModal9();
       // ... and other state variables you may have
-  
+
       // Optionally, you can display a success message or navigate to another screen
       // or perform other actions after successfully adding the data.
     } catch (error) {
@@ -422,7 +444,20 @@ const ChallengesScreen = ({ navigation }) => {
 
         {selectedBtnIndex === 0 ? (
           <View>
-            {/* <Text>explore challenges</Text> */}
+            {challenges.map((challenge) => (
+              <TouchableOpacity activeOpacity={0.6} key={challenge.id} style={{width:'90%',alignSelf: 'center',marginLeft: 10,marginTop: 30, borderWidth: 1,borderRadius: 6}}>
+              <View style={{padding: 12}}>
+              <Image style={{ height: 200, width: '100%', marginBottom: 12, borderRadius: 6 }} source={{ uri: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y3ljbGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60' }} />
+
+                <Text>{challenge.challengeName}</Text>
+                <Text>Challenge Description: {challenge.challengeDescription}</Text>
+                <Text>Challenge Description: {challenge.duration.from}</Text>
+                <Text>Challenge Description: {challenge.duration.to}</Text>
+                <Text>Challenge Description: {challenge.goal}</Text>
+                <Text>Challenge Description: {challenge.privacy}</Text>
+              </View>
+              </TouchableOpacity>
+            ))}
           </View>
 
         ) : selectedBtnIndex === 1 ? (
@@ -458,8 +493,13 @@ const ChallengesScreen = ({ navigation }) => {
                       <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('ChallengeDetail', { item })}>
 
                         <View style={{ marginBottom: 10, borderWidth: 1, padding: 20, borderRadius: 4, marginBottom: 17 }}>
+                          <Image style={{ height: 200, width: '100%', marginBottom: 12, borderRadius: 6 }} source={{ uri: 'https://images.unsplash.com/photo-1665686374221-1901faa9f3ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aGFwcHl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60' }} />
                           <Text>Challenge Name: {item.challengeName}</Text>
                           <Text>Challenge Description: {item.challengeDescription}</Text>
+                          <Text>Challenge Description: {item.duration.from}</Text>
+                          <Text>Challenge Description: {item.duration.to}</Text>
+                          <Text>Challenge Description: {item.goal}</Text>
+                          <Text>Challenge Description: {item.privacy}</Text>
                           {/* You can add more details from your feedback object here */}
                         </View>
                       </TouchableOpacity>
@@ -1008,12 +1048,12 @@ const ChallengesScreen = ({ navigation }) => {
               <Text style={{ marginTop: 40, fontSize: 17, color: '#fff', fontWeight: 'bold', marginBottom: 15 }}>Duration</Text>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Text style={{ color: '#fff', fontSize: 17, marginRight: 8 }}>From</Text>
-                <TextInput  value={durationFrom}
-                onChangeText={setDurationFrom} keyboardType='numeric' placeholder='dd/mm' placeholderTextColor={'black'} style={{ borderWidth: 1, backgroundColor: 'lightgray', width: 90, padding: 14 }} maxLength={4} />
+                <TextInput value={durationFrom}
+                  onChangeText={setDurationFrom} keyboardType='numeric' placeholder='dd/mm' placeholderTextColor={'black'} style={{ borderWidth: 1, backgroundColor: 'lightgray', width: 90, padding: 14 }} maxLength={4} />
                 <Text style={{ color: '#fff', fontSize: 18 }}>-</Text>
                 <Text style={{ color: '#fff', fontSize: 17, marginRight: 8 }}>To</Text>
-                <TextInput  value={durationTo}
-                onChangeText={setDurationTo} keyboardType='numeric' placeholder='dd/mm' placeholderTextColor={'black'} style={{ borderWidth: 1, backgroundColor: 'lightgray', width: 90, padding: 14 }} maxLength={4} />
+                <TextInput value={durationTo}
+                  onChangeText={setDurationTo} keyboardType='numeric' placeholder='dd/mm' placeholderTextColor={'black'} style={{ borderWidth: 1, backgroundColor: 'lightgray', width: 90, padding: 14 }} maxLength={4} />
               </View>
 
               <Text style={{ marginTop: 40, fontSize: 17, color: '#fff', fontWeight: 'bold' }}>Privacy*</Text>

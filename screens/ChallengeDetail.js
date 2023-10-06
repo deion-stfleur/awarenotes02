@@ -20,8 +20,11 @@ const ChallengeDetail = ({route, navigation}) => {
     <View style={{flex: 1,justifyContent:'center',alignItems:'center'}}>
       <Text>Why you need this challenge?</Text>
 
-      <Text>Challenge Name: {item.challengeName}</Text>
-                <Text>Challenge Description: {item.challengeDescription}</Text>
+      <Text>Challenge Description: {item.challengeDescription}</Text>
+                          <Text>Challenge Description: {item.duration.from}</Text>
+                          <Text>Challenge Description: {item.duration.to}</Text>
+                          <Text>Challenge Description: {item.goal}</Text>
+                          <Text>Challenge Description: {item.privacy}</Text>
                 <Text>Challenge Starting in</Text>
                 <TextInput style={{borderWidth: 1,width: '90%',marginTop: 30,borderRadius: 4,padding: 12}} />
 
