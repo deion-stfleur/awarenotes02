@@ -53,8 +53,10 @@ const Meditation = ({ navigation }) => {
                 </TouchableOpacity>
             </SafeAreaView>
 
+            <ScrollView style={{backgroundColor: '#EEECE4' }}>
+
             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 100 }}>
-                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%' }}>
+                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%',backgroundColor:'#fff' }}>
                     <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Mindfulness Meditation</Text>
                     <TouchableOpacity onPress={handleCompletePress} activeOpacity={0.6}>
                         <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
@@ -65,7 +67,7 @@ const Meditation = ({ navigation }) => {
 
                 <View style={{ width: 10, backgroundColor: 'transparent' }}></View>
 
-                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%' }}>
+                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%',backgroundColor:'#fff' }}>
                     <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Guided Meditation for Relaxation</Text>
                     <TouchableOpacity onPress={handleCompletePress2} activeOpacity={0.6}>
                         <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted2 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
@@ -77,7 +79,7 @@ const Meditation = ({ navigation }) => {
 
 
             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 20 }}>
-                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%' }}>
+                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%',backgroundColor:'#fff' }}>
                     <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Mindfulness Meditation</Text>
                     <TouchableOpacity onPress={handleCompletePress3} activeOpacity={0.6}>
                         <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted3 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
@@ -88,7 +90,7 @@ const Meditation = ({ navigation }) => {
 
                 <View style={{ width: 10, backgroundColor: 'transparent' }}></View>
 
-                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%' }}>
+                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%',backgroundColor:'#fff' }}>
                     <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Guided Meditation for Relaxation</Text>
                     <TouchableOpacity onPress={handleCompletePress4} activeOpacity={0.6}>
                         <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted4 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
@@ -100,7 +102,7 @@ const Meditation = ({ navigation }) => {
 
 
             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 20 }}>
-                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%' }}>
+                <View style={{ borderWidth: 1, padding: 12, borderRadius: 6, width: '45%',backgroundColor:'#fff' }}>
                     <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Mindfulness Meditation</Text>
                     <TouchableOpacity onPress={handleCompletePress5} activeOpacity={0.6}>
                         <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted5 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
@@ -133,6 +135,8 @@ const Meditation = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
+
+            </ScrollView>
 
      
         </>

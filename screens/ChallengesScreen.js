@@ -406,7 +406,7 @@ const ChallengesScreen = ({ navigation }) => {
           Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0)
       }}>
 
-        <View style={{ marginLeft: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%' }}>
+        <View style={{ marginLeft: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%',marginBottom: 10 }}>
           <Text style={{ marginLeft: 10, fontSize: 30, fontWeight: 'bold', marginTop: 4 }}>Challenges</Text>
 
           <View>
@@ -443,21 +443,52 @@ const ChallengesScreen = ({ navigation }) => {
         </View>
 
         {selectedBtnIndex === 0 ? (
-          <View>
-            {challenges.map((challenge) => (
-              <TouchableOpacity activeOpacity={0.6} key={challenge.id} style={{width:'90%',alignSelf: 'center',marginLeft: 10,marginTop: 30, borderWidth: 1,borderRadius: 6}}>
-              <View style={{padding: 12}}>
-              <Image style={{ height: 200, width: '100%', marginBottom: 12, borderRadius: 6 }} source={{ uri: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y3ljbGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60' }} />
 
-                <Text>{challenge.challengeName}</Text>
-                <Text>Challenge Description: {challenge.challengeDescription}</Text>
-                <Text>Challenge Description: {challenge.duration.from}</Text>
+
+          <View>
+
+
+            <View style={{backgroundColor:'#7A7F97',width:'90%',alignSelf: 'center',marginTop: 15,height: 190,borderRadius: 8}}>
+              <View style={{padding: 12}}>
+                 <Text style={{color: '#fff',fontSize: 17}}>Featured</Text>
+                 <Text style={{color: '#202020',fontSize: 17,marginTop: 5,fontWeight:'bold'}}>14 day Monthly Challenge</Text>
+              </View>
+            </View>
+
+
+
+            <Text style={{width:'90%',alignSelf: 'center',marginTop: 25,fontSize: 22,fontWeight: 'bold'}}>Upcoming challenges</Text>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+
+            {challenges.map((challenge) => (
+              <TouchableOpacity onPress={() => navigation.navigate('PublicChallenge', { challenge })} activeOpacity={.8} key={challenge.id} style={{marginLeft: 10,marginTop: 20,borderRadius: 6}}>
+              <View style={{padding: 12}}>
+
+                <View>
+              <Image style={{ height: 200, width: 300, marginBottom: 12, borderRadius: 6, objectFit:'cover' }} source={{ uri: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y3ljbGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60' }} />
+              <View style={{backgroundColor: 'blue',width: 96,padding: 10,borderRadius: 6,position:'absolute',top: 14,left: 10}}>
+            
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+              <Ionicons name="person-circle-sharp" size={24} color="white" style={{marginRight: 5}} />
+            <Text style={{color: '#fff',fontSize: 14,fontWeight:'bold'}}>{challenge.privacy}</Text>
+            </View>
+              </View>
+                </View>
+                <View style={{maxWidth: 250}}>
+
+                <Text style={{fontSize: 18,fontWeight: 'bold'}}>{challenge.challengeName}</Text>
+                {/* <Text>Challenge Description: {challenge.challengeDescription}</Text> */}
+                {/* <Text>Challenge Description: {challenge.duration.from}</Text>
                 <Text>Challenge Description: {challenge.duration.to}</Text>
                 <Text>Challenge Description: {challenge.goal}</Text>
-                <Text>Challenge Description: {challenge.privacy}</Text>
+                <Text>Challenge Description: {challenge.privacy}</Text> */}
+                </View>
               </View>
               </TouchableOpacity>
             ))}
+            </ScrollView>
+
           </View>
 
         ) : selectedBtnIndex === 1 ? (

@@ -453,7 +453,8 @@ const HomeScreen = ({navigation}) => {
 
         <TouchableOpacity onPress={() => handleButtonClick('Hopeful')} activeOpacity={0.6} style={{width: '33%'}}>
       <View style={{borderColor: selectedButton === 'Hopeful' ? 'blue' : 'transparent', borderWidth: 1,padding: 8, borderRadius: 13, marginRight: 5, backgroundColor: '#f5f5f3'}}>
-                <Fontisto style={{alignSelf: 'center',color: '#FABE0E'}} name="neutral" size={34}  />
+            
+                <Entypo style={{alignSelf: 'center',color: '#FABE0E'}} name="emoji-flirt" size={34} color="black" />
                 <Text style={{marginTop: 5, textAlign: 'center'}}>Hopeful</Text>
             </View>
         </TouchableOpacity>
@@ -489,7 +490,8 @@ const HomeScreen = ({navigation}) => {
 
 <TouchableOpacity activeOpacity={0.6} style={{width: '33%'}} onPress={() => handleButtonClick('Sad')}>
       <View  style={{borderColor: selectedButton === 'Sad' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
-            <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="blue" />
+         
+            <Entypo style={{alignSelf: 'center'}} name="emoji-sad" size={34} color="blue" />
                 <Text style={{marginTop: 5, textAlign: 'center'}}>Sad</Text>
             </View>
 </TouchableOpacity>
@@ -498,7 +500,7 @@ const HomeScreen = ({navigation}) => {
 <TouchableOpacity activeOpacity={0.6} style={{width: '33%'}} onPress={() => handleButtonClick('Confused')}>
 
       <View  style={{borderColor: selectedButton === 'Confused' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
-            <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="orange" />
+            <Fontisto style={{alignSelf: 'center'}} name="confused" size={34} color="orange" />
                 <Text style={{marginTop: 5, textAlign: 'center'}}>Confused</Text>
             </View>
 </TouchableOpacity>
@@ -509,7 +511,8 @@ const HomeScreen = ({navigation}) => {
       <View style={{flexDirection: 'row',marginTop: 4}}>
 <TouchableOpacity activeOpacity={0.6} style={{width: '33%'}} onPress={() => handleButtonClick('Lazy')}>
 <View  style={{borderColor: selectedButton === 'Lazy' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
-      <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="black" />
+     
+      <MaterialCommunityIcons name="sticker-emoji" size={34} color="black" style={{alignSelf: 'center'}} />
           <Text style={{marginTop: 5, textAlign: 'center'}}>Lazy</Text>
       </View>
 </TouchableOpacity>
@@ -517,7 +520,8 @@ const HomeScreen = ({navigation}) => {
 
 <TouchableOpacity style={{width: '33%'}} activeOpacity={0.6} onPress={() => handleButtonClick('Inspired')}>
 <View  style={{borderColor: selectedButton === 'Inspired' ? 'blue' : 'transparent',borderWidth: 1,padding: 8, borderRadius: 13,marginRight: 5,backgroundColor: '#f5f5f3'}}>
-      <Fontisto style={{alignSelf: 'center'}} name="rage" size={34} color="pink" />
+     
+      <Feather name="star" size={34} color="pink"  style={{alignSelf: 'center'}} />
           <Text style={{marginTop: 5, textAlign: 'center'}}>Inspired</Text>
       </View>
 </TouchableOpacity>
