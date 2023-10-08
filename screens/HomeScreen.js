@@ -94,6 +94,7 @@ const HomeScreen = ({navigation}) => {
     const [selectedButton, setSelectedButton] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalVisible2, setIsModalVisible2] = useState(false);
+    const [isModalVisible3, setIsModalVisible3] = useState(false);
     const [description, setDescription] = useState('');
     const [isScrollViewVisible, setIsScrollViewVisible] = useState(true);
 
@@ -304,6 +305,15 @@ const HomeScreen = ({navigation}) => {
       setIsModalVisible2(false);
     };
 
+    const openModal3 = () => {
+      setIsModalVisible3(true);
+    };
+
+
+    const closeModal3 = () => {
+      setIsModalVisible3(false);
+    };
+
 
     useEffect(() => {
         // Function to reset the counter to 0 at the end of the day
@@ -401,6 +411,12 @@ const HomeScreen = ({navigation}) => {
       </View>
 
       <View style={{flexDirection: 'row'}}>
+      <View>
+            <TouchableOpacity activeOpacity={0.6} onPress={openModal3}>
+              <Ionicons name="md-add-circle" size={29} color="black" />
+            </TouchableOpacity>
+          </View>
+            <View style={{width: 15,backgroundColor: 'transparent'}}></View>
 <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("ProfileScreen")}>
     <Ionicons name="person-circle" size={30} color="black"  />
 </TouchableOpacity>
@@ -969,6 +985,35 @@ It eases your mind, reducing stress and anxiety...Read more</Text>
     </Modal>
 
 
+    <Modal visible={isModalVisible3} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible3(false)}>
+
+<View style={styles.modalContainer3}>
+
+<View style={styles.modalContent3}>
+
+  <View style={{flex:.6,justifyContent:'center',alignItems:'center'}}>
+
+    <Text style={{fontSize: 30,textAlign:'center',fontWeight:'bold'}}>Accountability Partners</Text>
+    <Text style={{textAlign:'center',fontSize: 19,marginTop: 12}}>Stay motivated together!</Text>
+    <Text style={{textAlign:'center',width:'90%',alignSelf:'center',marginTop: 40,fontSize: 20}}>Invite your closest friend to the app by connecting with their email and share your journey with them.</Text>
+    <TextInput placeholder='Email' style={{borderWidth: 1, width: '90%',alignSelf:'center',borderRadius: 6,padding: 15,marginTop: 50}} />
+    <TextInput placeholder='Your Name' style={{borderWidth: 1, width: '90%',alignSelf:'center',borderRadius: 6,padding: 15,marginTop: 18}} />
+  </View>
+
+
+
+
+<View style={{backgroundColor: 'black',width: 45,borderRadius: '50%',alignSelf: 'center'}}>
+    <Text style={{color: '#fff',fontWeight: 'bold',fontSize: 24, textAlign: 'center',padding:8}} onPress={closeModal3}>x</Text>
+</View>
+
+</View>
+
+</View>
+
+</Modal>
+
+
     {/* <View style={{backgroundColor: '#fff', width: '100%',height: 300}}>
 
         <Text style={{textAlign: 'center',marginTop: 50, fontSize: 19, fontWeight: 'bold'}}>Try Premium</Text>
@@ -1058,5 +1103,22 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '95%',
         alignSelf: 'center'
-      }
+      },
+      modalContainer3: {
+        backgroundColor: 'white',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        position: 'absolute',
+        zIndex: 999,
+        width: '100%',
+        bottom: 0,
+      },
+      modalContent3: {
+        flex: 1,
+        marginTop: 90,
+        width: '95%',
+        alignSelf: 'center'
+      },
 })

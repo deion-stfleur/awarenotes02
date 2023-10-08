@@ -60,7 +60,7 @@ const PublicChallengeDetailScreen = ({ route, navigation }) => {
 
                 <View style={{width:'90%',alignSelf:'center',marginTop: 40}}>
                     <View style={{backgroundColor:'#7A7F97',padding: 24,borderRadius: 6}}>
-                        <Text>Reminder?</Text>
+                        <Text style={{color:'#fff',fontWeight:'500'}}>Reminder?</Text>
                     </View>
                 </View>
 
@@ -90,6 +90,13 @@ const PublicChallengeDetailScreen = ({ route, navigation }) => {
 
                 </View>
             </ScrollView>
+                <View style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: '#7A7F97' }}>
+                    <TouchableOpacity>
+                    <View style={{ padding: 24, borderRadius: 6 }}>
+                        <Text style={{ textAlign: 'center', color: '#fff', fontSize: 18, fontWeight: 'bold' }}>Join</Text>
+                    </View>
+                    </TouchableOpacity>
+                </View>
         </>
     )
 }

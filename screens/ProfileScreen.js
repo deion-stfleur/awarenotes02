@@ -9,9 +9,12 @@ const ProfileScreen = ({ navigation }) => {
     const handleSignOut = () => {
         auth.signOut()
             .then(() => {
-                navigation.replace("Login")
+                navigation.replace("Login");
             })
-            .catch(error => alert.message)
+            .catch(error => {
+                // Use `error.message` to access and display the error message
+                alert(error.message);
+            });
     }
     return (
         <>

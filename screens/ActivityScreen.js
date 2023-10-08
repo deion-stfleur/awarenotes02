@@ -27,6 +27,7 @@ const ActivityScreen = () => {
 
 
   const [orders, setOrders] = useState([]);
+  const [orders2, setOrders2] = useState([]);
 
 
   useEffect(() => {
@@ -40,11 +41,21 @@ const ActivityScreen = () => {
       setOrders(ordersData);
     });
 
+
+    const unsubscribe2 = onSnapshot(collection(db, 'userEmails'), (snapshot) => {
+      const ordersData2 = [];
+      snapshot.forEach((doc) => {
+        ordersData2.push({ id: doc.id, ...doc.data() });
+      });
+      setOrders2(ordersData2);
+    });
+
  
 
 
     return () => {
       unsubscribe(); 
+      unsubscribe2(); 
    
     }// Unsubscribe from the snapshot listener when the component unmounts
   }, []);
@@ -120,7 +131,21 @@ const ActivityScreen = () => {
 
     </View> */}
 
-    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Moodyboard</Text>
+    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Your Activity</Text>
+    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Other Members</Text>
+
+
+           {orders2.map((order) => (
+
+                <TouchableOpacity  key={order.id} activeOpacity={0.7}>
+
+                <View key={order.id} style={{borderWidth: 1, width: '90%', marginBottom: 10, padding: 10, borderRadius: 4, backgroundColor: '#fff', alignSelf: 'center'}}>
+                 
+                  <Text style={{fontSize: 16}}>{order.userEmail}</Text>
+                </View>
+                </TouchableOpacity>
+              ))}
+
  
               {/* {orders.map((order) => (
 
