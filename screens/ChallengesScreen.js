@@ -448,10 +448,13 @@ const ChallengesScreen = ({ navigation }) => {
           <View>
 
 
-            <View style={{backgroundColor:'#7A7F97',width:'90%',alignSelf: 'center',marginTop: 15,height: 190,borderRadius: 8}}>
-              <View style={{padding: 12}}>
+            <View style={{backgroundColor:'#7A7F97',width:'90%',alignSelf: 'center',marginTop: 15,height: 220,borderRadius: 8}}>
+              <View style={{backgroundColor: 'lightgray',position: 'absolute',bottom: 0,width:'100%',borderBottomLeftRadius: 6, borderBottomRightRadius: 6}}>
+
+                <View style={{padding: 12}}>
                  <Text style={{color: '#fff',fontSize: 17}}>Featured</Text>
                  <Text style={{color: '#202020',fontSize: 17,marginTop: 5,fontWeight:'bold'}}>14 day Monthly Challenge</Text>
+                </View>
               </View>
             </View>
 
@@ -512,9 +515,9 @@ const ChallengesScreen = ({ navigation }) => {
               ) : null}
 
               <View style={{ width: '90%', alignSelf: 'center' }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent</Text>
+                {/* <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent</Text> */}
                 {userFeedbackData.length === 0 ? (
-                  <Text>No feedback available</Text>
+                  null
                 ) : (
                   <FlatList
                     data={userFeedbackData}
@@ -523,22 +526,28 @@ const ChallengesScreen = ({ navigation }) => {
 
                       <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('ChallengeDetail', { item })}>
 
-                        <View style={{ marginBottom: 10, borderWidth: 1, padding: 20, borderRadius: 4, marginBottom: 17 }}>
+                        <View style={{ marginBottom: 10, padding: 20, borderRadius: 4, marginBottom: 17 }}>
                           <Image style={{ height: 200, width: '100%', marginBottom: 12, borderRadius: 6 }} source={{ uri: 'https://images.unsplash.com/photo-1665686374221-1901faa9f3ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8aGFwcHl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60' }} />
-                          <Text>Challenge Name: {item.challengeName}</Text>
-                          <Text>Challenge Description: {item.challengeDescription}</Text>
-                          <Text>Challenge Description: {item.duration.from}</Text>
+                          <Text style={{fontSize: 15,fontWeight:'bold',marginBottom: 12}}>Name: {item.challengeName}</Text>
+                          <Text>Description: {item.challengeDescription}</Text>
+                          {/* <Text>Challenge Description: {item.duration.from}</Text>
                           <Text>Challenge Description: {item.duration.to}</Text>
-                          <Text>Challenge Description: {item.goal}</Text>
-                          <Text>Challenge Description: {item.privacy}</Text>
-                          {/* You can add more details from your feedback object here */}
+                          <Text>Challenge Description: {item.goal}</Text> */}
+                          {/* <Text>Challenge Description: {item.privacy}</Text> */}
+                        
                         </View>
                       </TouchableOpacity>
                     )}
                   />
+                  
+               
                 )}
+
+                
               </View>
+              
             </View>
+            
 
 
             {/*   

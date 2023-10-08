@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Alert, Modal } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Alert, Modal, Platform,StatusBar } from 'react-native';
 import moment from 'moment';
 import { collection, query, onSnapshot } from 'firebase/firestore'
 import {db} from '../firebaseConfig'
@@ -24,6 +24,24 @@ const ActivityScreen = () => {
       </View>
     );
   }
+
+  const months = [
+    { name: 'January', days: 31 },
+    { name: 'February', days: 28 }, // Adjust for leap year if needed
+    { name: 'March', days: 31 },
+    { name: 'April', days: 30 },
+    { name: 'May', days: 31 },
+    { name: 'June', days: 30 },
+    { name: 'July', days: 31 },
+    { name: 'August', days: 31 },
+    { name: 'September', days: 30 },
+    { name: 'October', days: 31 },
+    { name: 'November', days: 30 },
+    { name: 'December', days: 31 },
+  ];
+
+  const [showAllMonths, setShowAllMonths] = useState(false);
+  const visibleMonths = showAllMonths ? months : [months[currentDate.month()]];
 
 
   const [orders, setOrders] = useState([]);
@@ -80,7 +98,8 @@ const ActivityScreen = () => {
 
   return (
     <>
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: '#EEECE4',paddingTop:
+    Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0)}}>
 
     </SafeAreaView>
 
@@ -131,7 +150,38 @@ const ActivityScreen = () => {
 
     </View> */}
 
-    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Your Activity</Text>
+<Text style={{ marginLeft: 20, fontSize: 20, marginTop: 40, fontWeight: 'bold', marginBottom: 22 }}>Your Activity</Text>
+
+<View style={{backgroundColor: '#7A7F97',padding: 5,width:'90%',alignSelf:'center',borderRadius: 6}}>
+    <View style={styles.container}>
+      {visibleMonths.map((month, index) => (
+        <View key={index}>
+          <Text style={styles.monthText}>{month.name}</Text>
+          <View style={styles.dayContainer2}>
+            {Array.from({ length: month.days }, (_, dayIndex) => (
+              <View key={dayIndex} style={styles.dayBox}>
+                {/* You can display the day's data here */}
+              </View>
+            ))}
+          </View>
+        </View>
+      ))}
+    </View>
+</View>
+    {!showAllMonths && (
+      <TouchableOpacity onPress={() => setShowAllMonths(true)}>
+        <Text style={{textAlign:'center',marginTop: 35}}>Show More +</Text>
+      </TouchableOpacity>
+    )}
+    {showAllMonths && (
+  <TouchableOpacity onPress={() => setShowAllMonths(false)}>
+    <Text style={{textAlign:'center',marginTop: 35}}>Show Less -</Text>
+  </TouchableOpacity>
+)}
+
+    <View>
+
+    </View>
     <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Other Members</Text>
 
 
@@ -235,7 +285,37 @@ const styles = StyleSheet.create({
     marginTop: 60,
     width: '95%',
     alignSelf: 'center'
-  }
+  },
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    width: '98%',
+    alignSelf: 'center',
+    
+  },
+  monthText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    margin: 10,
+  },
+  dayContainer2: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  dayBox: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'lightblue',
+    margin: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+  },
+  dayText2: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default ActivityScreen;

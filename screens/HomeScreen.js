@@ -97,10 +97,16 @@ const HomeScreen = ({navigation}) => {
     const [isModalVisible3, setIsModalVisible3] = useState(false);
     const [description, setDescription] = useState('');
     const [isScrollViewVisible, setIsScrollViewVisible] = useState(true);
+    const [email, setEmail] = useState('');
+    const [yourName, setYourName] = useState('');
+
+    const isSubmitDisabled3 = !email || !yourName 
 
     const [usersWithMeditation, setUsersWithMeditation] = useState([]);
     const [usersWithYoga,setUsersWithYoga] = useState([]);
 
+
+  
     useEffect(() => {
       // Get the user's email
       const user = auth.currentUser;
@@ -149,6 +155,32 @@ const HomeScreen = ({navigation}) => {
 
 
     const isSubmitDisabled = !description
+
+
+    const sendPartner = async () => {
+      const sameUser = auth.currentUser;
+      const order = {
+        userId: sameUser.email,
+        email: email,
+        yourName: yourName,
+      }
+
+      try {
+        const docRef = await addDoc(collection(db, 'accountability-partners'), order);
+        console.log('Document created with ID: ', docRef.id);
+      } catch (error) {
+        console.error('Error creating document:', error);
+      }
+    }
+
+    const addSendPartner = () => {
+      sendPartner();
+      closeModal3();
+      setEmail('');
+      setYourName('');
+
+    }
+
 
 
     const create = async () => {
@@ -991,19 +1023,35 @@ It eases your mind, reducing stress and anxiety...Read more</Text>
 
 <View style={styles.modalContent3}>
 
-  <View style={{flex:.6,justifyContent:'center',alignItems:'center'}}>
+  <View style={{flex: .85,justifyContent:'center',alignItems:'center'}}>
+
+    <View>
+      <View>
+        <View style={{height: 90,width: 90,backgroundColor: 'gray',borderRadius: '50%'}}></View>
+        <Text style={{textAlign:'center',marginTop: 15,fontSize: 19,marginBottom: 30}}>Me</Text>
+      </View>
+    </View>
 
     <Text style={{fontSize: 30,textAlign:'center',fontWeight:'bold'}}>Accountability Partners</Text>
     <Text style={{textAlign:'center',fontSize: 19,marginTop: 12}}>Stay motivated together!</Text>
     <Text style={{textAlign:'center',width:'90%',alignSelf:'center',marginTop: 40,fontSize: 20}}>Invite your closest friend to the app by connecting with their email and share your journey with them.</Text>
-    <TextInput placeholder='Email' style={{borderWidth: 1, width: '90%',alignSelf:'center',borderRadius: 6,padding: 15,marginTop: 50}} />
-    <TextInput placeholder='Your Name' style={{borderWidth: 1, width: '90%',alignSelf:'center',borderRadius: 6,padding: 15,marginTop: 18}} />
+    <TextInput value={email} onChangeText={setEmail} placeholderTextColor={'black'} placeholder='Their Email' style={{borderWidth: 1, width: '90%',alignSelf:'center',borderRadius: 6,padding: 15,marginTop: 50}} />
+    <TextInput value={yourName} onChangeText={setYourName}  placeholderTextColor={'black'}  placeholder='Your Name' style={{borderWidth: 1, width: '90%',alignSelf:'center',borderRadius: 6,padding: 15,marginTop: 18}} />
+ 
+
+ <TouchableOpacity activeOpacity={0.6} disabled={isSubmitDisabled3} onPress={addSendPartner}>
+  <View style={{marginTop: 40, backgroundColor: isSubmitDisabled ? 'gray' : 'black',width:'90%',alignSelf:'center',padding: 15,borderRadius: 6}}>
+    <Text style={{color:'#fff',textAlign:'center',fontWeight: 'bold',fontSize: 19}}>Add Partner</Text>
+  </View>
+
+ </TouchableOpacity>
+ 
   </View>
 
 
 
 
-<View style={{backgroundColor: 'black',width: 45,borderRadius: '50%',alignSelf: 'center'}}>
+<View style={{backgroundColor: 'black',width: 45,borderRadius: '50%',alignSelf: 'center',marginTop: 50}}>
     <Text style={{color: '#fff',fontWeight: 'bold',fontSize: 24, textAlign: 'center',padding:8}} onPress={closeModal3}>x</Text>
 </View>
 
