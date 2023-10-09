@@ -448,6 +448,8 @@ const ChallengesScreen = ({ navigation }) => {
           <View>
 
 
+          <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("FeaturedChallengeScreen")}>
+
             <View style={{backgroundColor:'#7A7F97',width:'90%',alignSelf: 'center',marginTop: 15,height: 220,borderRadius: 8}}>
               <View style={{backgroundColor: 'lightgray',position: 'absolute',bottom: 0,width:'100%',borderBottomLeftRadius: 6, borderBottomRightRadius: 6}}>
 
@@ -457,6 +459,7 @@ const ChallengesScreen = ({ navigation }) => {
                 </View>
               </View>
             </View>
+          </TouchableOpacity>
 
 
 

@@ -184,7 +184,7 @@ const ActivityScreen = () => {
     </View>
     <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Other Members</Text>
 
-
+      <View style={{marginBottom: 40}}>
            {orders2.map((order) => (
 
                 <TouchableOpacity  key={order.id} activeOpacity={0.7}>
@@ -195,6 +195,7 @@ const ActivityScreen = () => {
                 </View>
                 </TouchableOpacity>
               ))}
+      </View>
 
  
               {/* {orders.map((order) => (

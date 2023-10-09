@@ -15,6 +15,8 @@ import YogaGoal from './screens/goals/Yoga';
 import ProfileScreen from './screens/ProfileScreen';
 import ChallengeDetail from './screens/ChallengeDetail';
 import PublicChallengeDetailScreen from './screens/PublicChallengeDetailScreen';
+import AvatarScreen from './screens/AvatarScreen';
+import FeaturedChallenge from './screens/FeaturedChallenge';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -100,6 +102,8 @@ export default function App() {
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="ChallengeDetail" component={ChallengeDetail} />
         <Stack.Screen name="PublicChallenge" component={PublicChallengeDetailScreen} /> 
+        <Stack.Screen name="AvatarScreen" component={AvatarScreen} />
+        <Stack.Screen name="FeaturedChallengeScreen" component={FeaturedChallenge } />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

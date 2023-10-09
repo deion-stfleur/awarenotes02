@@ -131,7 +131,10 @@ const Meditation = ({ navigation }) => {
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>Completed!</Text>
+                        <Text style={styles.modalText}>Go You!!!</Text>
+                        <Text style={{textAlign:'center',alignSelf:'center',width:'90%',fontSize: 17}}>You've outperformed <Text style={{fontWeight:'bold',fontSize: 17}}>10 users</Text> and proved that you have what it takes to complete the journey.</Text>
+
+              
                     </View>
                 </View>
             </Modal>
@@ -156,9 +159,12 @@ const styles = StyleSheet.create({
     },
     modalText: {
         textAlign: 'center',
-        marginTop: 30,
-        fontSize: 50,
+        marginTop: 60,
+        marginBottom: 30,
+        fontSize: 40,
         fontWeight: 'bold',
-        color: 'green'
+        color: 'green',
+        width: '90%',
+        alignSelf: 'center'
     }
 })
