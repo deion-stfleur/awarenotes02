@@ -106,6 +106,30 @@ const HomeScreen = ({navigation}) => {
     const [usersWithYoga,setUsersWithYoga] = useState([]);
 
 
+    const fetchStreakCount = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(userDocRef);
+    
+        if (docSnap.exists()) {
+          return docSnap.data().streak;
+        }
+      }
+    
+      return 0; // Default streak count if the user is not found or the streak is not set
+    };
+
+    const [streakCount, setStreakCount] = useState(0);
+
+    useEffect(() => {
+      // Fetch the streak count and update the state
+      fetchStreakCount().then((count) => {
+        setStreakCount(count);
+      });
+    }, []);
+
+
   
     useEffect(() => {
       // Get the user's email
@@ -454,7 +478,7 @@ const HomeScreen = ({navigation}) => {
 </TouchableOpacity>
     <View style={{width: 15,backgroundColor: 'transparent'}}></View>
 
-    <TouchableOpacity activeOpacity={0.6}>
+    <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("NotificationsScreen")}>
     <Ionicons name="ios-notifications" size={30} color="black" />
     </TouchableOpacity>
       </View>
@@ -766,7 +790,7 @@ const HomeScreen = ({navigation}) => {
               <View style={{flexDirection:'row',justifyContent: 'space-between',alignItems: 'center'}}>
                 <View>
               <Text style={{color: '#fff',fontSize: 19,fontWeight: 'bold'}}>Meditation</Text>
-              <Text style={{color: '#fff'}}>🔥8</Text>
+              <Text style={{color: '#fff'}}>🔥{streakCount}</Text>
 
                 </View>
 

@@ -65,7 +65,7 @@ const PublicChallengeDetailScreen = ({ route, navigation }) => {
                 </View>
 
 
-                <View>
+                <View style={{marginBottom: 150}}>
                     <Text style={{ textAlign: 'center', marginTop: 40, fontSize: 18, fontWeight: 'bold' }}>Challenge starting in</Text>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', alignSelf: 'center', marginTop: 20 }}>
