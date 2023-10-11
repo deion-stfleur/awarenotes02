@@ -1,9 +1,12 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Image, Button } from 'react-native'
 import React, { useState } from 'react'
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { doc, setDoc, collection } from 'firebase/firestore';
+import { db, auth } from '../firebaseConfig';
+
 
 const GoalsScreen = ({ navigation }) => {
   const [selectedBtnIndex, setSelectedBtnIndex] = useState(0); // Set the default selected button index to 0
@@ -11,6 +14,64 @@ const GoalsScreen = ({ navigation }) => {
   const handleBtnPress = (index) => {
     setSelectedBtnIndex(index);
   }
+
+  const [pressedCount, setPressedCount] = useState(0);
+  const [showButton, setShowButton] = useState(false);
+
+  const handlePress = (itemText) => {
+    // Increment the pressedCount and set the showButton state
+    setPressedCount(pressedCount + 1);
+  
+    if (pressedCount + 1 >= 3) {
+      setShowButton(true);
+    }
+  
+    // Call handleButtonClick to add the pressed item to Firestore
+    handleButtonClick(itemText);
+  };
+  
+
+  const handleButtonClick = async (itemText) => {
+    // Check if the user is authenticated
+    if (!auth.currentUser) {
+      console.log('User not authenticated');
+      return;
+    }
+  
+    // Get the user's email
+    const userEmail = auth.currentUser.email;
+  
+    // Create a reference to the user's document
+    const userDocRef = doc(db, 'users', userEmail);
+  
+    // Define the data to be added to the "brokenHabits" collection
+    const habitData = {
+      text: itemText,
+      // You can add more data as needed
+    };
+  
+    try {
+      // Add the habit data to the "brokenHabits" subcollection
+      await setDoc(doc(userDocRef, 'brokenHabits', itemText), habitData);
+      console.log('Habit added to Firestore');
+    } catch (error) {
+      console.error('Error adding habit to Firestore:', error);
+    }
+  };
+  
+
+  // You can create an array of item data for easy scaling
+  const items = [
+    { text: 'Limit Junk Food', iconName: 'pluscircle' },
+    { text: 'Stop Drinking', iconName: 'pluscircle' }, // Example with a different icon
+    { text: 'Limit Overeating', iconName: 'pluscircle' },
+    // Add three more items here
+    { text: 'Limit Screen Time', iconName: 'pluscircle' },
+    { text: 'Overspending', iconName: 'pluscircle' },
+    { text: 'Nail Biting', iconName: 'pluscircle' },
+  ];
+
+
 
   return (
     <>
@@ -106,6 +167,15 @@ const GoalsScreen = ({ navigation }) => {
                   </View>
                 </View>
 
+
+                <View style={{ backgroundColor: 'lightgray', width: '48%', height: 160, borderRadius: 10 }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, width: '90%', alignSelf: 'center' }}>
+
+                    <Text style={{ fontSize: 22, fontWeight: '500', width: '60%' }}>Create your own</Text>
+                    {/* <Image style={{height: 80,width: 80}} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/yoga.png?alt=media&token=b6a38ff6-7c1f-47b0-ab7f-80a46d000fc4'}} /> */}
+                  </View>
+                </View>
+
               </View>
 
               {/* 
@@ -152,41 +222,104 @@ const GoalsScreen = ({ navigation }) => {
                 <View style={{ backgroundColor: 'gray', width: 83, padding: 8, borderRadius: 20 }}>
                   <Text style={{ fontSize: 15, color: '#fff', textAlign: 'center', fontWeight: 'bold' }}>For You</Text>
                 </View>
-                <Text style={{ fontSize: 18, marginTop: 12 }}>We will empower you to break your habits by providing guidance, continuous reminders, and regular check-ins with both you and your support network.</Text>
+                <Text style={{ fontSize: 18, marginTop: 12 }}>We will empower you to break your habits by providing guidance, continuous reminders, and regular check-ins with both you and your support network. <Text style={{fontWeight: 'bold'}}>(choose a minimum of 4 daily.)</Text></Text>
               </View>
 
-              <TouchableOpacity activeOpacity={0.6}>
-                <View style={{ backgroundColor: '#D7D7D7', borderWidth: 1, width: '90%', height: 80, borderRadius: 10, alignSelf: 'center', marginTop: 30 }}>
-                  <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 30 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Limit Junk Food</Text>
+              {/* <TouchableOpacity activeOpacity={0.6}>
+                <View style={{ backgroundColor: '#E9E9E9', borderWidth: 1, width: '90%', borderRadius: 10, alignSelf: 'center', marginTop: 30 }}>
+                  <View style={{ padding: 20 }}>
+                    <View style={{flexDirection: 'row',alignItems: 'center',justifyContent:'space-between'}}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Limit Junk Food</Text>
+                    <AntDesign name="pluscircle" size={22} color="black" />
+                    </View>
                   </View>
                 </View>
               </TouchableOpacity>
 
               <TouchableOpacity activeOpacity={0.6}>
-                <View style={{ backgroundColor: '#D7D7D7', borderWidth: 1, width: '90%', height: 80, borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
-                  <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 30 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Stop Drinking</Text>
+                <View style={{ backgroundColor: '#E9E9E9', borderWidth: 1, width: '90%', borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
+                <View style={{ padding: 20 }}>
+                    <View style={{flexDirection: 'row',alignItems: 'center',justifyContent:'space-between'}}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Stop Drinking</Text>
+                    <AntDesign name="pluscircle" size={22} color="black" />
+                    </View>
                   </View>
                 </View>
               </TouchableOpacity>
 
               <TouchableOpacity activeOpacity={0.6}>
-                <View style={{ backgroundColor: '#D7D7D7', borderWidth: 1, width: '90%', height: 80, borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
-                  <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 30 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Limit Overeating</Text>
+                <View style={{ backgroundColor: '#E9E9E9', borderWidth: 1, width: '90%', borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
+                <View style={{ padding: 20 }}>
+                    <View style={{flexDirection: 'row',alignItems: 'center',justifyContent:'space-between'}}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Limit Overeating</Text>
+                    <AntDesign name="pluscircle" size={22} color="black" />
+                    </View>
                   </View>
                 </View>
               </TouchableOpacity>
 
               <TouchableOpacity activeOpacity={0.6}>
-                <View style={{ backgroundColor: '#D7D7D7', borderWidth: 1, width: '90%', height: 80, borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
-                  <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', padding: 30 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Limit Screen Time</Text>
+                <View style={{ backgroundColor: '#E9E9E9', borderWidth: 1, width: '90%', borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
+                <View style={{ padding: 20 }}>
+                    <View style={{flexDirection: 'row',alignItems: 'center',justifyContent:'space-between'}}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Limit Screen Time</Text>
+                    <AntDesign name="pluscircle" size={22} color="black" />
+                    </View>
                   </View>
                 </View>
               </TouchableOpacity>
 
+              <TouchableOpacity activeOpacity={0.6}>
+                <View style={{ backgroundColor: '#E9E9E9', borderWidth: 1, width: '90%', borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
+                <View style={{ padding: 20 }}>
+                    <View style={{flexDirection: 'row',alignItems: 'center',justifyContent:'space-between'}}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Overspending</Text>
+                    <AntDesign name="pluscircle" size={22} color="black" />
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={0.6}>
+                <View style={{ backgroundColor: '#E9E9E9', borderWidth: 1, width: '90%', borderRadius: 10, alignSelf: 'center', marginTop: 16 }}>
+                <View style={{ padding: 20 }}>
+                    <View style={{flexDirection: 'row',alignItems: 'center',justifyContent:'space-between'}}>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Nail Biting</Text>
+                    <AntDesign name="pluscircle" size={22} color="black" />
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity> */}
+
+
+<View>
+      {items.map((item, index) => (
+        <TouchableOpacity key={index} activeOpacity={0.6} onPress={() => handlePress(item.text)}>
+          <View style={{
+            borderWidth: pressedCount >= 3 ? 1 : 1,
+            borderColor: pressedCount >= 3 ? 'green' : 'black',
+            width: '90%',
+            borderRadius: 10,
+            alignSelf: 'center',
+            marginTop: 16, // Adjust the spacing between items
+          }}>
+            <View style={{ padding: 20 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{item.text}</Text>
+                <AntDesign name={item.iconName} size={22} color={pressedCount >= 3 ? 'green' : 'black'} />
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ))}
+
+      {/* {showButton && (
+        <>
+        <View style={{height: 30}}></View>
+        <Button title="Track Habits + 5xp" onPress={handleButtonClick} />
+        </>
+      )} */}
+    </View>
 
 
 

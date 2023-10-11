@@ -769,7 +769,7 @@ const HomeScreen = ({navigation}) => {
     <TouchableOpacity onPress={() => navigation.navigate("GoalsScreen")} style={{borderWidth: 2,borderColor: 'blue',borderRadius: 6,width: 200,marginRight: 20}} activeOpacity={0.6}>
       <View style={{alignItems: 'center',justifyContent: 'center',flex: 1}}>
         <View>
-          <Text style={{fontSize: 20,fontWeight: 'bold'}}><AntDesign name="pluscircle" size={16} color="black" /> Add More</Text>
+          <Text style={{fontSize: 20,fontWeight: 'bold'}}><AntDesign name="pluscircle" size={16} color="black" /> Habit Tracking</Text>
         </View>
       </View>
     </TouchableOpacity>

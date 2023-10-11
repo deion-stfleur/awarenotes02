@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from 'react';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Alert, Modal, Platform,StatusBar } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity, Alert, Modal, Platform,StatusBar, RefreshControl } from 'react-native';
 import moment from 'moment';
-import { collection, query, onSnapshot } from 'firebase/firestore'
-import {db} from '../firebaseConfig'
+import { collection, query, onSnapshot, where, getDocs, doc } from 'firebase/firestore'
+import {db, auth} from '../firebaseConfig'
 import { Ionicons } from '@expo/vector-icons';
 
 const ActivityScreen = () => {
@@ -93,8 +93,46 @@ const ActivityScreen = () => {
   const closeModal = () => {
     setIsModalVisible(false);
   };
-
+  const [brokenHabits, setBrokenHabits] = useState([]);
+  const userEmail = auth.currentUser.email;
   
+  const fetchBrokenHabits = async () => {
+    // Create a reference to the "brokenHabits" subcollection of the user's document
+    const userDocRef = doc(db, 'users', userEmail);
+    const brokenHabitsRef = collection(userDocRef, 'brokenHabits');
+  
+    // Query the "brokenHabits" subcollection
+    const q = query(brokenHabitsRef);
+  
+    try {
+      const querySnapshot = await getDocs(q);
+      const habitsData = [];
+      querySnapshot.forEach((doc) => {
+        habitsData.push(doc.data());
+      });
+      setBrokenHabits(habitsData);
+    } catch (error) {
+      console.error('Error fetching broken habits:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchBrokenHabits(); // Initial data fetch when the component mounts
+  }, []);
+  
+  const [refreshing, setRefreshing] = useState(false);
+  
+  const onRefresh = () => {
+    setRefreshing(true);
+  
+    // Call fetchBrokenHabits to re-fetch the data
+    fetchBrokenHabits();
+  
+    setTimeout(() => {
+      // Simulate data fetching completion
+      setRefreshing(false);
+    }, 2000);
+  };
 
   return (
     <>
@@ -103,7 +141,14 @@ const ActivityScreen = () => {
 
     </SafeAreaView>
 
-<ScrollView style={{backgroundColor: '#EEECE4'}}>
+<ScrollView  refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="#000"
+          colors={['#000']}
+        />
+      } style={{backgroundColor: '#EEECE4'}}>
 
     <View>
 
@@ -150,7 +195,32 @@ const ActivityScreen = () => {
 
     </View> */}
 
-<Text style={{ marginLeft: 20, fontSize: 20, marginTop: 40, fontWeight: 'bold', marginBottom: 22 }}>Today</Text>
+<Text style={{ marginLeft: 20, fontSize: 30, marginTop: 40, fontWeight: 'bold' }}>Today</Text>
+<View>
+  <Text style={{ width: '90%', alignSelf: 'center', marginBottom: 14, marginTop: 8, fontSize: 16 }}>Your Broken Habits:</Text>
+  {brokenHabits.length === 0 ? ( // Check if the brokenHabits array is empty
+    <Text style={{ width: '90%', alignSelf: 'center', fontSize: 16, textAlign: 'center', marginTop: 30 }}>
+      No broken habits to display.... you either are done for the day (yaaay!!) or need to add more to conquer!!!
+    </Text>
+  ) : (
+    brokenHabits.map((habit, index) => (
+      <TouchableOpacity
+        activeOpacity={0.6}
+        key={index}
+        style={{
+          width: '90%',
+          alignSelf: 'center',
+          marginBottom: 12,
+          backgroundColor: '#7A7F97',
+          padding: 16,
+          borderRadius: 6,
+        }}
+      >
+        <Text style={{ fontSize: 16, color: '#fff', fontWeight: 'bold' }}>{habit.text}</Text>
+      </TouchableOpacity>
+    ))
+  )}
+</View>
 
 {/* <View style={{backgroundColor: '#7A7F97',padding: 5,width:'90%',alignSelf:'center',borderRadius: 6}}>
     <View style={styles.container}>
