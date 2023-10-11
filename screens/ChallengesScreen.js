@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Modal, TextInput, Image, Alert, Platform, StatusBar, FlatList } from 'react-native'
+import { StyleSheet, RefreshControl, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Modal, TextInput, Image, Alert, Platform, StatusBar, FlatList } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -398,6 +398,19 @@ const ChallengesScreen = ({ navigation }) => {
   };
 
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+   
+    setRefreshing(true);
+
+    setTimeout(() => {
+      // Simulate data fetching completion
+      setRefreshing(false);
+    }, 2000);
+  };
+
+
   return (
     <>
 
@@ -417,7 +430,14 @@ const ChallengesScreen = ({ navigation }) => {
         </View>
       </SafeAreaView>
 
-      <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: '#EEECE4' }}>
+      <ScrollView refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="#000"
+          colors={['#000']}
+        />
+      }  showsVerticalScrollIndicator={false} style={{ backgroundColor: '#EEECE4' }}>
 
 
         {/* <Text style={{ fontWeight: 'bold', fontSize: 19, marginLeft: 17, marginTop: 20 }}>Leaderboards</Text> */}

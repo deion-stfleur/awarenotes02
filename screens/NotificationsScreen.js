@@ -1,9 +1,20 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, RefreshControl } from 'react-native'
+import React, {useState} from 'react'
 import { Ionicons } from '@expo/vector-icons'
 
 
 const NotificationsScreen = ({navigation}) => {
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = () => {
+   
+      setRefreshing(true);
+  
+      setTimeout(() => {
+        // Simulate data fetching completion
+        setRefreshing(false);
+      }, 2000);
+    };
     return (
         <>
             <SafeAreaView style={{ backgroundColor: '#EEECE4', paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0) }}>
@@ -28,7 +39,14 @@ const NotificationsScreen = ({navigation}) => {
                 </View>
 
             </SafeAreaView>
-<ScrollView style={{backgroundColor: '#EEECE4'}}>
+<ScrollView  refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="#000"
+          colors={['#000']}
+        />
+      } style={{backgroundColor: '#EEECE4'}}>
     
             <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
                 <Text style={{fontSize: 16, marginTop: 100}}>No Notifications yet..</Text>

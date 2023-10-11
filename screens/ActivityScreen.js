@@ -150,9 +150,9 @@ const ActivityScreen = () => {
 
     </View> */}
 
-<Text style={{ marginLeft: 20, fontSize: 20, marginTop: 40, fontWeight: 'bold', marginBottom: 22 }}>Your Activity</Text>
+<Text style={{ marginLeft: 20, fontSize: 20, marginTop: 40, fontWeight: 'bold', marginBottom: 22 }}>Today</Text>
 
-<View style={{backgroundColor: '#7A7F97',padding: 5,width:'90%',alignSelf:'center',borderRadius: 6}}>
+{/* <View style={{backgroundColor: '#7A7F97',padding: 5,width:'90%',alignSelf:'center',borderRadius: 6}}>
     <View style={styles.container}>
       {visibleMonths.map((month, index) => (
         <View key={index}>
@@ -160,15 +160,15 @@ const ActivityScreen = () => {
           <View style={styles.dayContainer2}>
             {Array.from({ length: month.days }, (_, dayIndex) => (
               <View key={dayIndex} style={styles.dayBox}>
-                {/* You can display the day's data here */}
+             
               </View>
             ))}
           </View>
         </View>
       ))}
     </View>
-</View>
-    {!showAllMonths && (
+</View> */}
+    {/* {!showAllMonths && (
       <TouchableOpacity onPress={() => setShowAllMonths(true)}>
         <Text style={{textAlign:'center',marginTop: 35}}>Show More +</Text>
       </TouchableOpacity>
@@ -177,7 +177,7 @@ const ActivityScreen = () => {
   <TouchableOpacity onPress={() => setShowAllMonths(false)}>
     <Text style={{textAlign:'center',marginTop: 35}}>Show Less -</Text>
   </TouchableOpacity>
-)}
+)} */}
 
     <View>
 
@@ -191,7 +191,10 @@ const ActivityScreen = () => {
 
                 <View key={order.id} style={{borderWidth: 1, width: '90%', marginBottom: 10, padding: 10, borderRadius: 4, backgroundColor: '#fff', alignSelf: 'center'}}>
                  
+                 <View style={{flexDirection: 'row',justifyContent: 'space-between',width:'95%',alignSelf: 'center'}}>
                   <Text style={{fontSize: 16}}>{order.userEmail}</Text>
+                  {/* <Text style={{fontSize: 16}}>{order.streak}</Text> */}
+                 </View>
                 </View>
                 </TouchableOpacity>
               ))}

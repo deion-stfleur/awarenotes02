@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Modal, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Modal, TextInput, Alert, RefreshControl } from 'react-native'
 import React,{useState, useEffect} from 'react'
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -99,6 +99,8 @@ const HomeScreen = ({navigation}) => {
     const [isScrollViewVisible, setIsScrollViewVisible] = useState(true);
     const [email, setEmail] = useState('');
     const [yourName, setYourName] = useState('');
+
+
 
     const isSubmitDisabled3 = !email || !yourName 
 
@@ -455,6 +457,18 @@ const HomeScreen = ({navigation}) => {
         .catch(error => alert.message)
       }
 
+      const [refreshing, setRefreshing] = useState(false);
+
+      const onRefresh = () => {
+        fetchStreakCount();
+        setRefreshing(true);
+    
+        setTimeout(() => {
+          // Simulate data fetching completion
+          setRefreshing(false);
+        }, 2000);
+      };
+
   return (
   <>
     <SafeAreaView style={{paddingTop:
@@ -485,7 +499,14 @@ const HomeScreen = ({navigation}) => {
     </View>
     
     </SafeAreaView>
-    <ScrollView style={{backgroundColor: '#EEECE4'}}>
+    <ScrollView    refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="#000"
+          colors={['#000']}
+        />
+      } style={{backgroundColor: '#EEECE4'}}>
 
 <View style={{flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', width: '95%'}}>
     <View style={styles.container}>
@@ -722,6 +743,17 @@ const HomeScreen = ({navigation}) => {
             </View> */}
     </TouchableOpacity>
 
+    <TouchableOpacity onPress={() => navigation.navigate("QuizScreen1")} style={{backgroundColor:'#755DC6',borderRadius: 6, width: 200, marginRight: 20, height: 200}} activeOpacity={0.8}>
+        
+        <View style={{alignItems: 'center', justifyContent: 'center',flex: 1}}>
+        <Text style={{fontSize: 20, fontWeight: 'bold',textAlign: 'center', color: '#fff'}}>Take the quiz!</Text>
+        {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>/ */}
+        </View>
+
+
+       
+    </TouchableOpacity>
+
 
     {/* <TouchableOpacity style={{backgroundColor:'#F6BF04',borderRadius: 6, width: 200,marginRight: 20}} activeOpacity={0.8}>
         
@@ -842,6 +874,12 @@ const HomeScreen = ({navigation}) => {
   No Goals have been set yet . Go to Add More Above !
 </Text>
 )}
+
+<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("GoalsScreen")}>
+  <View style={{marginTop: 50, marginBottom: 50, borderWidth: 1, width: 200,alignSelf:'center',padding: 12,borderRadius: 100}}>
+    <Text style={{textAlign: 'center'}}>Add Goals +</Text>
+  </View>
+</TouchableOpacity>
     </View>
 
 {/* <View style={{marginTop: 40}}>

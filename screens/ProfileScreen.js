@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, StatusBar, Platform, ScrollView, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, StatusBar, Platform, ScrollView, TextInput, Image, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebaseConfig';
 import { Ionicons } from '@expo/vector-icons';
@@ -43,6 +43,7 @@ const ProfileScreen = ({ navigation }) => {
         setSelectedAvatarData({ backgroundColor, imageUrl, text });
       } else {
         console.error('User document not found');
+        Alert.alert("Please click on the pen button to choose and avatar!");
       }
     } catch (error) {
       console.error('Error fetching user document:', error);
