@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, StatusBar, Platform, ScrollView, TextInput, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, StatusBar, Platform, ScrollView, TextInput, Image, Alert, RefreshControl } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebaseConfig';
 import { Ionicons } from '@expo/vector-icons';
@@ -48,6 +48,25 @@ const ProfileScreen = ({ navigation }) => {
     } catch (error) {
       console.error('Error fetching user document:', error);
     }
+  };
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    fetchStreakCount();
+    setRefreshing(true);
+
+    try {
+
+      handleButtonClick(false)
+    } catch (error) {
+      console.log(error)
+    }
+
+    setTimeout(() => {
+      // Simulate data fetching completion
+      setRefreshing(false);
+    }, 2000);
   };
 
   return (

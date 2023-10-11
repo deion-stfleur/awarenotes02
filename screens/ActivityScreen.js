@@ -4,6 +4,7 @@ import moment from 'moment';
 import { collection, query, onSnapshot, where, getDocs, doc } from 'firebase/firestore'
 import {db, auth} from '../firebaseConfig'
 import { Ionicons } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 
 const ActivityScreen = () => {
   const currentDate = moment(); // Get the current date
@@ -252,7 +253,7 @@ const ActivityScreen = () => {
     <View>
 
     </View>
-    <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Other Members</Text>
+    {/* <Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Other Members</Text>
 
       <View style={{marginBottom: 40}}>
            {orders2.map((order) => (
@@ -263,12 +264,50 @@ const ActivityScreen = () => {
                  
                  <View style={{flexDirection: 'row',justifyContent: 'space-between',width:'95%',alignSelf: 'center'}}>
                   <Text style={{fontSize: 16}}>{order.userEmail}</Text>
-                  {/* <Text style={{fontSize: 16}}>{order.streak}</Text> */}
+                  <Text style={{fontSize: 16}}>{order.streak}</Text>
                  </View>
                 </View>
                 </TouchableOpacity>
               ))}
+      </View> */}
+
+<Text style={{marginLeft: 20, fontSize: 20,marginTop: 40,fontWeight: 'bold', marginBottom: 22}}>Mood & Emotions</Text>
+
+<View style={{backgroundColor: '#B4B6BF', width: '90%',alignSelf:'center',padding: 12, borderRadius: 6, marginBottom: 70}}>
+
+  <View style={{flexDirection:'row', justifyContent: 'space-between',width:'90%',alignSelf:'center'}}>
+
+  <View style={{}}>
+    <View>
+      <View style={{flexDirection:'row',alignItems:'center'}}>
+      <Octicons name="dot-fill" size={24} color="purple" style={{marginRight: 5}} />
+      <Text style={styles.h1}>Habits</Text>
       </View>
+      <Text style={{fontWeight: 'bold', fontSize: 22, marginBottom: 9, marginTop: 5}}>12</Text>
+    </View>
+
+    <View>
+     <View style={{flexDirection:'row',alignItems:'center'}}>
+      <Octicons name="dot-fill" size={24} color="green" style={{marginRight: 5}} />
+      <Text style={styles.h1}>Habits</Text>
+      </View>
+       <Text style={{fontWeight: 'bold', fontSize: 22, marginBottom: 9, marginTop: 5}}>99</Text>
+    </View>
+
+    <View>
+     <View style={{flexDirection:'row',alignItems:'center'}}>
+      <Octicons name="dot-fill" size={24} color="blue" style={{marginRight: 5}} />
+      <Text style={styles.h1}>Habits</Text>
+      </View>
+       <Text style={{fontWeight: 'bold', fontSize: 22, marginBottom: 9, marginTop: 5}}>23</Text>
+    </View>
+  </View>
+
+  <View>
+    <Text>Graph</Text>
+  </View>
+  </View>
+</View>
 
  
               {/* {orders.map((order) => (
@@ -390,6 +429,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  h1: {
+    fontSize: 16,
+    // marginBottom: 5
+  }
 });
 
 export default ActivityScreen;

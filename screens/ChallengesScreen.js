@@ -468,11 +468,11 @@ const ChallengesScreen = ({ navigation }) => {
           <View>
 
 
-          <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("FeaturedChallengeScreen")}>
+          <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate("FeaturedChallengeScreen")}>
 
             <View style={{backgroundColor:'#7A7F97',width:'90%',alignSelf: 'center',marginTop: 15,height: 220,borderRadius: 8}}>
               <View style={{backgroundColor: 'lightgray',position: 'absolute',bottom: 0,width:'100%',borderBottomLeftRadius: 6, borderBottomRightRadius: 6}}>
-
+                <Image style={{height: 200, width: '100%', borderTopLeftRadius: 6,borderTopRightRadius: 6}} source={{uri: 'https://images.unsplash.com/photo-1502101872923-d48509bff386?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hhbGxlbmdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60'}} />
                 <View style={{padding: 12}}>
                  <Text style={{color: '#fff',fontSize: 17}}>Featured</Text>
                  <Text style={{color: '#202020',fontSize: 17,marginTop: 5,fontWeight:'bold'}}>14 day Monthly Challenge</Text>

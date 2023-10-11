@@ -48,14 +48,16 @@ const FeelingHistory = ({navigation}) => {
     <Ionicons style={{marginRight: 10}} name="arrow-back" size={24} color="black" />
 </TouchableOpacity>
       <Text style={{fontSize: 19,fontWeight: 'bold'}}>Feeling History</Text>
+
         </View>
+      {/* <Text>Tracking your emotions is a delightful journey of self-awareness and personal growth. This practice empowers you to uncover the vibrant tapestry of your feelings, providing valuable insights into your emotional landscape. By nurturing this awareness, you'll uncover patterns, triggers, and trends in your emotional well-being, allowing you to make informed decisions about your mental health. As you develop this skill, you'll find it easier to manage stress, anxiety, and enhance emotional regulation. Moreover, heightened awareness of your emotions can lead to improved communication with those around you, fostering more meaningful connections. Your emotional awareness journey begins here, guiding you to a deeper understanding of yourself and your path to greater well-being</Text> */}
     </SafeAreaView>
     
     <View style={{alignSelf: 'center'}}>
       <View style={{}}>
       <FlatList
       showsVerticalScrollIndicator={false}
-      style={{marginBottom: 150}}
+      style={{marginBottom: 250}}
         data={feelingCounts}
         keyExtractor={(item) => item.id} // Use the document name as the key
         renderItem={({ item }) => (

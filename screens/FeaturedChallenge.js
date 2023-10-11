@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform, StatusBar, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform, StatusBar, ScrollView, Image } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -32,9 +32,12 @@ const FeaturedChallenge = ({navigation}) => {
     <View style={{width:'90%',alignSelf:'center',marginTop: 50,marginBottom: 50}}>
    
    <View style={styles.tab}>
-    <Text>Day 1: Mindful Morning</Text>
+    <Image style={{height: 200, width: '100%',objectFit:'cover', marginBottom: 12,borderRadius: 6}} source={{uri: 'https://plus.unsplash.com/premium_photo-1664302314504-9d1b914c9151?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fG1pbmRmdWwlMjBtb3JuaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60'}} />
+    <Text style={{fontSize: 16, fontWeight: '500',marginBottom: 15}}>Day 1: Mindful Morning</Text>
 
-<Text>Challenge users to start the day with a 5-minute mindfulness meditation using the app to help set a positive tone for the challenge.</Text>
+<Text style={{fontSize: 16}}>Challenge users to start the day with a 5-minute mindfulness meditation using the app to help set a positive tone for the challenge.</Text>
+   
+   <Text style={{marginTop:13, textAlign:'right',padding: 12}}>10 people are currently on this day</Text>
    </View>
 
 
