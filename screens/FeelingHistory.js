@@ -57,16 +57,18 @@ const FeelingHistory = ({navigation}) => {
       <View style={{}}>
       <FlatList
       showsVerticalScrollIndicator={false}
-      style={{marginBottom: 250}}
+      style={{}}
         data={feelingCounts}
         keyExtractor={(item) => item.id} // Use the document name as the key
         renderItem={({ item }) => (
+          <TouchableOpacity activeOpacity={0.4}>
           <View style={{borderWidth: 1,padding: 35,marginBottom: 4,borderRadius: 6}}>
             <Text style={{fontSize: 22,textAlign: 'center'}}> {item.id}</Text>
             {/* <Text>Feeling: {item.feeling}</Text> */}
             {/* <Text>Count: {item.count}</Text> */}
             <Text style={{textAlign: 'center',fontSize: 19}}>{item.timestamp.toDate().toLocaleDateString()}</Text>
           </View>
+          </TouchableOpacity>
         )}
       />
     </View>

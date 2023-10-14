@@ -463,12 +463,12 @@ const HomeScreen = ({ navigation }) => {
     fetchStreakCount();
     setRefreshing(true);
 
-    try {
+    // try {
 
-      handleButtonClick(false)
-    } catch (error) {
-      console.log(error)
-    }
+    //   handleButtonClick(false)
+    // } catch (error) {
+    //   console.log(error)
+    // }
 
     setTimeout(() => {
       // Simulate data fetching completion
@@ -635,7 +635,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={{ padding: 8, borderRadius: 13, marginRight: 5, backgroundColor: '#f5f5f3', height: 73 }}>
 
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ marginTop: 5, textAlign: 'center', fontWeight: 'bold' }}> Feeling History</Text>
+                  <Text style={{ marginTop: 5, textAlign: 'center', fontWeight: 'bold' }}>Feeling History <MaterialCommunityIcons name="history" size={24} color="black" /></Text>
                 </View>
               </View>
             </TouchableOpacity>

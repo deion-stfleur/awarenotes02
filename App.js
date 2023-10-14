@@ -19,6 +19,8 @@ import AvatarScreen from './screens/AvatarScreen';
 import FeaturedChallenge from './screens/FeaturedChallenge';
 import NotificationsScreen from './screens/NotificationsScreen';
 import QuizScreen1 from './screens/QuizScreen1';
+import AddQuestion from './screens/AddQuestionScreen';
+import InterestScreen from './screens/InterestScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -108,6 +110,8 @@ export default function App() {
         <Stack.Screen name="FeaturedChallengeScreen" component={FeaturedChallenge } />
         <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} />
         <Stack.Screen name="QuizScreen1" component={QuizScreen1} />
+        <Stack.Screen name="AddQuestion" component={AddQuestion} />
+        <Stack.Screen name="InterestScreen" component={InterestScreen} />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

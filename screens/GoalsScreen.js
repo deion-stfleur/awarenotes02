@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Image, Button } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Image, Button, Modal } from 'react-native'
 import React, { useState } from 'react'
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,6 +10,17 @@ import { db, auth } from '../firebaseConfig';
 
 const GoalsScreen = ({ navigation }) => {
   const [selectedBtnIndex, setSelectedBtnIndex] = useState(0); // Set the default selected button index to 0
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
 
   const handleBtnPress = (index) => {
     setSelectedBtnIndex(index);
@@ -178,6 +189,13 @@ const GoalsScreen = ({ navigation }) => {
 
               </View>
 
+          <View style={{marginTop: 70}}>
+              <Button title="Create a habit" onPress={openModal} />
+          </View>
+
+
+          
+
               {/* 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', alignSelf: 'center', marginTop: 10 }}>
 
@@ -344,7 +362,20 @@ const GoalsScreen = ({ navigation }) => {
         ) : (
           null
         )}
+
       </ScrollView>
+
+      <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={() => setIsModalVisible(false)}>
+
+        <View style={styles.modalContainer}>
+
+          <View style={styles.modalContent}>
+            <Text onPress={closeModal}>Close</Text>
+          </View>
+
+        </View>
+
+      </Modal>
     </>
   )
 }
@@ -375,5 +406,22 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     width: 180,
     // alignSelf: 'center'
+  },
+  modalContainer: {
+    backgroundColor: '#DEDEDE',
+    height: '95%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    position: 'absolute',
+    zIndex: 999,
+    width: '100%',
+    bottom: 0,
+  },
+  modalContent: {
+    flex: 1,
+    marginTop: 20,
+    width: '95%',
+    alignSelf: 'center'
   },
 })

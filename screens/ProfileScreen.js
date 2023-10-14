@@ -50,24 +50,7 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
-  const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = () => {
-    fetchStreakCount();
-    setRefreshing(true);
-
-    try {
-
-      handleButtonClick(false)
-    } catch (error) {
-      console.log(error)
-    }
-
-    setTimeout(() => {
-      // Simulate data fetching completion
-      setRefreshing(false);
-    }, 2000);
-  };
 
   return (
     <>
@@ -148,6 +131,49 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={{textAlign:'center',marginTop: 12,fontWeight: 'bold'}}>{selectedAvatarData.text}</Text>
             </>
         )} */}
+
+     
+          <View style={{flexDirection:'row',justifyContent: 'space-between', width:'90%',alignSelf:'center',marginTop: 30,alignItems:'center'}}>
+          
+          
+          <Text style={{fontSize: 18,fontWeight:'bold'}}>Questions about you</Text>
+        
+        <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate("AddQuestion")}>
+          <Text style={{fontSize: 28}}>+</Text>
+        </TouchableOpacity>
+          </View>
+
+          <View  onPress={() => navigation.navigate("AddQuestion")} style={{backgroundColor:'#fff',width:'90%',alignSelf:'center',marginTop: 15,padding: 15,borderRadius: 12}}>
+            <Text style={{textAlign:'center',marginTop: 12}}>Answer questions about yourself</Text>
+
+            <TouchableOpacity  onPress={() => navigation.navigate("AddQuestion")} activeOpacity={0.6} style={{alignSelf:'center',marginTop: 20,marginBottom: 12,borderWidth: 1,padding: 12,borderRadius:100,width: 100,borderColor: 'gray'}}>
+              <View>
+                <Text style={{textAlign:'center'}}>Answer</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+
+          <View style={{flexDirection:'row',justifyContent: 'space-between', width:'90%',alignSelf:'center',marginTop: 30,alignItems:'center'}}>
+          
+          
+          <Text style={{fontSize: 18,fontWeight:'bold'}}>Interests</Text>
+
+          <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate("InterestScreen")}>
+          <Text style={{fontSize: 28}}>+</Text>
+          </TouchableOpacity>
+          </View>
+
+          <View  onPress={() => navigation.navigate("InterestScreen")} style={{backgroundColor:'#fff',width:'90%',alignSelf:'center',marginTop: 15,padding: 15,borderRadius: 12}}>
+            <Text style={{textAlign:'center',marginTop: 12}}>Answer questions about yourself</Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate("InterestScreen")} activeOpacity={0.6} style={{alignSelf:'center',marginTop: 20,marginBottom: 12,borderWidth: 1,padding: 12,borderRadius:100,width: 100,borderColor: 'gray'}}>
+              <View>
+                <Text style={{textAlign:'center'}}>Answer</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        
 
         <TouchableOpacity activeOpacity={0.6} onPress={handleSignOut}>
           <View style={{ marginTop: 50 }}>
