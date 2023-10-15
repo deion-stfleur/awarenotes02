@@ -179,20 +179,20 @@ const GoalsScreen = ({ navigation }) => {
                 </View>
 
 
-                <View style={{ backgroundColor: 'lightgray', width: '48%', height: 160, borderRadius: 10 }}>
+
+            <TouchableOpacity activeOpacity={0.6} onPress={openModal} style={{ backgroundColor: 'lightgray', width: '48%', height: 160, borderRadius: 10 }}>
+                <View>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, width: '90%', alignSelf: 'center' }}>
 
                     <Text style={{ fontSize: 22, fontWeight: '500', width: '60%' }}>Create your own</Text>
                     {/* <Image style={{height: 80,width: 80}} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/app06-9e6c0.appspot.com/o/yoga.png?alt=media&token=b6a38ff6-7c1f-47b0-ab7f-80a46d000fc4'}} /> */}
                   </View>
                 </View>
+            </TouchableOpacity>
 
               </View>
 
-          <View style={{marginTop: 70}}>
-              <Button title="Create a habit" onPress={openModal} />
-          </View>
-
+        
 
           
 
