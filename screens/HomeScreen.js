@@ -12,6 +12,8 @@ import { doc, setDoc, collection, addDoc, getDoc, serverTimestamp, query, where,
 import { db, auth } from '../firebaseConfig'
 import { Foundation } from '@expo/vector-icons';
 
+
+
 const quotes = [
   "No matter how dirty your past is, your future is still spotless.",
   "I was born to make mistakes, not to fake perfection",
@@ -100,6 +102,7 @@ const HomeScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [yourName, setYourName] = useState('');
 
+  
 
 
   const isSubmitDisabled3 = !email || !yourName
@@ -635,7 +638,10 @@ const HomeScreen = ({ navigation }) => {
               <View style={{ padding: 8, borderRadius: 13, marginRight: 5, backgroundColor: '#f5f5f3', height: 73 }}>
 
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ marginTop: 5, textAlign: 'center', fontWeight: 'bold' }}>Feeling History <MaterialCommunityIcons name="history" size={24} color="black" /></Text>
+                  <View>
+                  <Text style={{ marginTop: 5, textAlign: 'center', fontWeight: 'bold',marginBottom: 5 }}>History</Text>
+                  <MaterialCommunityIcons name="history" size={24} color="black" style={{alignSelf:'center'}} />
+                  </View>
                 </View>
               </View>
             </TouchableOpacity>

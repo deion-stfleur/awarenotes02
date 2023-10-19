@@ -21,6 +21,7 @@ import NotificationsScreen from './screens/NotificationsScreen';
 import QuizScreen1 from './screens/QuizScreen1';
 import AddQuestion from './screens/AddQuestionScreen';
 import InterestScreen from './screens/InterestScreen';
+import CreateHabit from './screens/CreateHabit';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -73,6 +74,8 @@ function HomeTabNavigator() {
 
 export default function App() {
 
+
+
   const [user, setUser] = useState(null);
 
 
@@ -112,6 +115,7 @@ export default function App() {
         <Stack.Screen name="QuizScreen1" component={QuizScreen1} />
         <Stack.Screen name="AddQuestion" component={AddQuestion} />
         <Stack.Screen name="InterestScreen" component={InterestScreen} />
+        <Stack.Screen name="CreateHabit" component={CreateHabit} />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

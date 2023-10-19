@@ -164,7 +164,8 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           </View>
 
-          <View  onPress={() => navigation.navigate("InterestScreen")} style={{backgroundColor:'#fff',width:'90%',alignSelf:'center',marginTop: 15,padding: 15,borderRadius: 12}}>
+        <TouchableOpacity  onPress={() => navigation.navigate("InterestScreen")} activeOpacity={1}>
+          <View  style={{backgroundColor:'#fff',width:'90%',alignSelf:'center',marginTop: 15,padding: 15,borderRadius: 12}}>
             <Text style={{textAlign:'center',marginTop: 12}}>Answer questions about yourself</Text>
 
             <TouchableOpacity onPress={() => navigation.navigate("InterestScreen")} activeOpacity={0.6} style={{alignSelf:'center',marginTop: 20,marginBottom: 12,borderWidth: 1,padding: 12,borderRadius:100,width: 100,borderColor: 'gray'}}>
@@ -173,6 +174,7 @@ const ProfileScreen = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </View>
+        </TouchableOpacity>
         
 
         <TouchableOpacity activeOpacity={0.6} onPress={handleSignOut}>

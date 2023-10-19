@@ -180,7 +180,7 @@ const GoalsScreen = ({ navigation }) => {
 
 
 
-            <TouchableOpacity activeOpacity={0.6} onPress={openModal} style={{ backgroundColor: 'lightgray', width: '48%', height: 160, borderRadius: 10 }}>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("CreateHabit")} style={{ backgroundColor: 'lightgray', width: '48%', height: 160, borderRadius: 10 }}>
                 <View>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, width: '90%', alignSelf: 'center' }}>
 
