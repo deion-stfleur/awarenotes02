@@ -4,6 +4,8 @@ import { db, auth } from '../firebaseConfig';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { doc, collection, getDoc, query, where, getDocs } from 'firebase/firestore';
+import { EvilIcons } from '@expo/vector-icons';
+
 
 const ProfileScreen = ({ navigation }) => {
   const handleSignOut = () => {
@@ -82,6 +84,36 @@ const ProfileScreen = ({ navigation }) => {
     }
   }, [user]);
 
+  const [userInterests, setUserInterests] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchUserInterests = async () => {
+    try {
+      const user = auth.currentUser.email;
+      const interestsQuery = query(collection(db, 'user-interests'), where('userId', '==', user));
+      const querySnapshot = await getDocs(interestsQuery);
+      const interestsArray = [];
+      querySnapshot.forEach((doc) => {
+        interestsArray.push(doc.data().interests);
+      });
+      setUserInterests(interestsArray);
+    } catch (error) {
+      console.error('Error fetching user interests:', error);
+    }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchUserInterests();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    fetchUserInterests();
+  }, []);
+
 
   return (
     <>
@@ -107,7 +139,14 @@ const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </SafeAreaView>
 
-      <ScrollView style={{ backgroundColor: '#EEECE4' }}>
+      <ScrollView refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor="#000"
+          colors={['#000']}
+        />
+      } style={{ backgroundColor: '#EEECE4' }}>
         <View>
           <View style={{}}>
             {/* <View
@@ -214,21 +253,40 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           </View>
 
-        <TouchableOpacity  onPress={() => navigation.navigate("InterestScreen")} activeOpacity={1}>
-          <View  style={{backgroundColor:'#fff',width:'90%',alignSelf:'center',marginTop: 15,padding: 15,borderRadius: 12}}>
-            <Text style={{textAlign:'center',marginTop: 12}}>Answer questions about yourself</Text>
+          {userInterests.length === 0 && (
+  <TouchableOpacity onPress={() => navigation.navigate("InterestScreen")} activeOpacity={1}>
+    <View style={{ backgroundColor: '#fff', width: '95%', alignSelf: 'center', marginTop: 15, padding: 15, borderRadius: 12 }}>
+      <Text style={{ textAlign: 'center', marginTop: 12 }}>
+        Add your Interests and save all your favorite moments
+      </Text>
 
-            <TouchableOpacity onPress={() => navigation.navigate("InterestScreen")} activeOpacity={0.6} style={{alignSelf:'center',marginTop: 20,marginBottom: 12,borderWidth: 1,padding: 12,borderRadius:100,width: 100,borderColor: 'gray'}}>
-              <View>
-                <Text style={{textAlign:'center'}}>Answer</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("InterestScreen")}
+        activeOpacity={0.6}
+        style={{ alignSelf: 'center', marginTop: 20, marginBottom: 12, borderWidth: 1, padding: 12, borderRadius: 100, width: 150, borderColor: 'gray' }}>
+        <View>
+          <Text style={{ textAlign: 'center' }}>Add Interests</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  </TouchableOpacity>
+)}
+
+<ScrollView>
+  {userInterests.map((interest, index) => (
+
+    <>
+    <TouchableOpacity activeOpacity={1}  onPress={() => navigation.navigate("InterestScreen")}  style={{backgroundColor: '#fff',marginTop: 30,padding: 22,width:'90%',alignSelf:'center', borderRadius: 6, borderWidth: 2, borderColor: 'lightgray'}}>
+    <EvilIcons name="pencil" size={24} color="black" style={{alignSelf:'flex-end',marginBottom: 10}} />
+    <Text style={{textAlign: 'center'}} key={index}>{interest}</Text>
+    </TouchableOpacity>
+    </>
+  ))}
+</ScrollView>
         
 
         <TouchableOpacity activeOpacity={0.6} onPress={handleSignOut}>
-          <View style={{ marginTop: 50 }}>
+          <View style={{ marginTop: 50, marginBottom: 100 }}>
             <View style={{}}>
               <Text style={{ textAlign: 'center', textDecorationLine: 'underline', fontSize: 15 }}>
                 Log Out
