@@ -109,6 +109,9 @@ const ActivityScreen = () => {
       const querySnapshot = await getDocs(q);
       const habitsData = [];
       querySnapshot.forEach((doc) => {
+        const habitData = doc.data();
+        habitData.completed = false; 
+        // habitsData.push(habitData);
         habitsData.push(doc.data());
       });
       setBrokenHabits(habitsData);
@@ -134,6 +137,9 @@ const ActivityScreen = () => {
       setRefreshing(false);
     }, 2000);
   };
+  
+
+  
 
   return (
     <>
@@ -196,6 +202,21 @@ const ActivityScreen = () => {
 
     </View> */}
 
+
+    <View style={{flexDirection:'row',width:'90%',alignSelf:'center', marginTop: 30, justifyContent:'space-between'}}>
+      <TouchableOpacity activeOpacity={1} style={{borderWidth: 1,padding: 20,borderRadius: 6, width:'48%'}}>
+        <View>
+          <Text style={{textAlign:'center',fontSize: 16}}> 10 day Streak</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity activeOpacity={1} style={{borderWidth: 1,padding: 20,borderRadius: 6,width:'48%'}}>
+        <View>
+          <Text style={{textAlign:'center',fontSize: 16}}> <Text style={{fontWeight:'bold'}}>345</Text>XP</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+
 <Text style={{ marginLeft: 20, fontSize: 30, marginTop: 40, fontWeight: 'bold' }}>Today</Text>
 <View>
   <Text style={{ width: '90%', alignSelf: 'center', marginBottom: 14, marginTop: 8, fontSize: 16 }}>Your Broken Habits:</Text>
@@ -205,10 +226,11 @@ const ActivityScreen = () => {
     </Text>
   ) : (
     brokenHabits.map((habit, index) => (
-      <TouchableOpacity
-        activeOpacity={0.6}
+      <View
         key={index}
         style={{
+          flexDirection: 'row',
+          alignItems: 'center',
           width: '90%',
           alignSelf: 'center',
           marginBottom: 12,
@@ -217,9 +239,23 @@ const ActivityScreen = () => {
           borderRadius: 6,
         }}
       >
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => {
+            // Toggle the completion status when the item is pressed
+            const updatedHabits = [...brokenHabits];
+            updatedHabits[index].completed = !updatedHabits[index].completed;
+            setBrokenHabits(updatedHabits);
+          }}
+        >
+          <View style={{ width: 24, height: 24, marginRight: 10, borderWidth: 1, borderColor: '#fff', borderRadius: 4 }}>
+            {habit.completed && <View style={{ flex: 1, backgroundColor: 'lightgreen', borderRadius: 3 }} />}
+          </View>
+        </TouchableOpacity>
         <Text style={{ fontSize: 16, color: '#fff', fontWeight: 'bold' }}>{habit.text}</Text>
-      </TouchableOpacity>
+      </View>
     ))
+    
   )}
 </View>
 

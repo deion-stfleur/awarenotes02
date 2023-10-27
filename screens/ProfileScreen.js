@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebaseConfig';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { doc, collection, getDoc } from 'firebase/firestore';
+import { doc, collection, getDoc, query, where, getDocs } from 'firebase/firestore';
 
 const ProfileScreen = ({ navigation }) => {
   const handleSignOut = () => {
@@ -50,6 +50,37 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+
+  const [feelingCounts, setFeelingCounts] = useState([]);
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    if (user) {
+      const userEmail = user.email;
+
+      // Create a query to filter FeelingCounts by userEmail
+      const feelingCountsQuery = query(
+        collection(db, 'FeelingCounts'),
+        where('userEmail', '==', userEmail)
+      );
+
+      // Fetch the feeling counts for the current user
+      const fetchFeelingCounts = async () => {
+        try {
+          const querySnapshot = await getDocs(feelingCountsQuery);
+          const feelingCountData = querySnapshot.docs.map((doc) => ({
+            id: doc.id, // Include the document name as 'id'
+            ...doc.data(), // Include the document data
+          }));
+          setFeelingCounts(feelingCountData);
+        } catch (error) {
+          console.error('Error fetching feeling counts:', error);
+        }
+      };
+
+      fetchFeelingCounts();
+    }
+  }, [user]);
 
 
   return (
@@ -132,7 +163,7 @@ const ProfileScreen = ({ navigation }) => {
             </>
         )} */}
 
-     
+{/*      
           <View style={{flexDirection:'row',justifyContent: 'space-between', width:'90%',alignSelf:'center',marginTop: 30,alignItems:'center'}}>
           
           
@@ -141,9 +172,9 @@ const ProfileScreen = ({ navigation }) => {
         <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate("AddQuestion")}>
           <Text style={{fontSize: 28}}>+</Text>
         </TouchableOpacity>
-          </View>
+          </View> */}
 
-          <View  onPress={() => navigation.navigate("AddQuestion")} style={{backgroundColor:'#fff',width:'90%',alignSelf:'center',marginTop: 15,padding: 15,borderRadius: 12}}>
+          {/* <View  onPress={() => navigation.navigate("AddQuestion")} style={{backgroundColor:'#fff',width:'90%',alignSelf:'center',marginTop: 15,padding: 15,borderRadius: 12}}>
             <Text style={{textAlign:'center',marginTop: 12}}>Answer questions about yourself</Text>
 
             <TouchableOpacity  onPress={() => navigation.navigate("AddQuestion")} activeOpacity={0.6} style={{alignSelf:'center',marginTop: 20,marginBottom: 12,borderWidth: 1,padding: 12,borderRadius:100,width: 100,borderColor: 'gray'}}>
@@ -151,7 +182,26 @@ const ProfileScreen = ({ navigation }) => {
                 <Text style={{textAlign:'center'}}>Answer</Text>
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
+
+
+
+<Text style={{width:'90%',alignSelf:'center',marginTop: 30,fontSize: 18,fontWeight:'bold'}}>Recent Feeling History</Text>
+<ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginTop: 20, width:'90%',alignSelf:'center'}}>
+  {feelingCounts.map((item) => (
+    <>
+    <TouchableOpacity activeOpacity={1} key={item.id}>
+      <View style={{ borderWidth: 2, padding: 35, marginBottom: 4, borderRadius: 6, marginRight: 10, backgroundColor:'#fff',borderColor:'#e6e6e6' }}>
+        <Text style={{ fontSize: 22, textAlign: 'center' }}>{item.id}</Text>
+        {/* <Text>Feeling: {item.feeling}</Text> */}
+        {/* <Text>Count: {item.count}</Text> */}
+        <Text style={{ textAlign: 'center', fontSize: 19 }}>{item.timestamp.toDate().toLocaleDateString()}</Text>
+      </View>
+    </TouchableOpacity>
+    
+    </>
+  ))}
+</ScrollView>
 
 
           <View style={{flexDirection:'row',justifyContent: 'space-between', width:'90%',alignSelf:'center',marginTop: 30,alignItems:'center'}}>

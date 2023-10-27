@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Modal, TextInput, Alert, RefreshControl } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Modal, TextInput, Alert, RefreshControl, Button } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Fontisto } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -11,6 +11,8 @@ import { Entypo } from '@expo/vector-icons';
 import { doc, setDoc, collection, addDoc, getDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore'
 import { db, auth } from '../firebaseConfig'
 import { Foundation } from '@expo/vector-icons';
+import * as MailComposer from 'expo-mail-composer';
+
 
 
 
@@ -99,13 +101,42 @@ const HomeScreen = ({ navigation }) => {
   const [isModalVisible3, setIsModalVisible3] = useState(false);
   const [description, setDescription] = useState('');
   const [isScrollViewVisible, setIsScrollViewVisible] = useState(true);
-  const [email, setEmail] = useState('');
+  const [emailer, setEmailer] = useState('');
   const [yourName, setYourName] = useState('');
+
+
+  const sendEmail = async () => {
+    const email = {
+      subject: 'Accountablity Partner Request',
+      body: 'Hello, your friend has invited you to be their buddy in the Awarenotes app. Accept the invitation and download the app to help them be accountablr along this journey.',
+      recipients: [emailer], // An array of recipient email addresses
+      attachments: [], // You can attach files here
+    };
+  
+    try {
+      const { status } = await MailComposer.composeAsync(email);
+  
+      if (status === 'sent') {
+        console.log('Email sent successfully');
+      } else {
+        console.log('Email not sent');
+      }
+    } catch (error) {
+      console.error('Error sending email: ', error);
+    }
+  };
+
+
+  const emailSender = () => {
+    sendEmail();
+    closeModal3();
+  }
+  
 
   
 
 
-  const isSubmitDisabled3 = !email || !yourName
+  const isSubmitDisabled3 = !emailer || !yourName
 
   const [usersWithMeditation, setUsersWithMeditation] = useState([]);
   const [usersWithYoga, setUsersWithYoga] = useState([]);
@@ -190,7 +221,7 @@ const HomeScreen = ({ navigation }) => {
     const sameUser = auth.currentUser;
     const order = {
       userId: sameUser.email,
-      email: email,
+      email: emailer,
       yourName: yourName,
     }
 
@@ -204,8 +235,9 @@ const HomeScreen = ({ navigation }) => {
 
   const addSendPartner = () => {
     sendPartner();
-    closeModal3();
-    setEmail('');
+    // closeModal3();
+    emailSender();
+    setEmailer('');
     setYourName('');
 
   }
@@ -761,7 +793,7 @@ const HomeScreen = ({ navigation }) => {
               <TouchableOpacity onPress={() => navigation.navigate("QuizScreen1")} style={{ backgroundColor: '#755DC6', borderRadius: 6, width: 200, marginRight: 20, height: 200 }} activeOpacity={0.8}>
 
                 <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                  <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#fff' }}>Take the quiz!</Text>
+                  <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#fff' }}>Take the quiz⭐️</Text>
                   {/* <Text style={{marginTop: 10, fontSize: 16}}>{randomQuote2}</Text>/ */}
                 </View>
 
@@ -1106,24 +1138,28 @@ It eases your mind, reducing stress and anxiety...Read more</Text>
 
                 <View>
                   <View>
-                    <View style={{ height: 90, width: 90, backgroundColor: 'gray', borderRadius: '50%' }}></View>
-                    <Text style={{ textAlign: 'center', marginTop: 15, fontSize: 19, marginBottom: 30 }}>Me</Text>
+                    {/* <View style={{ height: 90, width: 90, backgroundColor: 'gray', borderRadius: '50%' }}>
+                    </View> */}
+                      <Text style={{fontSize: 64}}>🤝</Text>
+                    {/* <Text style={{ textAlign: 'center', marginTop: 15, fontSize: 19, marginBottom: 30 }}>Me</Text> */}
                   </View>
                 </View>
 
-                <Text style={{ fontSize: 30, textAlign: 'center', fontWeight: 'bold' }}>Accountability Partners</Text>
-                <Text style={{ textAlign: 'center', fontSize: 19, marginTop: 12 }}>Stay motivated together!</Text>
-                <Text style={{ textAlign: 'center', width: '90%', alignSelf: 'center', marginTop: 40, fontSize: 20 }}>Invite your closest friend to the app by connecting with their email and share your journey with them.</Text>
-                <TextInput value={email} onChangeText={setEmail} placeholderTextColor={'black'} placeholder='Their Email' style={{ borderWidth: 1, width: '90%', alignSelf: 'center', borderRadius: 6, padding: 15, marginTop: 50 }} />
-                <TextInput value={yourName} onChangeText={setYourName} placeholderTextColor={'black'} placeholder='Your Name' style={{ borderWidth: 1, width: '90%', alignSelf: 'center', borderRadius: 6, padding: 15, marginTop: 18 }} />
+                <Text style={{ fontSize: 30, textAlign: 'center', fontWeight: 'bold', color: '#fff' }}>Accountability Partners</Text>
+                <Text style={{ textAlign: 'center', fontSize: 19, marginTop: 12, color:'#fff' }}>Stay motivated together!</Text>
+                <Text style={{ textAlign: 'center', width: '90%', alignSelf: 'center', marginTop: 40, fontSize: 20, color: '#fff' }}>Invite your closest friend to the app by connecting with their email and share your journey with them.</Text>
+                <TextInput value={emailer} onChangeText={setEmailer} placeholderTextColor={'white'} placeholder='Their Email' style={{ borderWidth: 1, width: '90%', alignSelf: 'center', borderRadius: 6, padding: 15, marginTop: 50, borderColor: '#fff' }} />
+                <TextInput value={yourName} onChangeText={setYourName} placeholderTextColor={'white'} placeholder='Your Name' style={{ borderWidth: 1, width: '90%', alignSelf: 'center', borderRadius: 6, padding: 15, marginTop: 18, borderColor: '#fff' }} />
 
 
                 <TouchableOpacity activeOpacity={0.6} disabled={isSubmitDisabled3} onPress={addSendPartner}>
-                  <View style={{ marginTop: 40, backgroundColor: isSubmitDisabled ? 'gray' : 'black', width: '90%', alignSelf: 'center', padding: 15, borderRadius: 6 }}>
+                  <View style={{ marginTop: 40, backgroundColor: isSubmitDisabled3 ? 'gray' : 'black', width: '90%', alignSelf: 'center', padding: 15, borderRadius: 6 }}>
                     <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold', fontSize: 19 }}>Add Partner</Text>
+
                   </View>
 
                 </TouchableOpacity>
+                    {/* <Button title="Send Email" onPress={sendEmail} /> */}
 
               </View>
 
@@ -1232,7 +1268,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   modalContainer3: {
-    backgroundColor: 'white',
+    backgroundColor: '#4358D8',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
