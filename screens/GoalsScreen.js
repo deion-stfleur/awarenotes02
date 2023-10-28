@@ -241,15 +241,16 @@ const GoalsScreen = ({ navigation }) => {
               </View>
 
 
-              <ScrollView>
+              <ScrollView style={{marginTop: 50}}>
+                <Text style={{width: '90%',alignSelf: 'center',marginBottom: 15,fontSize: 16,fontWeight: 'bold'}}>Incomplete Habits (1)</Text>
       {loading && <Text style={{textAlign: 'center',marginTop: 80}}>Loading...</Text>}
       {!loading && userHabits.length === 0 && <Text style={{textAlign: 'center',marginTop: 80}}>No habits found. Create a habit and start tracking progress!</Text>}
       {!loading &&
         userHabits.length > 0 &&
         userHabits.map((habit, index) => (
           <View key={index}>
-            <TouchableOpacity style={{width:'90%',alignSelf:'center',marginBottom: 14}}>
-                <Text style={{textAlign: 'left',marginTop: 80}}>{habit}</Text>
+            <TouchableOpacity activeOpacity={1} style={{width:'90%',alignSelf:'center', borderWidth: 1,marginBottom: 14,padding: 16,borderRadius: 6}}>
+                <Text style={{textAlign: 'left'}}>- {habit}</Text>
             </TouchableOpacity>
           </View>
         ))}
