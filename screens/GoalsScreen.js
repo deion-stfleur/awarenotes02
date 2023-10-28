@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Image, Button, Modal } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, Image, Button, Modal, RefreshControl } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { doc, setDoc, collection } from 'firebase/firestore';
+import {  doc, collection, getDoc, query, where, getDocs  } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
+import { EvilIcons } from '@expo/vector-icons';
 
 
 const GoalsScreen = ({ navigation }) => {
@@ -82,6 +83,50 @@ const GoalsScreen = ({ navigation }) => {
     { text: 'Nail Biting', iconName: 'pluscircle' },
   ];
 
+  const [userHabits, setUserHabits] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchUserHabits = async () => {
+    const user = auth.currentUser.email;
+    const habitsQuery = query(collection(db, 'user-created-habits'), where('userId', '==', user));
+    const querySnapshot = await getDocs(habitsQuery);
+    const habitsArray = [];
+    querySnapshot.forEach((doc) => {
+      habitsArray.push(doc.data().habits);
+    });
+    setUserHabits(habitsArray);
+    setLoading(false);
+    setRefreshing(false);
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchUserHabits();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 50000);
+  };
+
+ 
+
+  useEffect(() => {
+    fetchUserHabits();
+  }, []);
+
+
+  // const onRefresh = () => {
+  //   setRefreshing(true);
+  //   fetchUserInterests();
+  //   setTimeout(() => {
+  //     setRefreshing(false);
+  //   }, 2000);
+  // };
+
+  // useEffect(() => {
+  //   fetchUserInterests();
+  // }, []);
+
 
 
   return (
@@ -95,7 +140,10 @@ const GoalsScreen = ({ navigation }) => {
         </TouchableOpacity>
       </SafeAreaView>
 
-      <ScrollView style={{ backgroundColor: '#EEECE4' }}>
+      <ScrollView  refreshControl={
+        <RefreshControl refreshing={refreshing}    tintColor="#000"
+        colors={['#000']} onRefresh={onRefresh} />
+      } style={{ backgroundColor: '#EEECE4' }}>
         <View style={styles.btnRow}>
           <TouchableOpacity activeOpacity={0.6} onPress={() => handleBtnPress(0)}>
             <View style={[styles.btnContainer, selectedBtnIndex === 0 && styles.selectedBtn]}>
@@ -191,6 +239,21 @@ const GoalsScreen = ({ navigation }) => {
             </TouchableOpacity>
 
               </View>
+
+
+              <ScrollView>
+      {loading && <Text style={{textAlign: 'center',marginTop: 80}}>Loading...</Text>}
+      {!loading && userHabits.length === 0 && <Text style={{textAlign: 'center',marginTop: 80}}>No habits found. Create a habit and start tracking progress!</Text>}
+      {!loading &&
+        userHabits.length > 0 &&
+        userHabits.map((habit, index) => (
+          <View key={index}>
+            <TouchableOpacity style={{width:'90%',alignSelf:'center',marginBottom: 14}}>
+                <Text style={{textAlign: 'left',marginTop: 80}}>{habit}</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+    </ScrollView>
 
         
 

@@ -1,10 +1,37 @@
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform, StatusBar, ScrollView, Image, TextInput } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import { doc, setDoc, collection, addDoc, getDoc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 import { Ionicons } from '@expo/vector-icons'
 
 const CreateHabit = ({ navigation }) => {
+
+    const [habits, setHabits] = useState('');
+
+
+    const isSubmitDisabled = !habits;
+
+
+    const sendHabits = async () => {
+        const user = auth.currentUser.email;
+        const order = {
+          userId: user,
+          habits: habits
+        };
+    
+        try {
+          const docRef = await addDoc(collection(db, 'user-created-habits'), order);
+          console.log('Document created with ID: ', user);
+        } catch (error) {
+          console.error('Error creating document:', error);
+        }
+      };
+
+
+      const addSendHabits = () => {
+        sendHabits();
+        navigation.navigate("GoalsScreen");
+      }
     return (
         <>
             <SafeAreaView style={{ backgroundColor: '#EEECE4', paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0) }}>
@@ -27,7 +54,7 @@ const CreateHabit = ({ navigation }) => {
             <ScrollView style={{ backgroundColor: '#EEECE4' }}>
 
                 <View>
-                    <TextInput multiline style={{ backgroundColor: '#fff', width: '90%', alignSelf: 'center', height: 300, borderRadius: 6, padding: 20, paddingTop: 12, fontSize: 22 }} placeholder='Enter details...' placeholderTextColor={'black'} />
+                    <TextInput value={habits} onChangeText={setHabits}  multiline style={{ backgroundColor: '#fff', width: '90%', alignSelf: 'center', height: 300, borderRadius: 6, padding: 20, paddingTop: 12, fontSize: 22 }} placeholder='Enter details...' placeholderTextColor={'black'} />
                 </View>
                 {/* 
             <TouchableOpacity style={{width:'90%',alignSelf:'center',marginTop: 60, backgroundColor:'#fff',padding: 22,borderRadius: 8}}>
@@ -36,9 +63,9 @@ const CreateHabit = ({ navigation }) => {
                 </View>
             </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ width: '90%', alignSelf: 'center', marginTop: 60, backgroundColor: '#fff', padding: 22, borderRadius: 8,borderWidth: 1 }}>
+                <TouchableOpacity disabled={isSubmitDisabled} onPress={addSendHabits} style={{ width: '90%', alignSelf: 'center', marginTop: 60, backgroundColor: isSubmitDisabled ? 'lightgray' : '#7A7F97' , padding: 22, borderRadius: 8,borderWidth: 2 }}>
                     <View>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign:'center' }}>Create New</Text>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign:'center' }}>Create New +</Text>
                     </View>
                 </TouchableOpacity>
             </ScrollView>
