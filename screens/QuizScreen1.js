@@ -84,6 +84,9 @@ const QuizScreen1 = ({ navigation }) => {
               <Text style={{ fontSize: 18 }}>Back</Text>
             </View>
           </TouchableOpacity>
+
+
+          
         </View>
       </SafeAreaView>
       <ScrollView style={{ backgroundColor: '#EEECE4' }}>

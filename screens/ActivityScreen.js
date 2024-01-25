@@ -5,6 +5,7 @@ import { collection, query, onSnapshot, where, getDocs, doc } from 'firebase/fir
 import {db, auth} from '../firebaseConfig'
 import { Ionicons } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const ActivityScreen = () => {
   const currentDate = moment(); // Get the current date
@@ -217,7 +218,11 @@ const ActivityScreen = () => {
       </TouchableOpacity>
     </View>
 
-<Text style={{ marginLeft: 20, fontSize: 30, marginTop: 40, fontWeight: 'bold' }}>Today</Text>
+
+<View style={{flexDirection:'row',alignItems:'baseline',justifyContent:'space-between',width:'90%',alignSelf:'center'}}>
+<Text style={{fontSize: 30, marginTop: 40, fontWeight: 'bold' }}>Today</Text>
+<AntDesign name="delete" size={20} color="black" />
+</View>
 <View>
   <Text style={{ width: '90%', alignSelf: 'center', marginBottom: 14, marginTop: 8, fontSize: 16 }}>Your Broken Habits:</Text>
   {brokenHabits.length === 0 ? ( // Check if the brokenHabits array is empty
@@ -226,6 +231,12 @@ const ActivityScreen = () => {
     </Text>
   ) : (
     brokenHabits.map((habit, index) => (
+      <TouchableOpacity   activeOpacity={.8}   key={index}  onPress={() => {
+        // Toggle the completion status when the item is pressed
+        const updatedHabits = [...brokenHabits];
+        updatedHabits[index].completed = !updatedHabits[index].completed;
+        setBrokenHabits(updatedHabits);
+      }}>
       <View
         key={index}
         style={{
@@ -238,6 +249,7 @@ const ActivityScreen = () => {
           padding: 16,
           borderRadius: 6,
         }}
+   
       >
         <TouchableOpacity
           activeOpacity={0.6}
@@ -254,6 +266,8 @@ const ActivityScreen = () => {
         </TouchableOpacity>
         <Text style={{ fontSize: 16, color: '#fff', fontWeight: 'bold' }}>{habit.text}</Text>
       </View>
+
+      </TouchableOpacity>
     ))
     
   )}

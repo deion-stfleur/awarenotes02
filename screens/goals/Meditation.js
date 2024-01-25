@@ -96,7 +96,7 @@ const Meditation = ({ navigation }) => {
                         <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Mindfulness Meditation</Text>
                         <TouchableOpacity onPress={handleCompletePress} activeOpacity={0.6}>
                             <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
-                                <Text style={{ textAlign: 'center' }}>{isCompleted ? 'Completed' : 'Mark as Complete'}</Text>
+                                <Text style={{ textAlign: 'center' }}>{isCompleted ? 'Completed' : 'Play |>'}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -107,7 +107,7 @@ const Meditation = ({ navigation }) => {
                         <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Guided Meditation for Relaxation</Text>
                         <TouchableOpacity onPress={handleCompletePress2} activeOpacity={0.6}>
                             <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted2 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
-                                <Text style={{ textAlign: 'center' }}>{isCompleted2 ? 'Completed' : 'Mark as Complete'}</Text>
+                                <Text style={{ textAlign: 'center' }}>{isCompleted2 ? 'Completed' : 'Play |>'}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -119,7 +119,7 @@ const Meditation = ({ navigation }) => {
                         <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Mindfulness Meditation</Text>
                         <TouchableOpacity onPress={handleCompletePress3} activeOpacity={0.6}>
                             <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted3 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
-                                <Text style={{ textAlign: 'center' }}>{isCompleted3 ? 'Completed' : 'Mark as Complete'}</Text>
+                                <Text style={{ textAlign: 'center' }}>{isCompleted3 ? 'Completed' : 'Play |>'}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -130,7 +130,7 @@ const Meditation = ({ navigation }) => {
                         <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Guided Meditation for Relaxation</Text>
                         <TouchableOpacity onPress={handleCompletePress4} activeOpacity={0.6}>
                             <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted4 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
-                                <Text style={{ textAlign: 'center' }}>{isCompleted4 ? 'Completed' : 'Mark as Complete'}</Text>
+                                <Text style={{ textAlign: 'center' }}>{isCompleted4 ? 'Completed' : 'Play |>'}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -142,7 +142,7 @@ const Meditation = ({ navigation }) => {
                         <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Mindfulness Meditation</Text>
                         <TouchableOpacity onPress={handleCompletePress5} activeOpacity={0.6}>
                             <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted5 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
-                                <Text style={{ textAlign: 'center' }}>{isCompleted5 ? 'Completed' : 'Mark as Complete'}</Text>
+                                <Text style={{ textAlign: 'center' }}>{isCompleted5 ? 'Completed' : 'Play |>'}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -153,7 +153,7 @@ const Meditation = ({ navigation }) => {
                     <Text style={{ marginTop: 12, textAlign: 'center', fontSize: 16 }}>Guided Meditation for Relaxation</Text>
                     <TouchableOpacity onPress={handleCompletePress2}>
                         <View style={{ marginBottom: 12, marginTop: 20, backgroundColor: isCompleted2 ? 'green' : 'lightgray', padding: 12, borderRadius: 6 }}>
-                            <Text style={{ textAlign: 'center' }}>{isCompleted2 ? 'Completed' : 'Mark as Complete'}</Text>
+                            <Text style={{ textAlign: 'center' }}>{isCompleted2 ? 'Completed' : 'Play |>'}</Text>
                         </View>
                     </TouchableOpacity>
                 </View> */}

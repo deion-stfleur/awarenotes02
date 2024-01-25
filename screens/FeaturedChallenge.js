@@ -1,8 +1,15 @@
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform, StatusBar, ScrollView, Image } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import { Ionicons } from '@expo/vector-icons'
 
 const FeaturedChallenge = ({navigation}) => {
+
+    const [viewHeight, setViewHeight] = useState(190); // Initial height
+
+    const toggleViewHeight = () => {
+      // Toggle the height between 0 and 190
+      setViewHeight(viewHeight === 0 ? 190 : 0);
+    };
   return (
 
     <>
@@ -121,23 +128,28 @@ const FeaturedChallenge = ({navigation}) => {
     </View>
 
     </ScrollView>
-    <View style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: '#fff',height: 190 }}>
-                   <View style={{alignSelf:'flex-end',marginRight: 14,marginTop: 10}}>
-                    <Text>close</Text>
-                   </View>
-                   <Text style={{width:'90%',alignSelf:'center',marginTop: 14}}>Join this months challenge to continue getting updates and posts in your home feed.</Text>
 
-                <View style={{flexDirection:'row',justifyContent:'space-between',width:'70%',alignSelf:'center',marginTop: 18, alignItems:'center'}}>
-                    <Text style={{fontWeight:'bold'}}>TURN ON UPDATES</Text>
+    <TouchableOpacity activeOpacity={1}>
+      <View style={{ position: 'absolute', bottom: 0, width: '100%', backgroundColor: '#fff', height: viewHeight }}>
+       
+       <TouchableOpacity activeOpacity={0.6} onPress={toggleViewHeight}>
+        <View style={{ alignSelf: 'flex-end', marginRight: 14, marginTop: 10 }}>
+          <Text>close</Text>
+        </View>
+       </TouchableOpacity>
+        <Text style={{ width: '90%', alignSelf: 'center', marginTop: 14 }}>Join this month's challenge to continue getting updates and posts in your home feed.</Text>
 
-                    <TouchableOpacity>
-                        <View style={{backgroundColor:'blue',padding: 15,borderRadius: 100}}>
-                            <Text style={{color:'#fff'}}>Join Challenge</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-               
-                </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '70%', alignSelf: 'center', marginTop: 18, alignItems: 'center' }}>
+          <Text style={{ fontWeight: 'bold' }}>TURN ON UPDATES</Text>
+
+          <TouchableOpacity>
+            <View style={{ backgroundColor: 'blue', padding: 15, borderRadius: 100 }}>
+              <Text style={{ color: '#fff' }}>Join Challenge</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </TouchableOpacity>
     
     </>
   )

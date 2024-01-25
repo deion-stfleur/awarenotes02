@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform, StatusBar, ScrollView, Image, TextInput } from 'react-native'
-import React, {useState} from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Platform, StatusBar, ScrollView, Image, TextInput, RefreshControl } from 'react-native'
+import React, {useState, useEffect} from 'react'
 import { doc, setDoc, collection, addDoc, getDoc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 import { Ionicons } from '@expo/vector-icons'
@@ -32,6 +32,8 @@ const CreateHabit = ({ navigation }) => {
         sendHabits();
         navigation.navigate("GoalsScreen");
       }
+
+      
     return (
         <>
             <SafeAreaView style={{ backgroundColor: '#EEECE4', paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0) }}>

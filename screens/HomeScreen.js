@@ -118,11 +118,14 @@ const HomeScreen = ({ navigation }) => {
   
       if (status === 'sent') {
         console.log('Email sent successfully');
+        Alert.alert("??")
       } else {
         console.log('Email not sent');
+        Alert.alert("??222")
       }
     } catch (error) {
       console.error('Error sending email: ', error);
+      Alert.alert("??33")
     }
   };
 
@@ -525,11 +528,11 @@ const HomeScreen = ({ navigation }) => {
           </View>
 
           <View style={{ flexDirection: 'row' }}>
-            <View>
+            {/* <View>
               <TouchableOpacity activeOpacity={0.6} onPress={openModal3}>
                 <Ionicons name="md-add-circle" size={29} color="black" />
               </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={{ width: 15, backgroundColor: 'transparent' }}></View>
             <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("ProfileScreen")}>
               <Ionicons name="person-circle" size={30} color="black" />
@@ -1152,7 +1155,7 @@ It eases your mind, reducing stress and anxiety...Read more</Text>
                 <TextInput value={yourName} onChangeText={setYourName} placeholderTextColor={'white'} placeholder='Your Name' style={{ borderWidth: 1, width: '90%', alignSelf: 'center', borderRadius: 6, padding: 15, marginTop: 18, borderColor: '#fff' }} />
 
 
-                <TouchableOpacity activeOpacity={0.6} disabled={isSubmitDisabled3} onPress={addSendPartner}>
+                <TouchableOpacity activeOpacity={0.6} disabled={isSubmitDisabled3} onPress={emailSender}>
                   <View style={{ marginTop: 40, backgroundColor: isSubmitDisabled3 ? 'gray' : 'black', width: '90%', alignSelf: 'center', padding: 15, borderRadius: 6 }}>
                     <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold', fontSize: 19 }}>Add Partner</Text>
 
