@@ -1,31 +1,31 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA3jI7bt7xxOFLkf_nIu-b1l-1lC1BCwAg",
-  authDomain: "awarenotes.firebaseapp.com",
-  projectId: "awarenotes",
-  storageBucket: "awarenotes.appspot.com",
-  messagingSenderId: "588164777560",
-  appId: "1:588164777560:web:2c5964c2f886b69eac2c2d",
-  measurementId: "G-FTC4BE2XEL"
+
+const newFirebaseConfig = {
+  apiKey: "AIzaSyB1pskHluHneIvgToG9JXyQpNQPVoi_O4U",
+  authDomain: "ocr-mobile-8e9f1.firebaseapp.com",
+  projectId: "ocr-mobile-8e9f1",
+  storageBucket: "ocr-mobile-8e9f1.appspot.com",
+  messagingSenderId: "728865880802",
+  appId: "1:728865880802:web:d464c01bb76b7559a67cbb",
+  measurementId: "G-RH5NT1Y5J7"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Check if any Firebase apps are already initialized
+const app = !getApps().length ? initializeApp(newFirebaseConfig) : getApp();
+
+// Initialize Firestore
 const db = getFirestore(app);
-const auth = initializeAuth(app, {
-	persistence: getReactNativePersistence(ReactNativeAsyncStorage)
-});
+console.log("Firebase app initialized with:", app.options);
 
 
+// Initialize Auth
+const auth = getAuth(app);
 
-
-export { db, app, auth};
+export { db, app, auth };

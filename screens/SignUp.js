@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar,KeyboardAvoidingView,TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native'
 import React, {useState, useEffect} from 'react'
-import {auth} from '../firebaseConfig'
+import {auth, db} from '../firebaseConfig'
 import {collection, addDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
-const Login = ({navigation}) => {
+const SignUp = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -20,27 +20,29 @@ const Login = ({navigation}) => {
     },[])
 
 
-    // const createUser = async () => {
+    const createUser = async () => {
         
-    //     const order = {
-    //       userEmail: email,  
-    //     };
+        const order = {
+          userEmail: email,  
+        };
       
-    //     try {
-    //       const docRef = await addDoc(collection(db, 'userEmails'), order);
-    //       console.log('Document created with ID: ', docRef.id);
-    //     } catch (error) {
-    //       console.error('Error creating document:', error);
-    //     }
-    //   };
+        try {
+          const docRef = await addDoc(collection(db, 'userEmails'), order);
+          console.log('Document created with ID: ', docRef.id);
+        } catch (error) {
+          console.error('Error creating document:', error);
+        }
+      };
 
     const handleSignUp = () => {
         if (email!== "" & password !== "") {
             createUserWithEmailAndPassword(auth,email,password)
             .then(() => console.log("Signup Successful"))
             .catch((err) => Alert.alert("Login error", err.message));
-            createUser();
-        }
+            Alert.alert("Account Successful! Navigate to sign in page to begin.")
+        } if ( email === "" || password === "") {
+            Alert.alert("Please fill out information")
+        } 
     }
 
 
@@ -58,10 +60,10 @@ const Login = ({navigation}) => {
 
 <View style={styles.container}>
   <Text style={styles.h1}>Let's</Text>
-  <Text style={styles.h1}>Sign you in.</Text>
+  <Text style={styles.h1}>Sign you up.</Text>
 
-  <Text style={styles.grayToph2}>Welcome back!</Text>
-  <Text style={styles.grayh2}>You've been missed!</Text>
+  <Text style={styles.grayToph2}>Welcome!</Text>
+  <Text style={styles.grayh2}>Create account below!</Text>
 
 
   <Text style={styles.h3}>Email</Text>
@@ -82,27 +84,20 @@ const Login = ({navigation}) => {
   />
 
 
-  <TouchableOpacity activeOpacity={0.6} onPress={handleLogin}>
+  <TouchableOpacity activeOpacity={0.6} onPress={handleSignUp}>
     <View style={styles.sIBtn}>
-        <Text style={styles.sIBtnText}>Sign in</Text>
+        <Text style={styles.sIBtnText}>Create Account</Text>
     </View>
   </TouchableOpacity>
 
-<View style={styles.textContainer}>
-    <Text>Don't have an account?</Text>
-    <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate('Signup')}>
-    <View style={styles.sBtn}>
-        <Text style={styles.sBtnText}>Sign up</Text>
-    </View>
-  </TouchableOpacity>
-</View>
+
 
 </View>
   </>
   )
 }
 
-export default Login
+export default SignUp
 
 const styles = StyleSheet.create({
     container: {

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "awarenotes",
-    "slug": "awarenotes",
-    "version": "1.0.7",
+    "name": "awarenotes03",
+    "slug": "awarenotes03",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/aw-logo.png",
     "userInterfaceStyle": "light",
@@ -16,13 +16,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.msimeon.awarenotes02"
+      "bundleIdentifier": "com.msimeon.awarenotes03"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "permissions": ["SEND_EMAIL"]
+        "permissions": [
+          "SEND_EMAIL"
+        ]
       }
     },
     "web": {
@@ -30,7 +32,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "759dcb24-5fe3-4237-8971-f7ea3d4fd683"
+        "projectId": "ab399f03-e6dd-4c3f-9293-7894b07094f8"
       }
     }
   }
