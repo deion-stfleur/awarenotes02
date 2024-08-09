@@ -261,13 +261,13 @@ const handler = (pageText) => {
   <SpreadSheetIcon name='spreadsheet' color={'white'} size={25} />
   </View>
   <View>
-  <Text style={styles.dch1}>Spreadsheet</Text>
+  <Text style={styles.dch1}>Spreadsheet (Coming Soon!!)</Text>
   <Text style={styles.dcCopy}>You can create new document project</Text>
   </View>
   </View>
   <TouchableOpacity activeOpacity={0.5} style={styles.shadow}>
   <View style={styles.arrowIconContainer}>
-  <Arrow name='arrow-forward-ios' size={18} color={'gray'} />
+  {/* <Arrow name='arrow-forward-ios' size={18} color={'gray'} /> */}
   </View>
   </TouchableOpacity>
   </View>

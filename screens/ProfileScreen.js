@@ -4,7 +4,28 @@ import { db, auth } from '../firebaseConfig'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 
-const ProfileScreen = ({navigation}) => {
+const CircleView = ({ email, navigation }) => {
+  const firstLetter = email ? email.charAt(0).toUpperCase() : '';
+
+
+ 
+  
+
+  return (
+
+
+    <View style={styles.mainCircleContainer}>
+      <View style={styles.mainCircle}>
+        <Text style={styles.mainCText}>{firstLetter}</Text>
+      </View>
+      <Text style={styles.mainh1}>Hello,{auth.currentUser?.email}</Text>
+    </View>
+ 
+  );
+};
+
+
+const ProfileScreen = ({navigation, email}) => {
 
 
   const handleSignOut = () => {
@@ -26,21 +47,26 @@ const ProfileScreen = ({navigation}) => {
     <SafeAreaView>
 
     </SafeAreaView>
-    <Text style={styles.mainh1}>Hello,{auth.currentUser?.email}</Text>
+
+    <CircleView email={auth.currentUser?.email} />   
+  
+    
 
     <View style={styles.mainCol1}>
 
+        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("Feedback")}>
         <View style={styles.flexRow}>
       <Text style={styles.nainCopy}>Leave Feedback</Text>
       <MaterialIcons name="feedback" size={19} color="black" />
         </View>
+        </TouchableOpacity>
       <View style={styles.borderLine}></View>
 
       <View style={styles.flexRow}>
 
         <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} activeOpacity={0.6} onPress={() => navigation.navigate("FAQ")}>
-      <Text style={styles.nainCopy}>FAQ</Text>
-      <Text style={styles.bold}>&#62;</Text>
+      <Text style={styles.nainCopy}>FAQs ?</Text>
+      {/* <Text style={styles.bold}>&#62;</Text> */}
         </TouchableOpacity>
       {/* <Text onPress={handleMore}>{expanded ? "-" : "+"}</Text> */}
       {/* <AntDesign name="questioncircle" size={19} color="black" /> */}
@@ -108,5 +134,34 @@ const styles = StyleSheet.create({
     bold: {
         fontWeight: 'bold',
         fontSize: 16
+    },
+    mainCircleContainer: {
+      backgroundColor: '#fff',
+      height: 220,
+      marginTop: 30,
+      width: '95%',
+      alignSelf: 'center',
+      borderRadius: 4,
+      shadowColor: 'black',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 4,
+    },
+    mainCircle: {
+      height: 100,
+      width: 100,
+      borderRadius: 200,
+      backgroundColor: '#V4AACA',
+      alignSelf: 'center',
+      marginTop: 25,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1
+    },
+    mainCText: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 28
     }
 })

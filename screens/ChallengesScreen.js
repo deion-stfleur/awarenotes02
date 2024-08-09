@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { doc, setDoc, collection, addDoc, onSnapshot, query, where, getDocs } from 'firebase/firestore'
 import { db, auth } from '../firebaseConfig'
 import firebase from '../firebaseConfig'
+import {FontAwesome} from '@expo/vector-icons';
 
 
 
@@ -35,7 +36,7 @@ const ChallengesScreen = ({ navigation }) => {
         console.log(docsRef);
 
         
-        const q = query(docsRef, where('userId', '==', userId));
+        const q = query(docsRef, where('userId', '==', auth.currentUser?.email));
 
         
         const querySnapshot = await getDocs(q);
@@ -90,11 +91,13 @@ const ChallengesScreen = ({ navigation }) => {
             data={documents}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <View style={styles.documentContainer}>
+              <TouchableOpacity style={styles.documentContainer} activeOpacity={0.6} onPress={() => navigation.navigate('Document', { documentId: item.id, documentText: item.text, documentTime: item.timestamp })}>
                 <Text style={styles.documentText}>{item.text}</Text>
                 <Text style={styles.documentTime}>Date: {formatTimestamp(item.timestamp)}</Text>
-              </View>
+              </TouchableOpacity>
             )}
+            horizontal={true}
+            showHorizontalScrollIndicator={false}
           />
         </View>
       ) : (
@@ -125,7 +128,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 12,
     borderRadius: 8,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#E1EBEE',
+    marginRight: 15
   },
   documentText: {
     fontSize: 18,

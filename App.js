@@ -15,6 +15,8 @@ import SignupScreen from './screens/SignUp';
 import OnboardScreen from './screens/OnboardScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import FAQPage from './screens/FAQPage';
+import FeedbackScreen from './screens/FeedbackScreen';
+import DocDetailsScreen from './screens/DocDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -85,6 +87,8 @@ export default function App() {
       <Stack.Navigator  screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeTab" component={HomeTabNavigator} />
         <Stack.Screen name="FAQ" component={FAQPage} />
+        <Stack.Screen name="Feedback" component={FeedbackScreen} />
+        <Stack.Screen name="Document" component={DocDetailsScreen} />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

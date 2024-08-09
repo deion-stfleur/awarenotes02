@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, ScrollView, Touchable, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { Ionicons } from '@expo/vector-icons';
 
 const FAQPage = ({navigation}) => {
     const [expanded, setExpanded] = useState(false);
@@ -82,14 +83,23 @@ const FAQPage = ({navigation}) => {
   return (
 
     <>
-  <SafeAreaView style={{
- backgroundColor: 'white',paddingTop:
-          Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0)
-      }}>
+  <SafeAreaView>
+  <View style={{flexDirection: 'row',alignItems: 'center'}}>
 
-      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-       <Text style={styles.backBtn}>&#60; Back</Text>
-      </TouchableOpacity>
+<TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+<View style={{
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingTop:
+    Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0)
+}}>
+        <Ionicons size={28} name='arrow-back-outline' style={{marginLeft: 14, marginRight: 10}} />
+<Text style={{fontSize: 20, fontWeight: 'bold'}}>Back</Text>
+</View>
+</TouchableOpacity>
+
+
+</View>
       </SafeAreaView>
 
 
@@ -292,7 +302,7 @@ const styles = StyleSheet.create({
         marginBottom: 70  
     },
     accTitle: {
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 5,
         marginRight: 12
@@ -300,7 +310,8 @@ const styles = StyleSheet.create({
     dFlex: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 15
+        marginTop: 15,
+        width: '90%'
     },
     dFlexBottom: {
         flexDirection: 'row',
