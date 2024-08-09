@@ -329,9 +329,6 @@ const handler = (pageText) => {
 
         
 
-        <TouchableOpacity onPress={handleSignOut} activeOpacity={0.6}>
-        <Text style={styles.logOut}>Log out</Text>
-        </TouchableOpacity>
       </View>
       </ScrollView>
       

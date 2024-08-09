@@ -6,13 +6,15 @@ import ChallengesScreen from './screens/ChallengesScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {auth} from './firebaseConfig';
 import React, {useState, useEffect} from 'react'
 import SignupScreen from './screens/SignUp';
 import OnboardScreen from './screens/OnboardScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import FAQPage from './screens/FAQPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -41,15 +43,15 @@ function HomeTabNavigator() {
         ),
       }} component={ChallengesScreen} />
 
-{/* <Tab.Screen name="Activity"  options={{
+<Tab.Screen name="Profile"  options={{
         tabBarIcon: ({ focused }) => (
-          <MaterialCommunityIcons
-            name={focused ? 'view-dashboard-variant-outline' : 'view-dashboard-variant-outline'}
+          <Ionicons
+            name={focused ? 'person-circle' : 'person-circle'}  
             size={20}
             color={focused ? '#000' : '#999'}
           />
         ),
-      }} component={ActivityScreen} /> */}
+      }} component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
@@ -82,6 +84,7 @@ export default function App() {
 {user ? (
       <Stack.Navigator  screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeTab" component={HomeTabNavigator} />
+        <Stack.Screen name="FAQ" component={FAQPage} />
       </Stack.Navigator>
           ) : (
               <Stack.Navigator>

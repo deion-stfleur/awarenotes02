@@ -71,7 +71,7 @@ const ChallengesScreen = ({ navigation }) => {
     <>
 
       <SafeAreaView style={{
- paddingTop:
+ backgroundColor: 'white',paddingTop:
           Platform.OS === 'android' ? StatusBar.currentHeight : (Platform.OS === 'ios' ? StatusBar.currentHeight : 0)
       }}>
 
